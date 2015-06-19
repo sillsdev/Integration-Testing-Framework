@@ -45,7 +45,7 @@ if {$force_conservative} {
 set timeout -1
 spawn apt-get -y -f install fieldworks-applications
 match_max 100000
-expect -exact "\[More\]"
+expect -exact "More"
 send -- "\r"
 expect -exact "Accept the application and terms of the CPOL?"
 send -- "y\r"
