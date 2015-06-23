@@ -28,15 +28,23 @@ Need to do:
 Have linux scripts write and read data to shared directory
 
 Startup Scripts
+
 sleep 6m && sikuli_runall.sh
+
 sleep 5m && fieldworks-flex
 
 
 Generica
+
 ^Install VirtualBox
+
 ^Install Git  =  put git commands on windows shell
+
 ^Install Vagrant
+
 ^Use Vagrant File (Ryan’s) OR follow tutorial at Vagrant website. Boot into a linux machine!
+
 ^Use “expect” script to install FLEX
+
 Auto open FLEX and run script sikuli_runall.sh
 
