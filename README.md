@@ -2,6 +2,7 @@
 Project to store files related to automating testing for SIL Software on Linux
 
 vagrant up, vagrant ssh, vagrant halt, vagrant destroy
+
 vagrant provision, vagrant ssh-config
 
 Packaging a Vagrant Box
@@ -21,7 +22,9 @@ If expect breaks, needs to be reported
 
 Need to do:
 ^Check that we can auto install fieldworks
+
 ^Get common share file working…
+
 Have linux scripts write and read data to shared directory
 
 Startup Scripts
