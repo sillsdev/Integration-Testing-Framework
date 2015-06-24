@@ -1,0 +1,140 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>try_all_sidebar_buttons.sikuli</h2> <a href="try_all_sidebar_buttons.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> flex_regions
+<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+
+<span class="str">"""
+Click through all of the buttons in the left sidebar.
+Make sure the middle part of the screen changes
+within 5 seconds.
+[Currently just has a popup if nothing changed, and exits]
+If an information box pops up, close it.
+Return to first option when done.
+"""</span>
+
+changed = <span class="str">"moon"</span>
+
+<span class="kw">def</span> stop_observer(event):
+    <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />) != None:
+        Type(Key.ENTER)
+    <span class="kw">else</span>:
+        event.region.stopObserver()
+        <span class="kw">global</span> changed
+        changed = True
+        <span class="skw">popup</span>(<span class="str">"changed = "</span> + str(changed))
+
+
+<span class="kw">def</span> try_all_sidebar_buttons():
+    first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<span class="dig">115</span>,<span class="dig">15</span>)
+
+    <span class="cmt"># Set initial region to click
+</span>    region = first_region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
+    count = <span class="dig">0</span>
+    <span class="cmt"># Change image recognition settings
+</span>    default_similarity = Settings.MinSimilarity
+    Settings.MinSimilarity = <span class="dig">0.99</span>
+
+    <span class="cmt"># keep clicking while the list still has items 
+</span>    <span class="kw">while</span> region.exists(<img src="blank_space.png" />) == None:
+
+        <span class="kw">global</span> changed
+        changed = False
+
+        <span class="cmt"># keep count and make sure we don't go too far
+</span>        count += <span class="dig">1</span>
+        <span class="kw">if</span> count &gt; <span class="dig">9</span>:
+            <span class="skw">popup</span>(<span class="str">"script malfunction"</span>)
+            exit(<span class="dig">2</span>)
+
+        <span class="cmt"># Click in the middle of the region and react to change
+</span>        flex_regions.MID_TOOLBAR.onChange(stop_observer)
+        Click(region.getCenter())
+        flex_regions.MID_TOOLBAR.observe(<span class="dig">5</span>)
+        <span class="skw">popup</span>(<span class="str">"changed = "</span> + str(changed))
+        <span class="cmt"># Check if the observer stopped as intended
+</span>        <span class="kw">if</span> <span class="kw">not</span> changed:
+            <span class="skw">popup</span>(<span class="str">"No change when clicking item "</span> + str(count))
+            <span class="kw">return</span>
+
+        <span class="cmt"># Move region down by 18 pixels
+</span>        region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
+
+    <span class="cmt"># go back to default screen + settings
+</span>    Click(first_region.getCenter())
+    Settings.MinSimilarity = default_similarity
+
+
+try_all_sidebar_buttons()
+</pre>
+</body>
+</html>
