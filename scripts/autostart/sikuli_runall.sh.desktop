@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/vagrant/Scripts/sikuli_runall.sh
+Exec=/home/vagrant/linux_setup/sikuli/sikuli_runall.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
