@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/vagrant/Scripts/sikuli_runall.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Sikuli Runall
+Name=Sikuli Runall
+Comment[en_US]=
+Comment=
