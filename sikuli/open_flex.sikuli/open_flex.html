@@ -70,14 +70,48 @@
 <h2>open_flex.sikuli</h2> <a href="open_flex.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="skw">click</span>(<img src="Createanewpr.png" />)
-<span class="skw">wait</span>(<span class="dig">1</span>)
-<span class="skw">type</span>( <span class="str">"hellooo"</span>)
-<span class="skw">click</span>(<img src="OK.png" />)
+<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+
+<span class="kw">def</span> write_log(line):
+    f = open(<span class="str">"/vagrant/error_log"</span>, <span class="str">"a+"</span>)
+    <span class="kw">try</span>:
+        f.write(line + <span class="str">"\n"</span>)
+    <span class="kw">finally</span>:
+        f.close()
+<span class="kw">try</span>:
+    <span class="skw">click</span>(<img src="Createanewpr.png" />)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+<span class="kw">except</span> FindFailed:
+    write_log(<span class="str">"open_flex: Cannot find `Create a new project`"</span>)
+
+<span class="skw">type</span>( <span class="str">"hello"</span>)
+<span class="kw">try</span>:
+    <span class="skw">click</span>(<img src="OK.png" />)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+<span class="kw">except</span> FindFailed:
+    write_log(<span class="str">"open_flex: Cannot find `OK`"</span>)
 <span class="kw">if</span> exists(Pattern(<img src="OK-2.png" />).similar(<span class="dig">0.88</span>)):
-    <span class="skw">click</span>(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.86</span>))
+    <span class="kw">try</span>:
+        <span class="skw">click</span>(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.86</span>))
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+    <span class="kw">except</span> FindFailed:
+        write_log(<span class="str">"open_flex: Cannot find `OK`"</span>)
 <span class="kw">else</span>:
-    <span class="skw">click</span>(Pattern(<img src="Qpen.png" />).similar(<span class="dig">0.80</span>))
+    <span class="kw">try</span>:
+        <span class="skw">click</span>(Pattern(<img src="Qpen.png" />).similar(<span class="dig">0.80</span>))
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+    <span class="kw">except</span> FindFailed:
+        write_log(<span class="str">"open_flex: Cannot find `Open`"</span>)
+<span class="kw">def</span> openHandler(event):
+    write_log(<span class="str">"open_flex: Successfully opened flex."</span>)
+    exit(<span class="dig">0</span>)
+
+opened = onAppear(<img src="1435347136957.png" />, openHandler)
+observe(<span class="dig">40</span>)
+
+write_log(<span class="str">"open_flex: failed to open"</span>)
+<span class="kw">if</span> exists(<img src="Anerrorhasoc.png" />):
+    write_log(<span class="str">"open_flex: An error has occurred (green)"</span>)
 </pre>
 </body>
 </html>
