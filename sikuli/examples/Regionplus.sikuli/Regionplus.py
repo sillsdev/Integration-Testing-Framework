@@ -2,22 +2,35 @@ from sikuli import *
 
 class Regionplus(Region):
 
-
-    def Click(self, thing, time=1):
+def Click(thing, debug=0, time=1):
+    try:
         click(thing)
-        wait(time)
+    except FindFailed, ff:
+        if debug > 0:
+            popup(ff.message)
+            exit(1)
+    wait(time)
 
-    def DoubleClick(self, thing, time=1):
+def DoubleClick(thing, debug=0, time=1):
+    try:
         doubleClick(thing)
-        wait(time)
+    except FindFailed, ff:
+        if debug > 0:
+            popup(ff.message)
+            exit(1)
+    wait(time)
 
-    def Type(self, text, time=1):
-        type(text)
-        wait(time)
-    
-    def Find(self, thing, time=1):
+def Type(text time=1):
+    type(text)
+    wait(time)
+
+def Find(thing, debug=0, time=1):
+    try:
         find(thing)
-        wait(time)
+    except FindFailed, ff:
+        if debug > 0:
+            popup(ff.message)
+            exit(1)
 
     def offset(self, x, y):
-        return self.offset(Location(x, y))
+        return offset(Location(x, y))
