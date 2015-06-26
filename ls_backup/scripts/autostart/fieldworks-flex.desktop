@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=fieldworks-flex 
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=FLEX
+Name=FLEX
+Comment[en_US]=
+Comment=
