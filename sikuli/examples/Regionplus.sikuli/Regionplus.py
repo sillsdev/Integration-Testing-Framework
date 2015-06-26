@@ -18,3 +18,6 @@ class Regionplus(Region):
     def Find(self, thing, time=1):
         find(thing)
         wait(time)
+
+    def offset(self, x, y):
+        return self.offset(Location(x, y))
