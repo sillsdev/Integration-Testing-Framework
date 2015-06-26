@@ -1,0 +1,12 @@
+# sikuli
+project to download and run automatically
+
+Scripts to be automated for FLEX or other software suits.
+
+Opening Script: 1_open_flex must be run first, thus 1 places it first in the folder.
+
+Additional Scripts: help_about
+
+sikuli_runall will run all sikuli folders in this directory after deleted previous `hel*` projects
+* Creates "hello" project as default
+* Performs tests on "hello" project
