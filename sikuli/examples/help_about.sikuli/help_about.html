@@ -73,16 +73,28 @@
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
 
-
-TOOLBARS.Click(<img src="Help.png" />)
-Click(<img src="AboutLanguag.png" />)
-region = Region(<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">1232</span>,<span class="dig">943</span>)
-<span class="kw">if</span> region.exists(<img src="7AboutSILFle.png" />) <span class="kw">is</span> None:
-    f = open(<span class="str">"error_log"</span>, <span class="str">"a"</span>)
+<span class="kw">def</span> write_log(line):
+    f = open(<span class="str">"/vagrant/error_log"</span>, <span class="str">"a+"</span>)
     <span class="kw">try</span>:
-        f.write(<span class="str">"about screen didn't pop up\n"</span>)
+        f.write(line + <span class="str">"\n"</span>)
     <span class="kw">finally</span>:
         f.close()
+
+<span class="kw">try</span>:
+    TOOLBARS.Click(<img src="Help.png" />)
+<span class="kw">except</span> FindFailed:
+    write_log(<span class="str">"Help button not found"</span>)
+    <span class="kw">print</span> <span class="str">"1"</span>
+
+<span class="kw">try</span>:
+    Click(<img src="AboutLanguag.png" />)
+<span class="kw">except</span> FindFailed:
+    write_log(<span class="str">"About Language Explorer button not found"</span>)
+    <span class="kw">print</span> <span class="str">"2"</span>
+
+region = Region(<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">1232</span>,<span class="dig">943</span>)
+<span class="kw">if</span> region.exists(<img src="7AboutSILFle.png" />) <span class="kw">is</span> None:
+    write_log(<span class="str">"about screen didn't pop up"</span>)
 </pre>
 </body>
 </html>

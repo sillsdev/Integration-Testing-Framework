@@ -7,31 +7,39 @@ time is specified.
 from sikuli import *
 
 def Click(thing, debug=0, time=1):
-    try:
+    if debug ==0:
         click(thing)
-    except FindFailed, ff:
-        if debug > 0:
+    else:
+        try:
+            click(thing)
+        except FindFailed, ff:
             popup(ff.message)
             exit(1)
     wait(time)
 
 def DoubleClick(thing, debug=0, time=1):
-    try:
+    if debug == 0:
         doubleClick(thing)
-    except FindFailed, ff:
-        if debug > 0:
-            popup(ff.message)
-            exit(1)
+    else:
+        try:
+            doubleClick(thing)
+        except FindFailed, ff:
+            if debug > 0:
+                popup(ff.message)
+                exit(1)
     wait(time)
 
-def Type(text time=1):
+def Type(text, time=1):
     type(text)
     wait(time)
 
 def Find(thing, debug=0, time=1):
-    try:
+    if debug == 0:
         find(thing)
-    except FindFailed, ff:
-        if debug > 0:
-            popup(ff.message)
-            exit(1)
+    else:
+        try:
+            find(thing)
+        except FindFailed, ff:
+            if debug > 0:
+                popup(ff.message)
+                exit(1)

@@ -79,34 +79,42 @@ time is specified.
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 
 <span class="kw">def</span> Click(thing, debug=<span class="dig">0</span>, time=<span class="dig">1</span>):
-    <span class="kw">try</span>:
+    <span class="kw">if</span> debug ==<span class="dig">0</span>:
         <span class="skw">click</span>(thing)
-    <span class="kw">except</span> FindFailed, ff:
-        <span class="kw">if</span> debug &gt; <span class="dig">0</span>:
+    <span class="kw">else</span>:
+        <span class="kw">try</span>:
+            <span class="skw">click</span>(thing)
+        <span class="kw">except</span> FindFailed, ff:
             <span class="skw">popup</span>(ff.message)
             exit(<span class="dig">1</span>)
     <span class="skw">wait</span>(time)
 
 <span class="kw">def</span> DoubleClick(thing, debug=<span class="dig">0</span>, time=<span class="dig">1</span>):
-    <span class="kw">try</span>:
+    <span class="kw">if</span> debug == <span class="dig">0</span>:
         <span class="skw">doubleClick</span>(thing)
-    <span class="kw">except</span> FindFailed, ff:
-        <span class="kw">if</span> debug &gt; <span class="dig">0</span>:
-            <span class="skw">popup</span>(ff.message)
-            exit(<span class="dig">1</span>)
+    <span class="kw">else</span>:
+        <span class="kw">try</span>:
+            <span class="skw">doubleClick</span>(thing)
+        <span class="kw">except</span> FindFailed, ff:
+            <span class="kw">if</span> debug &gt; <span class="dig">0</span>:
+                <span class="skw">popup</span>(ff.message)
+                exit(<span class="dig">1</span>)
     <span class="skw">wait</span>(time)
 
-<span class="kw">def</span> Type(text time=<span class="dig">1</span>):
+<span class="kw">def</span> Type(text, time=<span class="dig">1</span>):
     <span class="skw">type</span>(text)
     <span class="skw">wait</span>(time)
 
 <span class="kw">def</span> Find(thing, debug=<span class="dig">0</span>, time=<span class="dig">1</span>):
-    <span class="kw">try</span>:
+    <span class="kw">if</span> debug == <span class="dig">0</span>:
         <span class="skw">find</span>(thing)
-    <span class="kw">except</span> FindFailed, ff:
-        <span class="kw">if</span> debug &gt; <span class="dig">0</span>:
-            <span class="skw">popup</span>(ff.message)
-            exit(<span class="dig">1</span>)
+    <span class="kw">else</span>:
+        <span class="kw">try</span>:
+            <span class="skw">find</span>(thing)
+        <span class="kw">except</span> FindFailed, ff:
+            <span class="kw">if</span> debug &gt; <span class="dig">0</span>:
+                <span class="skw">popup</span>(ff.message)
+                exit(<span class="dig">1</span>)
 </pre>
 </body>
 </html>
