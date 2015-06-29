@@ -1,6 +1,0 @@
-## See changes
-git status
-
-## Remove old files
-git add -u
-git commit -m "Delete many old files"
