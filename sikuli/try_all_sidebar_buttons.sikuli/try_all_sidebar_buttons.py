@@ -1,5 +1,10 @@
+import sys
+sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+
+from sikuli import *
 import flex_regions
 from waiting_wrappers import *
+from logger import Logger
 
 """
 Click through all of the buttons in the left sidebar.
@@ -10,30 +15,29 @@ If an information box pops up, close it.
 Return to first option when done.
 """
 
-changed = "moon"
+changed = False
 
 def stop_observer(event):
-    if Region(148,139,544,545).exists("information_popup.png") != None:
+    global changed
+    if Region(148,139,544,545).exists("information_popup.png") is not None:
         Type(Key.ENTER)
+        #changed = True
     else:
         event.region.stopObserver()
-        global changed
         changed = True
-        popup("changed = " + str(changed))
     
 
 def try_all_sidebar_buttons():
+    log = Logger("try_all_side_bar_buttons")
+    
     first_region = Region(21,127,115,15)
 
     # Set initial region to click
     region = first_region.offset(Location(0, 18))
     count = 0
-    # Change image recognition settings
-    default_similarity = Settings.MinSimilarity
-    Settings.MinSimilarity = 0.99
     
     # keep clicking while the list still has items 
-    while region.exists("blank_space.png") == None:
+    while region.exists(Pattern("blank_space.png").similar(0.99)) == None:
         
         global changed
         changed = False
@@ -41,25 +45,26 @@ def try_all_sidebar_buttons():
         # keep count and make sure we don't go too far
         count += 1
         if count > 9:
-            popup("script malfunction")
-            exit(2)
+            log.write("Script malfunction: went too far down the left column")
+            return 0
 
         # Click in the middle of the region and react to change
         flex_regions.MID_TOOLBAR.onChange(stop_observer)
-        Click(region.getCenter())
+        click(region.getCenter())
         flex_regions.MID_TOOLBAR.observe(5)
-        popup("changed = " + str(changed))
         # Check if the observer stopped as intended
         if not changed:
-            popup("No change when clicking item " + str(count))
-            return
+            log.write("No change when clicking item " + str(count))
+            return count
 
         # Move region down by 18 pixels
         region = region.offset(Location(0, 18))
 
-    # go back to default screen + settings
+    # go back to first screen
     Click(first_region.getCenter())
-    Settings.MinSimilarity = default_similarity
+
+    log.write("Success")
+    return 0
 
 
 try_all_sidebar_buttons()

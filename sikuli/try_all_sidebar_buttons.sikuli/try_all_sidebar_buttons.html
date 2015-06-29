@@ -70,8 +70,13 @@
 <h2>try_all_sidebar_buttons.sikuli</h2> <a href="try_all_sidebar_buttons.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> flex_regions
 <span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+<span class="kw">from</span> logger <span class="kw">import</span> Logger
 
 <span class="str">"""
 Click through all of the buttons in the left sidebar.
@@ -82,30 +87,29 @@ If an information box pops up, close it.
 Return to first option when done.
 """</span>
 
-changed = <span class="str">"moon"</span>
+changed = False
 
 <span class="kw">def</span> stop_observer(event):
-    <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />) != None:
+    <span class="kw">global</span> changed
+    <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />) <span class="kw">is</span> <span class="kw">not</span> None:
         Type(Key.ENTER)
-    <span class="kw">else</span>:
+        <span class="cmt">#changed = True
+</span>    <span class="kw">else</span>:
         event.region.stopObserver()
-        <span class="kw">global</span> changed
         changed = True
-        <span class="skw">popup</span>(<span class="str">"changed = "</span> + str(changed))
 
 
 <span class="kw">def</span> try_all_sidebar_buttons():
+    log = Logger(<span class="str">"try_all_side_bar_buttons"</span>)
+
     first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<span class="dig">115</span>,<span class="dig">15</span>)
 
     <span class="cmt"># Set initial region to click
 </span>    region = first_region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
     count = <span class="dig">0</span>
-    <span class="cmt"># Change image recognition settings
-</span>    default_similarity = Settings.MinSimilarity
-    Settings.MinSimilarity = <span class="dig">0.99</span>
 
     <span class="cmt"># keep clicking while the list still has items 
-</span>    <span class="kw">while</span> region.exists(<img src="blank_space.png" />) == None:
+</span>    <span class="kw">while</span> region.exists(Pattern(<img src="blank_space.png" />).similar(<span class="dig">0.99</span>)) == None:
 
         <span class="kw">global</span> changed
         changed = False
@@ -113,25 +117,26 @@ changed = <span class="str">"moon"</span>
         <span class="cmt"># keep count and make sure we don't go too far
 </span>        count += <span class="dig">1</span>
         <span class="kw">if</span> count &gt; <span class="dig">9</span>:
-            <span class="skw">popup</span>(<span class="str">"script malfunction"</span>)
-            exit(<span class="dig">2</span>)
+            log.write(<span class="str">"Script malfunction: went too far down the left column"</span>)
+            <span class="kw">return</span> <span class="dig">0</span>
 
         <span class="cmt"># Click in the middle of the region and react to change
 </span>        flex_regions.MID_TOOLBAR.onChange(stop_observer)
-        Click(region.getCenter())
+        <span class="skw">click</span>(region.getCenter())
         flex_regions.MID_TOOLBAR.observe(<span class="dig">5</span>)
-        <span class="skw">popup</span>(<span class="str">"changed = "</span> + str(changed))
         <span class="cmt"># Check if the observer stopped as intended
 </span>        <span class="kw">if</span> <span class="kw">not</span> changed:
-            <span class="skw">popup</span>(<span class="str">"No change when clicking item "</span> + str(count))
-            <span class="kw">return</span>
+            log.write(<span class="str">"No change when clicking item "</span> + str(count))
+            <span class="kw">return</span> count
 
         <span class="cmt"># Move region down by 18 pixels
 </span>        region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
 
-    <span class="cmt"># go back to default screen + settings
+    <span class="cmt"># go back to first screen
 </span>    Click(first_region.getCenter())
-    Settings.MinSimilarity = default_similarity
+
+    log.write(<span class="str">"Success"</span>)
+    <span class="kw">return</span> <span class="dig">0</span>
 
 
 try_all_sidebar_buttons()
