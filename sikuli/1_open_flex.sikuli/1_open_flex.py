@@ -1,4 +1,6 @@
-#from waiting_wrappers import *
+import sys
+sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+from waiting_wrappers import *
 
 def write_log(line):
     f = open("/vagrant/error_log", "a+")

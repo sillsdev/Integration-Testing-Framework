@@ -70,6 +70,9 @@
 <h2>help_about.sikuli</h2> <a href="help_about.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
 
@@ -84,17 +87,19 @@
     TOOLBARS.Click(<img src="Help.png" />)
 <span class="kw">except</span> FindFailed:
     write_log(<span class="str">"help_about: Help button not found"</span>)
-    <span class="kw">print</span> <span class="str">"1"</span>
 
 <span class="kw">try</span>:
     Click(<img src="AboutLanguag.png" />)
 <span class="kw">except</span> FindFailed:
     write_log(<span class="str">"help_about: About Language Explorer button not found"</span>)
-    <span class="kw">print</span> <span class="str">"2"</span>
 
 region = Region(<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">1232</span>,<span class="dig">943</span>)
 <span class="kw">if</span> region.exists(<img src="7AboutSILFle.png" />) <span class="kw">is</span> None:
     write_log(<span class="str">"help_about: `About` screen didn't pop up"</span>)
+<span class="kw">try</span>:
+    Click(<img src="OK.png" />)
+<span class="kw">except</span> FindFailed:
+    write_log(<span class="str">"help_about: `About` screen doesn't contain `OK`"</span>)
 </pre>
 </body>
 </html>

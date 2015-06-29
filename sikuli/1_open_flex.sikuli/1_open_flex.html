@@ -70,8 +70,10 @@
 <h2>1_open_flex.sikuli</h2> <a href="1_open_flex.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="cmt">#from waiting_wrappers import *
-</span>
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+
 <span class="kw">def</span> write_log(line):
     f = open(<span class="str">"/vagrant/error_log"</span>, <span class="str">"a+"</span>)
     <span class="kw">try</span>:
