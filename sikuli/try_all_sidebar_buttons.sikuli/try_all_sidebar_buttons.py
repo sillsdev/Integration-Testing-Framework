@@ -3,7 +3,6 @@ sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 
 from sikuli import *
 import flex_regions
-from waiting_wrappers import *
 from logger import Logger
 
 """
@@ -20,8 +19,7 @@ changed = False
 def stop_observer(event):
     global changed
     if Region(148,139,544,545).exists("information_popup.png") is not None:
-        Type(Key.ENTER)
-        #changed = True
+        type(Key.ENTER)
     else:
         event.region.stopObserver()
         changed = True
@@ -45,8 +43,8 @@ def try_all_sidebar_buttons():
         # keep count and make sure we don't go too far
         count += 1
         if count > 9:
-            log.write("Script malfunction: went too far down the left column")
-            return 0
+            log.write_fail("Script malfunction: went too far down the left column")
+            break;
 
         # Click in the middle of the region and react to change
         flex_regions.MID_TOOLBAR.onChange(stop_observer)
@@ -54,17 +52,16 @@ def try_all_sidebar_buttons():
         flex_regions.MID_TOOLBAR.observe(5)
         # Check if the observer stopped as intended
         if not changed:
-            log.write("No change when clicking item " + str(count))
-            return count
+            log.write_fail("No change when clicking item " + str(count))
 
         # Move region down by 18 pixels
         region = region.offset(Location(0, 18))
 
     # go back to first screen
-    Click(first_region.getCenter())
+    click(first_region.getCenter())
 
-    log.write("Success")
-    return 0
+    if not log.has_fail():
+        log.write("Success")
 
 
 try_all_sidebar_buttons()
