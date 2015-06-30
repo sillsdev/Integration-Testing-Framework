@@ -10,7 +10,8 @@ class Regionplus(Region):
         self.helper = test_helper
         
 
-    def Click(self, thing, fail_message, success_message=None, time=1):
+    def Click(self, thing, fail_message, quit=False,
+              success_message=None, time=1):
         try:
             self.click(thing)
             if success_message:
@@ -20,11 +21,14 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
     
-    def DoubleClick(self, thing, fail_message, success_message=None, time=1):
+    def DoubleClick(self, thing, fail_message, quit=False,
+                    success_message=None, time=1):
         try:
             self.doubleClick(thing)
             if success_message:
@@ -34,11 +38,14 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
     
-    def Find(self, thing, fail_message, success_message=None, time=1):
+    def Find(self, thing, fail_message, quit=False,
+             success_message=None, time=1):
         try:
             self.find(thing)
             if success_message:
@@ -48,11 +55,14 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
 
-    def Exists(self, thing, fail_message, success_message=None, time=1):
+    def Exists(self, thing, fail_message, quit=False,
+               success_message=None, time=1):
         if self.exists(thing):
             if success_message:
                 self.helper.write(success_message)
@@ -60,6 +70,8 @@ class Regionplus(Region):
         else:
             if self.helper:
                 self.helper.write_fail(fail_message)
+            if quit:
+                exit()
             return False
     
     def offset(self, x, y):

@@ -16,8 +16,10 @@ class TestHelper:
 
     # Return True on success, False on FindFailed error, after
     # logging the error.
+    # If quit is True, exits the program using exit(1).
 
-    def Click(self, thing, fail_message, success_message=None, time=1):
+    def Click(self, thing, fail_message, quit=False,
+              success_message=None, time=1):
         try:
             click(thing)
             if success_message:
@@ -26,11 +28,14 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
     
-    def DoubleClick(self, thing, fail_message, success_message=None, time=1):
+    def DoubleClick(self, thing, fail_message, quit=False,
+                    success_message=None, time=1):
         try:
             doubleClick(thing)
             if success_message:
@@ -39,6 +44,8 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
@@ -47,7 +54,8 @@ class TestHelper:
         type(text)
         wait(time)
     
-    def Find(self, thing, fail_message, success_message=None, time=1):
+    def Find(self, thing, fail_message, quit=False,
+             success_message=None, time=1):
         try:
             find(thing)
             if success_message:
@@ -56,17 +64,22 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         except:
             raise
 
-    def Exists(self, thing, fail_message, success_message=None, time=1):
+    def Exists(self, thing, fail_message, quit=False,
+               success_message=None, time=1):
         if exists(thing):
             if success_message:
                 self.write(success_message)
             return True
         else:
             self.write_fail(fail_message)
+            if quit:
+                exit()
             return False
         
 

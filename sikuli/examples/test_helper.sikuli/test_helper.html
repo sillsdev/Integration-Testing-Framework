@@ -88,8 +88,10 @@
 </span>
     <span class="cmt"># Return True on success, False on FindFailed error, after
 </span>    <span class="cmt"># logging the error.
+</span>    <span class="cmt"># If quit is True, exits the program using exit(1).
 </span>
-    <span class="kw">def</span> Click(self, thing, fail_message, success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Click(self, thing, fail_message, quit=False,
+              success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
             <span class="skw">click</span>(thing)
             <span class="kw">if</span> success_message:
@@ -98,11 +100,14 @@
             <span class="kw">return</span> True
         <span class="kw">except</span> FindFailed:
             self.write_fail(fail_message)
+            <span class="kw">if</span> quit:
+                exit()
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> DoubleClick(self, thing, fail_message, success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> DoubleClick(self, thing, fail_message, quit=False,
+                    success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
             <span class="skw">doubleClick</span>(thing)
             <span class="kw">if</span> success_message:
@@ -111,6 +116,8 @@
             <span class="kw">return</span> True
         <span class="kw">except</span> FindFailed:
             self.write_fail(fail_message)
+            <span class="kw">if</span> quit:
+                exit()
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
@@ -119,7 +126,8 @@
         <span class="skw">type</span>(text)
         <span class="skw">wait</span>(time)
 
-    <span class="kw">def</span> Find(self, thing, fail_message, success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Find(self, thing, fail_message, quit=False,
+             success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
             <span class="skw">find</span>(thing)
             <span class="kw">if</span> success_message:
@@ -128,17 +136,22 @@
             <span class="kw">return</span> True
         <span class="kw">except</span> FindFailed:
             self.write_fail(fail_message)
+            <span class="kw">if</span> quit:
+                exit()
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Exists(self, thing, fail_message, success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Exists(self, thing, fail_message, quit=False,
+               success_message=None, time=<span class="dig">1</span>):
         <span class="kw">if</span> exists(thing):
             <span class="kw">if</span> success_message:
                 self.write(success_message)
             <span class="kw">return</span> True
         <span class="kw">else</span>:
             self.write_fail(fail_message)
+            <span class="kw">if</span> quit:
+                exit()
             <span class="kw">return</span> False
 
 
