@@ -1,42 +1,30 @@
 import sys
 sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
-from waiting_wrappers import *
-from logger import Logger
+from test_helper import TestHelper
 
-log = Logger("open_flex")
-try:
-    click("Createanewpr.png")
-    wait(1)
-except FindFailed:
-    log.write("Cannot find `Create a new project`")
+helper = TestHelper("open_flex")
 
+helper.Click("Createanewpr.png", "Cannot find `Create a new project`")
 type("hello")
-try:
-    click("OK.png")
-    wait(1)
-except FindFailed:
-    log.write("Cannot find `OK`")
+helper.Click("OK.png", "Cannot find `OK`")
 if exists(Pattern("OK-2.png").similar(0.88)):
-    try:
-        click(Pattern("OK-1.png").similar(0.86))
-        wait(1)
-    except FindFailed:
-        log.write("Cannot find `OK`")
+    helper.Click(Pattern("OK-1.png").similar(0.86), "Cannot find `OK`")
 else:
-    try:
-        click(Pattern("Qpen.png").similar(0.80))
-        wait(1)
-    except FindFailed:
-        log.write("Cannot find `Open`")
-def openHandler(event):
-    log.write("Successfully opened flex.")
-    exit(0)
+    helper.Click(Pattern("Qpen.png").similar(0.80), "Cannot find `Open`")
     
-opened = onAppear("1435347136957.png", openHandler)
+def open_handler(event):
+    helper.write("Successfully opened flex.")
+    event.region.stopObserver()
+
+def green_handler(event):
+    helper.write_fail("An error has occurred (green)")
+    event.region.stopObserver()
+    
+onAppear("1435347136957.png", open_handler)
+onAppear("Anerrorhasoc.png", green_handler)
 observe(40)
 
-log.write("open_flex: failed to open")
-if exists("Anerrorhasoc.png"):
-    log.write("An error has occurred (green)")
+if helper.has_fail():
+    helper.write_fail("Failed to open")
 
 
