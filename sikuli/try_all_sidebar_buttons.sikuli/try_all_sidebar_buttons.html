@@ -75,7 +75,6 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> flex_regions
-<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
 <span class="kw">from</span> logger <span class="kw">import</span> Logger
 
 <span class="str">"""
@@ -92,9 +91,8 @@ changed = False
 <span class="kw">def</span> stop_observer(event):
     <span class="kw">global</span> changed
     <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />) <span class="kw">is</span> <span class="kw">not</span> None:
-        Type(Key.ENTER)
-        <span class="cmt">#changed = True
-</span>    <span class="kw">else</span>:
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">else</span>:
         event.region.stopObserver()
         changed = True
 
@@ -117,8 +115,8 @@ changed = False
         <span class="cmt"># keep count and make sure we don't go too far
 </span>        count += <span class="dig">1</span>
         <span class="kw">if</span> count &gt; <span class="dig">9</span>:
-            log.write(<span class="str">"Script malfunction: went too far down the left column"</span>)
-            <span class="kw">return</span> <span class="dig">0</span>
+            log.write_fail(<span class="str">"Script malfunction: went too far down the left column"</span>)
+            <span class="kw">break</span>;
 
         <span class="cmt"># Click in the middle of the region and react to change
 </span>        flex_regions.MID_TOOLBAR.onChange(stop_observer)
@@ -126,17 +124,16 @@ changed = False
         flex_regions.MID_TOOLBAR.observe(<span class="dig">5</span>)
         <span class="cmt"># Check if the observer stopped as intended
 </span>        <span class="kw">if</span> <span class="kw">not</span> changed:
-            log.write(<span class="str">"No change when clicking item "</span> + str(count))
-            <span class="kw">return</span> count
+            log.write_fail(<span class="str">"No change when clicking item "</span> + str(count))
 
         <span class="cmt"># Move region down by 18 pixels
 </span>        region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
 
     <span class="cmt"># go back to first screen
-</span>    Click(first_region.getCenter())
+</span>    <span class="skw">click</span>(first_region.getCenter())
 
-    log.write(<span class="str">"Success"</span>)
-    <span class="kw">return</span> <span class="dig">0</span>
+    <span class="kw">if</span> <span class="kw">not</span> log.has_fail():
+        log.write(<span class="str">"Success"</span>)
 
 
 try_all_sidebar_buttons()

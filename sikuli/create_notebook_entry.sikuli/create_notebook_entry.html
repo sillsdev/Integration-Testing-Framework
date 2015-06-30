@@ -67,35 +67,37 @@
    </head>
 <body>
 <div class="info">
-<h2>logger.sikuli</h2> <a href="logger.zip">(Download this script)</a>
+<h2>create_notebook_entry.sikuli</h2> <a href="create_notebook_entry.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="kw">from</span> __future__ <span class="kw">import</span> with_statement
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 
-<span class="cmt"># So we don't have to define a write_log function in every test file. :P
-</span><span class="cmt"># If write_fail is used instead of write, the logger remembers that the
-</span><span class="cmt"># test failed.
-</span><span class="kw">class</span> Logger:
-    <span class="cmt"># If a file with the given filename already exists, the Logger will
-</span>    <span class="cmt"># just keep writing to the end of that file.
-</span>    <span class="kw">def</span> __init__(self, test_name=<span class="str">""</span>, filename=<span class="str">"/vagrant/error_log"</span>):
-        self.file = filename
-        self.test = test_name + <span class="str">": "</span>
-        self.test_failed = False
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">from</span> logger <span class="kw">import</span> Logger
+<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+<span class="kw">from</span> flex_regions <span class="kw">import</span> *
+<span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
-    <span class="cmt"># Prepends the test name and appends a newline before writing to file.
-</span>    <span class="kw">def</span> write(self, line):
-        <span class="kw">with</span> open(self.file, <span class="str">"a"</span>) <span class="kw">as</span> f:
-            f.write(self.test + line + <span class="str">"\n"</span>)
+log = Logger(<span class="str">"create_notebook_entry"</span>)
 
-    <span class="cmt"># Same as write, but internally remembers that the test failed.
-</span>    <span class="kw">def</span> write_fail(self, line):
-        self.test_failed = True
-        self.write(line)
+<span class="kw">try</span>:
+    Click(<img src="Notebook5.png" />)
+<span class="kw">except</span> FindFailed:
+    log.write_fail(<span class="str">"Couldn't find 'Notebook' button"</span>)
 
-    <span class="cmt"># Returns whether any fails have been logged.
-</span>    <span class="kw">def</span> has_fail(self):
-        <span class="kw">return</span> self.test_failed
+<span class="kw">try</span>:
+    TOOLBARS.Click(<img src="1435614864882.png" />)
+<span class="kw">except</span> FindFailed:
+    log.write_fail(<span class="str">"Couldn't find 'Create new record' button"</span>)
+
+Type(<span class="str">"hello world"</span> + Key.ENTER)
+
+<span class="kw">if</span> Region(<span class="dig">147</span>,<span class="dig">101</span>,<span class="dig">537</span>,<span class="dig">692</span>).exists(<img src="helloworld.png" />) <span class="kw">is</span> None:
+    log.write_fail(<span class="str">"Cannot find new 'hello world' entry"</span>)
+
+<span class="kw">if</span> <span class="kw">not</span> log.has_fail():
+    log.write(<span class="str">"Success"</span>)
 </pre>
 </body>
 </html>
