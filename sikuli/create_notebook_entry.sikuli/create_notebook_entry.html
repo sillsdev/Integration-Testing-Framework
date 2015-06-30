@@ -78,19 +78,28 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
-helper = TestHelper(<span class="str">"create_notebook_entry"</span>)
+<span class="cmt"># Set up helper
+</span>helper = TestHelper(<span class="str">"create_notebook_entry"</span>)
 set_flex_helper(helper)
 
-helper.Click(<img src="Notebook5.png" />, <span class="str">"Couldn't find 'Notebook' button"</span>)
-LEFT_SIDEBAR.Click(<img src="RecordEdit.png" />, <span class="str">"Couldn't find 'Record Edit' button"</span>)
-TOOLBARS.Click(Pattern(<img src="1435614864882.png" />).similar(<span class="dig">0.96</span>), <span class="str">"Couldn't find 'Create new record' button"</span>)
+<span class="cmt"># Opening
+</span><span class="cmt">##############
+</span>helper.Click(<img src="Notebook5.png" />, <span class="str">"Couldn't find 'Notebook' button"</span>, quit=True)
+LEFT_SIDEBAR.Click(<img src="RecordEdit.png" />, <span class="str">"Couldn't find 'Record Edit' button"</span>, quit=True)
+TOOLBARS.Click(Pattern(<img src="1435614864882.png" />).similar(<span class="dig">0.96</span>), <span class="str">"Couldn't find 'Create new record' button"</span>, quit=True)
 
-helper.Type(<span class="str">"hello world"</span> + Key.ENTER)
+<span class="cmt"># Goal
+</span><span class="cmt">##############
+</span>helper.Type(<span class="str">"hello world"</span> + Key.ENTER)
 
 Regionplus(helper, Region(<span class="dig">147</span>,<span class="dig">101</span>,<span class="dig">537</span>,<span class="dig">692</span>)).Exists(<img src="helloworld.png" />,
         <span class="str">"Cannot find new 'hello world' entry"</span>)
 
 helper.write_success()
+
+<span class="cmt"># Closing
+</span><span class="cmt">##############
+</span><span class="cmt"># (None)</span>
 </pre>
 </body>
 </html>
