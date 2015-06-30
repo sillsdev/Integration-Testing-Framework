@@ -86,14 +86,14 @@ helper.Click(<img src="OK.png" />, <span class="str">"Cannot find `OK`"</span>)
 
 <span class="kw">def</span> open_handler(event):
     helper.write(<span class="str">"Successfully opened flex."</span>)
-    event.region.stopObserver()
-
+    <span class="cmt">#event.region.stopObserver()
+</span>
 <span class="kw">def</span> green_handler(event):
     helper.write_fail(<span class="str">"An error has occurred (green)"</span>)
     event.region.stopObserver()
 
 onAppear(<img src="1435347136957.png" />, open_handler)
-onAppear(<img src="Anerrorhasoc.png" />, green_handler)
+onAppear(Pattern(<img src="Anerrorhasoc.png" />).similar(<span class="dig">0.80</span>), green_handler)
 observe(<span class="dig">40</span>)
 
 <span class="kw">if</span> helper.has_fail():

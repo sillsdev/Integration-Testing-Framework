@@ -14,14 +14,14 @@ else:
     
 def open_handler(event):
     helper.write("Successfully opened flex.")
-    event.region.stopObserver()
+    #event.region.stopObserver()
 
 def green_handler(event):
     helper.write_fail("An error has occurred (green)")
     event.region.stopObserver()
     
 onAppear("1435347136957.png", open_handler)
-onAppear("Anerrorhasoc.png", green_handler)
+onAppear(Pattern("Anerrorhasoc.png").similar(0.80), green_handler)
 observe(40)
 
 if helper.has_fail():
