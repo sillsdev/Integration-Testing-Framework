@@ -1,4 +1,4 @@
-import sys
+import sys, os
 sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 from waiting_wrappers import *
 from logger import Logger
@@ -38,5 +38,8 @@ observe(40)
 log.write("open_flex: failed to open")
 if exists("Anerrorhasoc.png"):
     log.write("An error has occurred (green)")
+    os.system("/bin/bash ./flex_restart.sh")
+    #subprocess.call(['./flex_restart.sh'])
+    
 
 

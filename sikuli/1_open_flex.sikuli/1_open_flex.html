@@ -70,7 +70,7 @@
 <h2>1_open_flex.sikuli</h2> <a href="1_open_flex.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="kw">import</span> sys
+<span class="kw">import</span> sys, os
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 <span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
 <span class="kw">from</span> logger <span class="kw">import</span> Logger
@@ -110,6 +110,8 @@ observe(<span class="dig">40</span>)
 log.write(<span class="str">"open_flex: failed to open"</span>)
 <span class="kw">if</span> exists(<img src="Anerrorhasoc.png" />):
     log.write(<span class="str">"An error has occurred (green)"</span>)
+    os.system(<span class="str">"/bin/bash ./flex_restart.sh"</span>)
+    <span class="cmt">#subprocess.call(['./flex_restart.sh'])</span>
 </pre>
 </body>
 </html>
