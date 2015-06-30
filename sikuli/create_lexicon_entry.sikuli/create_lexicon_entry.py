@@ -2,38 +2,22 @@ import sys
 sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 
 from sikuli import *
-from logger import Logger
-from waiting_wrappers import *
+from test_helper import TestHelper
 from flex_regions import *
 from Regionplus import *
 
-log = Logger("create_lexicon_entry")
+helper = TestHelper("create_lexicon_entry")
+set_flex_helper(helper)
 
-try:
-    Click("Lexicon.png")
-except FindFailed:
-    log.write_fail("Couldn't find 'Lexicon' button")
+helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
+LEFT_SIDEBAR.Click("EHLexiconEdi.png", "Couldn't find 'Lexicon Edit' button")
+MID_TOOLBAR.Click("Headword.png", "Couldn't find Headword button")
+TOOLBARS.Click("1435675185765.png", "Couldn't find 'Create new lexical entry' button")
 
-try:
-    LEFT_SIDEBAR.Click("EHLexiconEdi.png")
-except FindFailed:
-    log.write_fail("Couldn't find 'Lexicon Edit' button")
+helper.Type("cat" + Key.ENTER)
 
-try:
-    MID_TOOLBAR.Click("Headword.png")
-except FindFailed:
-    log.write_fail("Couldn't find Headword button")
+Regionplus(helper, Region(147,101,537,692)).Exists("catcat.png",
+    "Cannot find new 'cat' entry")
 
-try:
-    TOOLBARS.Click("1435675185765.png")
-except FindFailed:
-    log.write_fail("Couldn't find 'Create new lexical entry' button")
-
-Type("cat" + Key.ENTER)
-
-if Region(147,101,537,692).exists("catcat.png") is None:
-    log.write_fail("Cannot find new 'cat' entry")
-
-if not log.has_fail():
-    log.write("Success")
+helper.write_success()
     

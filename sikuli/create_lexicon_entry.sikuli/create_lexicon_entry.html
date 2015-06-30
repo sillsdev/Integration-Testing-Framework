@@ -74,40 +74,24 @@
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
-<span class="kw">from</span> logger <span class="kw">import</span> Logger
-<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
-log = Logger(<span class="str">"create_lexicon_entry"</span>)
+helper = TestHelper(<span class="str">"create_lexicon_entry"</span>)
+set_flex_helper(helper)
 
-<span class="kw">try</span>:
-    Click(<img src="Lexicon.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"Couldn't find 'Lexicon' button"</span>)
+helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+LEFT_SIDEBAR.Click(<img src="EHLexiconEdi.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
+MID_TOOLBAR.Click(<img src="Headword.png" />, <span class="str">"Couldn't find Headword button"</span>)
+TOOLBARS.Click(<img src="1435675185765.png" />, <span class="str">"Couldn't find 'Create new lexical entry' button"</span>)
 
-<span class="kw">try</span>:
-    LEFT_SIDEBAR.Click(<img src="EHLexiconEdi.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
+helper.Type(<span class="str">"cat"</span> + Key.ENTER)
 
-<span class="kw">try</span>:
-    MID_TOOLBAR.Click(<img src="Headword.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"Couldn't find Headword button"</span>)
+Regionplus(helper, Region(<span class="dig">147</span>,<span class="dig">101</span>,<span class="dig">537</span>,<span class="dig">692</span>)).Exists(<img src="catcat.png" />,
+    <span class="str">"Cannot find new 'cat' entry"</span>)
 
-<span class="kw">try</span>:
-    TOOLBARS.Click(<img src="1435675185765.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"Couldn't find 'Create new lexical entry' button"</span>)
-
-Type(<span class="str">"cat"</span> + Key.ENTER)
-
-<span class="kw">if</span> Region(<span class="dig">147</span>,<span class="dig">101</span>,<span class="dig">537</span>,<span class="dig">692</span>).exists(<img src="catcat.png" />) <span class="kw">is</span> None:
-    log.write_fail(<span class="str">"Cannot find new 'cat' entry"</span>)
-
-<span class="kw">if</span> <span class="kw">not</span> log.has_fail():
-    log.write(<span class="str">"Success"</span>)
+helper.write_success()
 </pre>
 </body>
 </html>
