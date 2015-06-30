@@ -74,30 +74,18 @@
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
-<span class="kw">from</span> waiting_wrappers <span class="kw">import</span> *
-<span class="kw">from</span> logger <span class="kw">import</span> Logger
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
-log = Logger(<span class="str">"help_about"</span>)
-<span class="kw">try</span>:
-    TOOLBARS.Click(<img src="Help.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"Help button not found"</span>)
+helper = TestHelper(<span class="str">"help_about"</span>)
+set_flex_helper(helper)
 
-<span class="kw">try</span>:
-    Click(<img src="AboutLanguag.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"About Language Explorer button not found"</span>)
+TOOLBARS.Click(<img src="Help.png" />, <span class="str">"Help button not found"</span>)
+helper.Click(<img src="AboutLanguag.png" />, <span class="str">"About Language Explorer button not found"</span>)
 
-region = Region(<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">1232</span>,<span class="dig">943</span>)
-<span class="kw">if</span> region.exists(<img src="7AboutSILFle.png" />) <span class="kw">is</span> None:
-    log.write_fail(<span class="str">"`About` screen didn't pop up"</span>)
-<span class="kw">try</span>:
-    Click(<img src="OK.png" />)
-<span class="kw">except</span> FindFailed:
-    log.write_fail(<span class="str">"`About` screen doesn't contain `OK`"</span>)
+helper.Exists(<img src="7AboutSILFle.png" />, <span class="str">"`About` screen didn't pop up"</span>)
+helper.Click(<img src="OK.png" />, <span class="str">"`About` screen doesn't contain `OK`"</span>)
 
-<span class="kw">if</span> <span class="kw">not</span> log.has_fail():
-    log.write(<span class="str">"Success"</span>)
+helper.write_success()
 </pre>
 </body>
 </html>
