@@ -2,43 +2,57 @@ from sikuli import *
 
 class Regionplus(Region):
 
-    def Click(self, thing, debug=0, time=1):
-        if debug ==0:
+    def __init__(self, test_helper, *args):
+        Region.__init__(self, *args)
+        self.helper = test_helper
+
+    def set_helper(self, test_helper):
+        self.helper = test_helper
+        
+
+    def Click(self, thing, message, time=1):
+        try:
             self.click(thing)
-        else:
-            try:
-                self.click(thing)
-            except FindFailed, ff:
-                popup(ff.message)
-                exit(1)
-        wait(time)
+            wait(time)
+            return True
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(message)
+            return False
+        except:
+            raise
     
-    def DoubleClick(self, thing, debug=0, time=1):
-        if debug == 0:
+    def DoubleClick(self, thing, message, time=1):
+        try:
             self.doubleClick(thing)
-        else:
-            try:
-                self.doubleClick(thing)
-            except FindFailed, ff:
-                if debug > 0:
-                    popup(ff.message)
-                    exit(1)
-        wait(time)
+            wait(time)
+            return True
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(message)
+            return False
+        except:
+            raise
     
-    def Type(self, text, time=1):
-        self.type(text)
-        wait(time)
-    
-    def Find(self, thing, debug=0, time=1):
-        if debug == 0:
+    def Find(self, thing, message, time=1):
+        try:
             self.find(thing)
+            wait(time)
+            return True
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(message)
+            return False
+        except:
+            raise
+
+    def Exists(self, thing, message, time=1):
+        if self.exists(thing):
+            return True
         else:
-            try:
-                self.find(thing)
-            except FindFailed, ff:
-                if debug > 0:
-                    popup(ff.message)
-                    exit(1)
+            if self.helper:
+                self.helper.write_fail(message)
+            return False
     
-        def offset(self, x, y):
-            return offset(Location(x, y))
+    def offset(self, x, y):
+        return offset(Location(x, y))
