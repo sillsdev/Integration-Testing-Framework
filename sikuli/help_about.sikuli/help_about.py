@@ -19,7 +19,7 @@ helper.Exists("7AboutSILFle.png", "`About` screen didn't pop up")
 
 # Closing
 #############
-helper.Click("OK.png", "`About` screen doesn't contain `OK`", quit=True)
+helper.Click("OK.png", "`About` screen doesn't contain `OK`", restart=True)
 
 helper.write_success()
 

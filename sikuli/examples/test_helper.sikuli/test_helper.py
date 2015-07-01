@@ -16,9 +16,10 @@ class TestHelper:
 
     # Return True on success, False on FindFailed error, after
     # logging the error.
-    # If quit is True, exits the program using exit(1).
+    # If give_up is True, exits the script using exit() on failure.
+    # If restart is True, FLEX needs to be restarted on failure.
 
-    def Click(self, thing, fail_message, quit=False,
+    def Click(self, thing, fail_message, give_up=True, restart=False,
               success_message=None, time=1):
         try:
             click(thing)
@@ -28,14 +29,16 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
         except:
             raise
     
-    def DoubleClick(self, thing, fail_message, quit=False,
-                    success_message=None, time=1):
+    def DoubleClick(self, thing, fail_message, give_up=True,
+                    restart=False, success_message=None, time=1):
         try:
             doubleClick(thing)
             if success_message:
@@ -44,7 +47,9 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
         except:
@@ -54,7 +59,7 @@ class TestHelper:
         type(text)
         wait(time)
     
-    def Find(self, thing, fail_message, quit=False,
+    def Find(self, thing, fail_message, give_up=True, restart=False,
              success_message=None, time=1):
         try:
             find(thing)
@@ -64,13 +69,15 @@ class TestHelper:
             return True
         except FindFailed:
             self.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
         except:
             raise
 
-    def Exists(self, thing, fail_message, quit=False,
+    def Exists(self, thing, fail_message, give_up=True, restart=False,
                success_message=None, time=1):
         if exists(thing):
             if success_message:
@@ -78,10 +85,14 @@ class TestHelper:
             return True
         else:
             self.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
-        
+
+    def restart_flex(self):
+        pass
 
     ###################
     # Logging methods
