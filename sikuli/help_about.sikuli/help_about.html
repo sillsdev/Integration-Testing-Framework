@@ -76,14 +76,22 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
-helper = TestHelper(<span class="str">"help_about"</span>)
+<span class="cmt"># Setup
+</span>helper = TestHelper(<span class="str">"help_about"</span>)
 set_flex_helper(helper)
 
-TOOLBARS.Click(<img src="Help.png" />, <span class="str">"Help button not found"</span>)
+<span class="cmt"># Opening
+</span><span class="cmt">#############
+</span>TOOLBARS.Click(<img src="Help.png" />, <span class="str">"Help button not found"</span>)
 helper.Click(<img src="AboutLanguag.png" />, <span class="str">"About Language Explorer button not found"</span>)
 
-helper.Exists(<img src="7AboutSILFle.png" />, <span class="str">"`About` screen didn't pop up"</span>)
-helper.Click(<img src="OK.png" />, <span class="str">"`About` screen doesn't contain `OK`"</span>)
+<span class="cmt"># Goal
+</span><span class="cmt">#############
+</span>helper.Exists(<img src="7AboutSILFle.png" />, <span class="str">"`About` screen didn't pop up"</span>)
+
+<span class="cmt"># Closing
+</span><span class="cmt">#############
+</span>helper.Click(<img src="OK.png" />, <span class="str">"`About` screen doesn't contain `OK`"</span>, quit=True)
 
 helper.write_success()
 </pre>

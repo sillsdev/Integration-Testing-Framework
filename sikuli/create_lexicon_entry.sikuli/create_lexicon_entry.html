@@ -78,20 +78,27 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
-helper = TestHelper(<span class="str">"create_lexicon_entry"</span>)
+<span class="cmt"># Setup
+</span>helper = TestHelper(<span class="str">"create_lexicon_entry"</span>)
 set_flex_helper(helper)
 
-helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+<span class="cmt"># Opening
+</span><span class="cmt">#############
+</span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
 LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
 MID_TOOLBAR.Click(<img src="Headword.png" />, <span class="str">"Couldn't find Headword button"</span>)
 TOOLBARS.Click(<img src="1435675185765.png" />, <span class="str">"Couldn't find 'Create new lexical entry' button"</span>)
 
-helper.Type(<span class="str">"cat"</span> + Key.ENTER)
+<span class="cmt"># Goal
+</span><span class="cmt">#############
+</span>helper.Type(<span class="str">"cat"</span> + Key.ENTER)
 
 Regionplus(helper, Region(<span class="dig">147</span>,<span class="dig">101</span>,<span class="dig">537</span>,<span class="dig">692</span>)).Exists(<img src="catcat.png" />,
     <span class="str">"Cannot find new 'cat' entry"</span>)
 
-helper.write_success()
+<span class="cmt"># Closing
+</span><span class="cmt">##############
+</span>helper.write_success()
 </pre>
 </body>
 </html>

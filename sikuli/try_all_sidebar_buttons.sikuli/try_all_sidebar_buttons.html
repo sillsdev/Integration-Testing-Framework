@@ -78,15 +78,16 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
 <span class="str">"""
-Click through all of the buttons in the left sidebar.
+Click through all of the buttons in the left sidebar
+on the Lexicon screen.
 Make sure the middle part of the screen changes
 within 5 seconds.
-[Currently just has a popup if nothing changed, and exits]
 If an information box pops up, close it.
 Return to first option when done.
 """</span>
 
-helper = TestHelper(<span class="str">"try_all_side_bar_buttons"</span>)
+<span class="cmt"># Setup
+</span>helper = TestHelper(<span class="str">"try_all_side_bar_buttons"</span>)
 set_flex_helper(helper)
 
 <span class="kw">def</span> stop_observer(event):
@@ -96,7 +97,8 @@ set_flex_helper(helper)
     <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />):
         helper.Type(Key.ENTER, time=<span class="dig">5</span>)
 
-<span class="cmt"># Setup to the correct initial screen
+<span class="cmt"># Opening
+</span><span class="cmt">###############
 </span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
 first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<span class="dig">115</span>,<span class="dig">15</span>)
 <span class="skw">click</span>(first_region.getCenter())
@@ -105,6 +107,9 @@ first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<
 </span>region = first_region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
 count = <span class="dig">0</span>
 
+<span class="cmt"># Goal
+</span><span class="cmt">###############
+</span>
 <span class="cmt"># keep clicking while the list still has items 
 </span><span class="kw">while</span> <span class="kw">not</span> region.exists(Pattern(<img src="blank_space.png" />).similar(<span class="dig">0.99</span>)):
 
@@ -128,6 +133,9 @@ count = <span class="dig">0</span>
     <span class="cmt"># Move region down by 18 pixels
 </span>    region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
 
+<span class="cmt"># Closing
+</span><span class="cmt">###############
+</span>
 <span class="cmt"># go back to first screen
 </span><span class="skw">click</span>(first_region.getCenter())
 

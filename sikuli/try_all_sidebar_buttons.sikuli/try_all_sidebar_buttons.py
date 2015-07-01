@@ -6,14 +6,15 @@ from flex_regions import *
 from test_helper import TestHelper
 
 """
-Click through all of the buttons in the left sidebar.
+Click through all of the buttons in the left sidebar
+on the Lexicon screen.
 Make sure the middle part of the screen changes
 within 5 seconds.
-[Currently just has a popup if nothing changed, and exits]
 If an information box pops up, close it.
 Return to first option when done.
 """
 
+# Setup
 helper = TestHelper("try_all_side_bar_buttons")
 set_flex_helper(helper)
 
@@ -24,7 +25,8 @@ def stop_observer(event):
     if Region(148,139,544,545).exists("information_popup.png"):
         helper.Type(Key.ENTER, time=5)
     
-# Setup to the correct initial screen
+# Opening
+###############
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
 first_region = Region(21,127,115,15)
 click(first_region.getCenter())
@@ -32,6 +34,9 @@ click(first_region.getCenter())
 # Set initial region to click
 region = first_region.offset(Location(0, 18))
 count = 0
+
+# Goal
+###############
 
 # keep clicking while the list still has items 
 while not region.exists(Pattern("blank_space.png").similar(0.99)):
@@ -55,6 +60,9 @@ while not region.exists(Pattern("blank_space.png").similar(0.99)):
 
     # Move region down by 18 pixels
     region = region.offset(Location(0, 18))
+
+# Closing
+###############
 
 # go back to first screen
 click(first_region.getCenter())
