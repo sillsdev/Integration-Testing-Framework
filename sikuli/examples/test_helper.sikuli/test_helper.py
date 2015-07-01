@@ -62,18 +62,18 @@ class TestHelper:
     def Find(self, thing, fail_message, give_up=True, restart=False,
              success_message=None, time=1):
         try:
-            find(thing)
+            match = find(thing)
             if success_message:
                 self.write(success_message)
             wait(time)
-            return True
+            return match
         except FindFailed:
             self.write_fail(fail_message)
             if restart:
                 self.restart_flex()
             if give_up:
                 exit()
-            return False
+            return None
         except:
             raise
 

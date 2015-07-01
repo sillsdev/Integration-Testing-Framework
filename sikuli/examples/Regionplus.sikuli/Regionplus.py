@@ -10,7 +10,7 @@ class Regionplus(Region):
         self.helper = test_helper
         
 
-    def Click(self, thing, fail_message, quit=False,
+    def Click(self, thing, fail_message, give_up=True, restart=False,
               success_message=None, time=1):
         try:
             self.click(thing)
@@ -21,13 +21,15 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
         except:
             raise
     
-    def DoubleClick(self, thing, fail_message, quit=False,
+    def DoubleClick(self, thing, fail_message, give_up=True, restart=False,
                     success_message=None, time=1):
         try:
             self.doubleClick(thing)
@@ -38,30 +40,34 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
         except:
             raise
     
-    def Find(self, thing, fail_message, quit=False,
+    def Find(self, thing, fail_message, give_up=True, restart=False,
              success_message=None, time=1):
         try:
-            self.find(thing)
+            match = self.find(thing)
             if success_message:
                 self.helper.write(success_message)
             wait(time)
-            return True
+            return match
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
-            return False
+            return None
         except:
             raise
 
-    def Exists(self, thing, fail_message, quit=False,
+    def Exists(self, thing, fail_message, give_up=True, restart=False,
                success_message=None, time=1):
         if self.exists(thing):
             if success_message:
@@ -70,7 +76,9 @@ class Regionplus(Region):
         else:
             if self.helper:
                 self.helper.write_fail(fail_message)
-            if quit:
+            if restart:
+                self.restart_flex()
+            if give_up:
                 exit()
             return False
     

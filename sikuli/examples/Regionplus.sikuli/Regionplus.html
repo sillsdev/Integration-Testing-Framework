@@ -82,7 +82,7 @@
         self.helper = test_helper
 
 
-    <span class="kw">def</span> Click(self, thing, fail_message, quit=False,
+    <span class="kw">def</span> Click(self, thing, fail_message, give_up=True, restart=False,
               success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
             self.<span class="skw">click</span>(thing)
@@ -93,13 +93,15 @@
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
-            <span class="kw">if</span> quit:
+            <span class="kw">if</span> restart:
+                self.restart_flex()
+            <span class="kw">if</span> give_up:
                 exit()
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> DoubleClick(self, thing, fail_message, quit=False,
+    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=True, restart=False,
                     success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
             self.<span class="skw">doubleClick</span>(thing)
@@ -110,30 +112,34 @@
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
-            <span class="kw">if</span> quit:
+            <span class="kw">if</span> restart:
+                self.restart_flex()
+            <span class="kw">if</span> give_up:
                 exit()
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Find(self, thing, fail_message, quit=False,
+    <span class="kw">def</span> Find(self, thing, fail_message, give_up=True, restart=False,
              success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
-            self.<span class="skw">find</span>(thing)
+            match = self.<span class="skw">find</span>(thing)
             <span class="kw">if</span> success_message:
                 self.helper.write(success_message)
             <span class="skw">wait</span>(time)
-            <span class="kw">return</span> True
+            <span class="kw">return</span> match
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
-            <span class="kw">if</span> quit:
+            <span class="kw">if</span> restart:
+                self.restart_flex()
+            <span class="kw">if</span> give_up:
                 exit()
-            <span class="kw">return</span> False
+            <span class="kw">return</span> None
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Exists(self, thing, fail_message, quit=False,
+    <span class="kw">def</span> Exists(self, thing, fail_message, give_up=True, restart=False,
                success_message=None, time=<span class="dig">1</span>):
         <span class="kw">if</span> self.exists(thing):
             <span class="kw">if</span> success_message:
@@ -142,7 +148,9 @@
         <span class="kw">else</span>:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
-            <span class="kw">if</span> quit:
+            <span class="kw">if</span> restart:
+                self.restart_flex()
+            <span class="kw">if</span> give_up:
                 exit()
             <span class="kw">return</span> False
 
