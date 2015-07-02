@@ -96,7 +96,8 @@ class TestHelper:
 
     def restart_flex(self):
         self.write_fail("Closing and restarting FLEX")
-        restart_flex.restart_flex()
+        os.system("sudo /home/vagrant/linux_setup/flex/flex_restart.sh")
+        #restart_flex.restart_flex()
 
     ###################
     # Logging methods
