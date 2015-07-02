@@ -74,69 +74,72 @@
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
-<span class="kw">import</span> flex_regions
-<span class="kw">from</span> logger <span class="kw">import</span> Logger
+<span class="kw">from</span> flex_regions <span class="kw">import</span> *
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
 <span class="str">"""
-Click through all of the buttons in the left sidebar.
+Click through all of the buttons in the left sidebar
+on the Lexicon screen.
 Make sure the middle part of the screen changes
 within 5 seconds.
-[Currently just has a popup if nothing changed, and exits]
 If an information box pops up, close it.
 Return to first option when done.
 """</span>
 
-changed = False
+<span class="cmt"># Setup
+</span>helper = TestHelper(<span class="str">"try_all_side_bar_buttons"</span>)
+set_flex_helper(helper)
 
 <span class="kw">def</span> stop_observer(event):
     <span class="kw">global</span> changed
-    <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />) <span class="kw">is</span> <span class="kw">not</span> None:
-        <span class="skw">type</span>(Key.ENTER)
-    <span class="kw">else</span>:
-        event.region.stopObserver()
-        changed = True
+    changed = True
+    event.region.stopObserver()
+    <span class="kw">if</span> Region(<span class="dig">148</span>,<span class="dig">139</span>,<span class="dig">544</span>,<span class="dig">545</span>).exists(<img src="information_popup.png" />):
+        helper.Type(Key.ENTER, time=<span class="dig">5</span>)
 
+<span class="cmt"># Opening
+</span><span class="cmt">###############
+</span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<span class="dig">115</span>,<span class="dig">15</span>)
+<span class="skw">click</span>(first_region.getCenter())
 
-<span class="kw">def</span> try_all_sidebar_buttons():
-    log = Logger(<span class="str">"try_all_side_bar_buttons"</span>)
+<span class="cmt"># Set initial region to click
+</span>region = first_region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
+count = <span class="dig">0</span>
 
-    first_region = Region(<span class="dig">21</span>,<span class="dig">127</span>,<span class="dig">115</span>,<span class="dig">15</span>)
+<span class="cmt"># Goal
+</span><span class="cmt">###############
+</span>
+<span class="cmt"># keep clicking while the list still has items 
+</span><span class="kw">while</span> <span class="kw">not</span> region.exists(Pattern(<img src="blank_space.png" />).similar(<span class="dig">0.99</span>)):
 
-    <span class="cmt"># Set initial region to click
-</span>    region = first_region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
-    count = <span class="dig">0</span>
+    <span class="kw">global</span> changed
+    changed = False
 
-    <span class="cmt"># keep clicking while the list still has items 
-</span>    <span class="kw">while</span> region.exists(Pattern(<img src="blank_space.png" />).similar(<span class="dig">0.99</span>)) == None:
+    <span class="cmt"># keep count and make sure we don't go too far
+</span>    count += <span class="dig">1</span>
+    <span class="kw">if</span> count &gt; <span class="dig">9</span>:
+        helper.write_fail(<span class="str">"Script malfunction: went too far down the left column"</span>)
+        <span class="kw">break</span>;
 
-        <span class="kw">global</span> changed
-        changed = False
+    <span class="cmt"># Click in the middle of the region and react to change
+</span>    MID_TOOLBAR.onChange(stop_observer)
+    <span class="skw">click</span>(region.getCenter())
+    MID_TOOLBAR.observe(<span class="dig">5</span>)
+    <span class="cmt"># Check if the observer stopped as intended
+</span>    <span class="kw">if</span> <span class="kw">not</span> changed:
+        helper.write_fail(<span class="str">"No change when clicking item "</span> + str(count))
 
-        <span class="cmt"># keep count and make sure we don't go too far
-</span>        count += <span class="dig">1</span>
-        <span class="kw">if</span> count &gt; <span class="dig">9</span>:
-            log.write_fail(<span class="str">"Script malfunction: went too far down the left column"</span>)
-            <span class="kw">break</span>;
+    <span class="cmt"># Move region down by 18 pixels
+</span>    region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
 
-        <span class="cmt"># Click in the middle of the region and react to change
-</span>        flex_regions.MID_TOOLBAR.onChange(stop_observer)
-        <span class="skw">click</span>(region.getCenter())
-        flex_regions.MID_TOOLBAR.observe(<span class="dig">5</span>)
-        <span class="cmt"># Check if the observer stopped as intended
-</span>        <span class="kw">if</span> <span class="kw">not</span> changed:
-            log.write_fail(<span class="str">"No change when clicking item "</span> + str(count))
+<span class="cmt"># Closing
+</span><span class="cmt">###############
+</span>
+<span class="cmt"># go back to first screen
+</span><span class="skw">click</span>(first_region.getCenter())
 
-        <span class="cmt"># Move region down by 18 pixels
-</span>        region = region.offset(Location(<span class="dig">0</span>, <span class="dig">18</span>))
-
-    <span class="cmt"># go back to first screen
-</span>    <span class="skw">click</span>(first_region.getCenter())
-
-    <span class="kw">if</span> <span class="kw">not</span> log.has_fail():
-        log.write(<span class="str">"Success"</span>)
-
-
-try_all_sidebar_buttons()
+helper.write_success()
 </pre>
 </body>
 </html>

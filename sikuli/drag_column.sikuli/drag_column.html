@@ -67,33 +67,50 @@
    </head>
 <body>
 <div class="info">
-<h2>help_about.sikuli</h2> <a href="help_about.zip">(Download this script)</a>
+<h2>drag_column.sikuli</h2> <a href="drag_column.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
 <span class="kw">import</span> sys
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
 
-<span class="kw">from</span> flex_regions <span class="kw">import</span> *
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+<span class="kw">from</span> flex_regions <span class="kw">import</span> *
+<span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
 <span class="cmt"># Setup
-</span>helper = TestHelper(<span class="str">"help_about"</span>)
+</span>helper = TestHelper(<span class="str">"drag_column"</span>)
 set_flex_helper(helper)
 
 <span class="cmt"># Opening
 </span><span class="cmt">#############
-</span>TOOLBARS.Click(<img src="Help.png" />, <span class="str">"Help button not found"</span>)
-helper.Click(<img src="AboutLanguag.png" />, <span class="str">"About Language Explorer button not found"</span>)
+</span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
 
 <span class="cmt"># Goal
 </span><span class="cmt">#############
-</span>helper.Exists(<img src="7AboutSILFle.png" />, <span class="str">"`About` screen didn't pop up"</span>)
+</span>
+<span class="cmt"># Not doing the drag-drop directly, so if it fails we can
+</span><span class="cmt"># pinpoint what wasn't found
+</span>glosses = MID_TOOLBAR.Find(<img src="3losses.png" />, <span class="str">"Couldn't find 'Glosses' column header"</span>)
+target = MID_TOOLBAR.Find(<img src="lLexemeJorm_.png" />,
+    <span class="str">"'Headword' and 'Lexeme Form' headers not where expected"</span>)
+<span class="skw">dragDrop</span>(glosses, target)
+
+<span class="cmt"># Check that it's in the new position
+</span>helper.Find(Pattern(<img src="hexemeformHe.png" />).similar(<span class="dig">0.80</span>), <span class="str">"'Glosses' column not in new position"</span>)
 
 <span class="cmt"># Closing
-</span><span class="cmt">#############
-</span>helper.Click(<img src="OK.png" />, <span class="str">"`About` screen doesn't contain `OK`"</span>, restart=True)
+</span><span class="cmt">##############
+</span>helper.write_success()
 
-helper.write_success()
+<span class="cmt"># Drag it back to previous position
+</span>glosses = MID_TOOLBAR.Find(<img src="3losses.png" />, <span class="str">"Couldn't find 'Glosses' column header"</span>,
+    restart=True)
+target = MID_TOOLBAR.Find(<img src="LexemeFormIG.png" />,
+    <span class="str">"'Lexeme Form' and 'Grammatical Info' headers not where expected"</span>,
+    restart=True)
+<span class="skw">dragDrop</span>(glosses, target)
 </pre>
 </body>
 </html>

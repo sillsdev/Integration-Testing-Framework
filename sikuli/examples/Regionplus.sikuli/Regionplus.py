@@ -2,43 +2,85 @@ from sikuli import *
 
 class Regionplus(Region):
 
-    def Click(self, thing, debug=0, time=1):
-        if debug ==0:
+    def __init__(self, test_helper, *args):
+        Region.__init__(self, *args)
+        self.helper = test_helper
+
+    def set_helper(self, test_helper):
+        self.helper = test_helper
+        
+
+    def Click(self, thing, fail_message, give_up=True, restart=False,
+              success_message=None, time=1):
+        try:
             self.click(thing)
-        else:
-            try:
-                self.click(thing)
-            except FindFailed, ff:
-                popup(ff.message)
-                exit(1)
-        wait(time)
+            if success_message:
+                self.helper.write(success_message)
+            wait(time)
+            return True
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(fail_message)
+            if restart:
+                self.restart_flex()
+            if give_up:
+                exit()
+            return False
+        except:
+            raise
     
-    def DoubleClick(self, thing, debug=0, time=1):
-        if debug == 0:
+    def DoubleClick(self, thing, fail_message, give_up=True, restart=False,
+                    success_message=None, time=1):
+        try:
             self.doubleClick(thing)
+            if success_message:
+                self.helper.write(success_message)
+            wait(time)
+            return True
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(fail_message)
+            if restart:
+                self.restart_flex()
+            if give_up:
+                exit()
+            return False
+        except:
+            raise
+    
+    def Find(self, thing, fail_message, give_up=True, restart=False,
+             success_message=None, time=1):
+        try:
+            match = self.find(thing)
+            if success_message:
+                self.helper.write(success_message)
+            wait(time)
+            return match
+        except FindFailed, ff:
+            if self.helper:
+                self.helper.write_fail(fail_message)
+            if restart:
+                self.restart_flex()
+            if give_up:
+                exit()
+            return None
+        except:
+            raise
+
+    def Exists(self, thing, fail_message, give_up=True, restart=False,
+               success_message=None, time=1):
+        if self.exists(thing):
+            if success_message:
+                self.helper.write(success_message)
+            return True
         else:
-            try:
-                self.doubleClick(thing)
-            except FindFailed, ff:
-                if debug > 0:
-                    popup(ff.message)
-                    exit(1)
-        wait(time)
+            if self.helper:
+                self.helper.write_fail(fail_message)
+            if restart:
+                self.restart_flex()
+            if give_up:
+                exit()
+            return False
     
-    def Type(self, text, time=1):
-        self.type(text)
-        wait(time)
-    
-    def Find(self, thing, debug=0, time=1):
-        if debug == 0:
-            self.find(thing)
-        else:
-            try:
-                self.find(thing)
-            except FindFailed, ff:
-                if debug > 0:
-                    popup(ff.message)
-                    exit(1)
-    
-        def offset(self, x, y):
-            return offset(Location(x, y))
+    def offset(self, x, y):
+        return offset(Location(x, y))

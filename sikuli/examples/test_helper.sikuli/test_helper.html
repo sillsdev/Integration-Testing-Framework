@@ -67,32 +67,43 @@
    </head>
 <body>
 <div class="info">
-<h2>Regionplus.sikuli</h2> <a href="Regionplus.zip">(Download this script)</a>
+<h2>test_helper.sikuli</h2> <a href="test_helper.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">from</span> __future__ <span class="kw">import</span> with_statement
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+<span class="kw">import</span> restart_flex
 
-<span class="kw">class</span> Regionplus(Region):
+<span class="kw">class</span> TestHelper:
 
-    <span class="kw">def</span> __init__(self, test_helper, *args):
-        Region.__init__(self, *args)
-        self.helper = test_helper
+    <span class="cmt"># If a file with the given filename already exists, the Logger will
+</span>    <span class="cmt"># just keep writing to the end of that file.
+</span>    <span class="kw">def</span> __init__(self, test_name=<span class="str">""</span>, filename=<span class="str">"/vagrant/error_log"</span>):
+        self.file = filename
+        self.test = test_name + <span class="str">": "</span>
+        self.test_failed = False
 
-    <span class="kw">def</span> set_helper(self, test_helper):
-        self.helper = test_helper
-
-
+    <span class="cmt">#################################
+</span>    <span class="cmt"># Wrappers for click, type, etc
+</span>    <span class="cmt">#################################
+</span>
+    <span class="cmt"># Return True on success, False on FindFailed error, after
+</span>    <span class="cmt"># logging the error.
+</span>    <span class="cmt"># If give_up is True, exits the script using exit() on failure.
+</span>    <span class="cmt"># If restart is True, FLEX needs to be restarted on failure.
+</span>
     <span class="kw">def</span> Click(self, thing, fail_message, give_up=True, restart=False,
               success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
-            self.<span class="skw">click</span>(thing)
+            <span class="skw">click</span>(thing)
             <span class="kw">if</span> success_message:
-                self.helper.write(success_message)
+                self.write(success_message)
             <span class="skw">wait</span>(time)
             <span class="kw">return</span> True
-        <span class="kw">except</span> FindFailed, ff:
-            <span class="kw">if</span> self.helper:
-                self.helper.write_fail(fail_message)
+        <span class="kw">except</span> FindFailed:
+            self.write_fail(fail_message)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -101,17 +112,16 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=True, restart=False,
-                    success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=True,
+                    restart=False, success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
-            self.<span class="skw">doubleClick</span>(thing)
+            <span class="skw">doubleClick</span>(thing)
             <span class="kw">if</span> success_message:
-                self.helper.write(success_message)
+                self.write(success_message)
             <span class="skw">wait</span>(time)
             <span class="kw">return</span> True
-        <span class="kw">except</span> FindFailed, ff:
-            <span class="kw">if</span> self.helper:
-                self.helper.write_fail(fail_message)
+        <span class="kw">except</span> FindFailed:
+            self.write_fail(fail_message)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -119,18 +129,21 @@
             <span class="kw">return</span> False
         <span class="kw">except</span>:
             <span class="kw">raise</span>
+
+    <span class="kw">def</span> Type(self, text, modifiers=<span class="dig">0</span>, time=<span class="dig">1</span>):
+        <span class="skw">type</span>(text, modifiers)
+        <span class="skw">wait</span>(time)
 
     <span class="kw">def</span> Find(self, thing, fail_message, give_up=True, restart=False,
              success_message=None, time=<span class="dig">1</span>):
         <span class="kw">try</span>:
-            match = self.<span class="skw">find</span>(thing)
+            match = <span class="skw">find</span>(thing)
             <span class="kw">if</span> success_message:
-                self.helper.write(success_message)
+                self.write(success_message)
             <span class="skw">wait</span>(time)
             <span class="kw">return</span> match
-        <span class="kw">except</span> FindFailed, ff:
-            <span class="kw">if</span> self.helper:
-                self.helper.write_fail(fail_message)
+        <span class="kw">except</span> FindFailed:
+            self.write_fail(fail_message)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -141,21 +154,44 @@
 
     <span class="kw">def</span> Exists(self, thing, fail_message, give_up=True, restart=False,
                success_message=None, time=<span class="dig">1</span>):
-        <span class="kw">if</span> self.exists(thing):
+        <span class="kw">if</span> exists(thing):
             <span class="kw">if</span> success_message:
-                self.helper.write(success_message)
+                self.write(success_message)
             <span class="kw">return</span> True
         <span class="kw">else</span>:
-            <span class="kw">if</span> self.helper:
-                self.helper.write_fail(fail_message)
+            self.write_fail(fail_message)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
                 exit()
             <span class="kw">return</span> False
 
-    <span class="kw">def</span> offset(self, x, y):
-        <span class="kw">return</span> offset(Location(x, y))
+    <span class="kw">def</span> restart_flex(self):
+        self.write_fail(<span class="str">"Closing and restarting FLEX"</span>)
+        restart_flex.restart_flex()
+
+    <span class="cmt">###################
+</span>    <span class="cmt"># Logging methods
+</span>    <span class="cmt">###################
+</span>
+    <span class="cmt"># Prepends the test name and appends a newline before writing to file.
+</span>    <span class="kw">def</span> write(self, line):
+        <span class="kw">with</span> open(self.file, <span class="str">"a"</span>) <span class="kw">as</span> f:
+            f.write(self.test + line + <span class="str">"\n"</span>)
+
+    <span class="cmt"># Same as write, but internally remembers that the test failed.
+</span>    <span class="kw">def</span> write_fail(self, line):
+        self.test_failed = True
+        self.write(line)
+
+    <span class="cmt"># Returns whether any fails have been logged.
+</span>    <span class="kw">def</span> has_fail(self):
+        <span class="kw">return</span> self.test_failed
+
+    <span class="cmt"># Writes "Success" iff no fails have been recorded.
+</span>    <span class="kw">def</span> write_success(self):
+        <span class="kw">if</span> <span class="kw">not</span> self.test_failed:
+            self.write(<span class="str">"Success"</span>)
 </pre>
 </body>
 </html>

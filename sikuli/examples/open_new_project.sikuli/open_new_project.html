@@ -67,33 +67,43 @@
    </head>
 <body>
 <div class="info">
-<h2>help_about.sikuli</h2> <a href="help_about.zip">(Download this script)</a>
+<h2>open_flex.sikuli</h2> <a href="open_flex.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> sys
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
-
-<span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
-<span class="cmt"># Setup
-</span>helper = TestHelper(<span class="str">"help_about"</span>)
-set_flex_helper(helper)
+open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
 
-<span class="cmt"># Opening
-</span><span class="cmt">#############
-</span>TOOLBARS.Click(<img src="Help.png" />, <span class="str">"Help button not found"</span>)
-helper.Click(<img src="AboutLanguag.png" />, <span class="str">"About Language Explorer button not found"</span>)
+<span class="cmt"># Handlers for things appearing on-screen
+</span><span class="kw">def</span> open_handler(event):
+    open_project_helper.write(<span class="str">"Successfully opened flex."</span>)
+    <span class="cmt"># Don't stop observer, to give it time to open before
+</span>    <span class="cmt"># the next script runs.
+</span>
+<span class="kw">def</span> green_handler(event):
+    open_project_helper.write_fail(<span class="str">"An error has occurred (green)"</span>)
+    event.region.stopObserver()
 
-<span class="cmt"># Goal
-</span><span class="cmt">#############
-</span>helper.Exists(<img src="7AboutSILFle.png" />, <span class="str">"`About` screen didn't pop up"</span>)
+<span class="cmt"># Open Flex from the start screen
+</span><span class="kw">def</span> open_new_project():
 
-<span class="cmt"># Closing
-</span><span class="cmt">#############
-</span>helper.Click(<img src="OK.png" />, <span class="str">"`About` screen doesn't contain `OK`"</span>, restart=True)
+    open_project_helper.Click(<img src="Createanewpr.png" />, <span class="str">"Cannot find `Create a new project`"</span>)
+    <span class="skw">type</span>(<span class="str">"hello"</span>)
+    open_project_helper.Click(<img src="OK.png" />, <span class="str">"Cannot find `OK`"</span>)
+    <span class="kw">if</span> exists(Pattern(<img src="OK-2.png" />).similar(<span class="dig">0.88</span>)):
+        open_project_helper.Click(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.86</span>), <span class="str">"Cannot find `OK`"</span>)
+    <span class="kw">else</span>:
+        open_project_helper.Click(Pattern(<img src="Qpen.png" />).similar(<span class="dig">0.80</span>), <span class="str">"Cannot find `Open`"</span>)
 
-helper.write_success()
+    onAppear(<img src="1435347136957.png" />, open_handler)
+    onAppear(Pattern(<img src="Anerrorhasoc.png" />).similar(<span class="dig">0.80</span>), green_handler)
+    observe(<span class="dig">40</span>)
+
+    <span class="kw">if</span> open_project_helper.has_fail():
+        open_project_helper.write_fail(<span class="str">"Failed to open"</span>)
 </pre>
 </body>
 </html>

@@ -73,9 +73,14 @@
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">from</span> Regionplus <span class="kw">import</span> *
 
-LEFT_SIDEBAR = Regionplus(Region(<span class="dig">3</span>,<span class="dig">100</span>,<span class="dig">138</span>,<span class="dig">185</span>))
-MID_TOOLBAR = Regionplus(Region(<span class="dig">145</span>,<span class="dig">99</span>,<span class="dig">670</span>,<span class="dig">253</span>))
-TOOLBARS = Regionplus(Region(<span class="dig">5</span>,<span class="dig">51</span>,<span class="dig">650</span>,<span class="dig">51</span>))
+LEFT_SIDEBAR = Regionplus(None, Region(<span class="dig">0</span>,<span class="dig">99</span>,<span class="dig">140</span>,<span class="dig">335</span>))
+MID_TOOLBAR = Regionplus(None, Region(<span class="dig">145</span>,<span class="dig">99</span>,<span class="dig">670</span>,<span class="dig">253</span>))
+TOOLBARS = Regionplus(None, Region(<span class="dig">5</span>,<span class="dig">51</span>,<span class="dig">650</span>,<span class="dig">51</span>))
+
+<span class="kw">def</span> set_flex_helper(test_helper):
+    regions = [LEFT_SIDEBAR, MID_TOOLBAR, TOOLBARS]
+    <span class="kw">for</span> r <span class="kw">in</span> regions:
+        r.set_helper(test_helper)
 </pre>
 </body>
 </html>
