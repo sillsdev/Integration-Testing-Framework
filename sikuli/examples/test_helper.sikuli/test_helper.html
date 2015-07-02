@@ -127,8 +127,8 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Type(self, text, time=<span class="dig">1</span>):
-        <span class="skw">type</span>(text)
+    <span class="kw">def</span> Type(self, text, modifiers=<span class="dig">0</span>, time=<span class="dig">1</span>):
+        <span class="skw">type</span>(text, modifiers)
         <span class="skw">wait</span>(time)
 
     <span class="kw">def</span> Find(self, thing, fail_message, give_up=True, restart=False,

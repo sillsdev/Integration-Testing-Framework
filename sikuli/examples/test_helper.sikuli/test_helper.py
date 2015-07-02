@@ -55,8 +55,8 @@ class TestHelper:
         except:
             raise
     
-    def Type(self, text, time=1):
-        type(text)
+    def Type(self, text, modifiers=0, time=1):
+        type(text, modifiers)
         wait(time)
     
     def Find(self, thing, fail_message, give_up=True, restart=False,
