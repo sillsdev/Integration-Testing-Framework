@@ -1,5 +1,8 @@
 from __future__ import with_statement
 from sikuli import *
+import sys
+sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+import restart_flex
 
 class TestHelper:
 
@@ -92,7 +95,8 @@ class TestHelper:
             return False
 
     def restart_flex(self):
-        pass
+        self.write_fail("Closing and restarting FLEX")
+        restart_flex.restart_flex()
 
     ###################
     # Logging methods

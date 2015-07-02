@@ -72,6 +72,9 @@
 <pre class="sikuli-code">
 <span class="kw">from</span> __future__ <span class="kw">import</span> with_statement
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+<span class="kw">import</span> restart_flex
 
 <span class="kw">class</span> TestHelper:
 
@@ -164,7 +167,8 @@
             <span class="kw">return</span> False
 
     <span class="kw">def</span> restart_flex(self):
-        <span class="kw">pass</span>
+        self.write_fail(<span class="str">"Closing and restarting FLEX"</span>)
+        restart_flex.restart_flex()
 
     <span class="cmt">###################
 </span>    <span class="cmt"># Logging methods
