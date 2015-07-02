@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WritingSystemChangeLog
+	Version="1">
+	<Changes>
+		<Delete
+			Producer="FieldWorks"
+			ProducerVersion="Version 8.1.4 (apparent build date: 1/1/1601)"
+			TimeStamp="2015-06-29T21:31:01Z">
+			<Id>en</Id>
+		</Delete>
+		<Delete
+			Producer="FieldWorks"
+			ProducerVersion="Version 8.1.4 (apparent build date: 1/1/1601)"
+			TimeStamp="2015-06-29T21:31:01Z">
+			<Id>seh-fonipa-x-etic</Id>
+		</Delete>
+		<Delete
+			Producer="FieldWorks"
+			ProducerVersion="Version 8.1.4 (apparent build date: 1/1/1601)"
+			TimeStamp="2015-07-01T16:26:21Z">
+			<Id>en</Id>
+		</Delete>
+	</Changes>
+</WritingSystemChangeLog>
