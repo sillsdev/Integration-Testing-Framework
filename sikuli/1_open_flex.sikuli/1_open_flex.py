@@ -38,7 +38,7 @@ observe(40)
 log.write("open_flex: failed to open")
 if exists("Anerrorhasoc.png"):
     log.write("An error has occurred (green)")
-    os.system("/bin/bash ./flex_restart.sh")
+    os.system("sudo ./flex_restart.sh")
     #subprocess.call(['./flex_restart.sh'])
     
 
