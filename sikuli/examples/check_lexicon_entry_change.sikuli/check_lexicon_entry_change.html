@@ -1,0 +1,114 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>check_lexicon_entry_change.sikuli</h2> <a href="check_lexicon_entry_change.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt">### In examples because it's not a concrete test yet.
+</span><span class="cmt"># To be filled in: [word], [picture of word in list],
+</span><span class="cmt"># [picture we're comparing it to]
+</span>
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">import</span> sys
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+
+helper = TestHelper(<span class="str">"check_lexicon_entry_change"</span>)
+
+<span class="cmt"># Opening
+</span><span class="cmt">###############
+</span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
+helper.Click(Pattern(<img src="ieadword.png" />).targetOffset(<span class="dig">47</span>,<span class="dig">24</span>), <span class="str">"'Headword' column not found"</span>)
+helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>)
+helper.Type(WORD)
+
+<span class="cmt"># Now the 'Filter for' box is up, so if we can't click something
+</span><span class="cmt"># we should restart Flex
+</span>helper.Click(Pattern(<img src="W_holeitem.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">0</span>), <span class="str">"'Whole item' option not found"</span>, restart=True)
+helper.Click(<img src="OK.png" />, <span class="str">"OK button not found"</span>, time=<span class="dig">5</span>, restart=True)
+<span class="cmt"># 'Filter for' box is gone now
+</span>
+
+helper.Click(WORD_PICTURE, <span class="str">"Word not found in list after filter"</span>)
+
+<span class="cmt"># Create a region at the top of the 'Entry' panel
+</span>entry_header = helper.Find(<img src="EntryHShowHi.png" />,
+    <span class="str">"'Entry' field not found in right panel"</span>)
+entry_region = entry_header.below(<span class="dig">90</span>)
+
+<span class="cmt"># Goal
+</span><span class="cmt">###############
+</span><span class="kw">if</span> entry_region.exists(PICTURE_TO_COMPARE):
+    helper.write_fail(<span class="str">"Field looks the same as in provided image"</span>)
+<span class="kw">else</span>:
+    helper.write_success()
+</pre>
+</body>
+</html>
