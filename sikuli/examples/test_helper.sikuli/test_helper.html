@@ -74,7 +74,6 @@
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> sys
 sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
-<span class="kw">import</span> restart_flex
 
 <span class="kw">class</span> TestHelper:
 
@@ -168,6 +167,8 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 
     <span class="kw">def</span> restart_flex(self):
         self.write_fail(<span class="str">"Closing and restarting FLEX"</span>)
+        <span class="cmt">#os.system("sudo /home/vagrant/linux_setup/flex/flex_restart.sh")
+</span>        <span class="kw">import</span> restart_flex
         restart_flex.restart_flex()
 
     <span class="cmt">###################

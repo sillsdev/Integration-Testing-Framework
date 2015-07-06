@@ -79,14 +79,17 @@ open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
 
 <span class="cmt"># Handlers for things appearing on-screen
 </span><span class="kw">def</span> open_handler(event):
-    open_project_helper.write(<span class="str">"Successfully opened flex."</span>)
-    <span class="cmt"># Don't stop observer, to give it time to open before
-</span>    <span class="cmt"># the next script runs.
-</span>
-<span class="kw">def</span> green_handler(event):
-    open_project_helper.write_fail(<span class="str">"An error has occurred (green)"</span>)
     event.region.stopObserver()
+    open_project_helper.write(<span class="str">"Successfully opened flex (new project)."</span>)
+    <span class="skw">wait</span>(<span class="dig">20</span>)
+    exit()
 
+<span class="kw">def</span> green_handler(event):
+    event.region.stopObserver()
+    open_project_helper.write(<span class="str">"An error has occurred (green), trying to open existing project"</span>)
+    os.system(<span class="str">"sudo /home/vagrant/linux_setup/flex/flex_restart.sh"</span>)
+    <span class="cmt"># Apparently this never returns until flex is closed
+</span>
 <span class="cmt"># Open Flex from the start screen
 </span><span class="kw">def</span> open_new_project():
 
@@ -102,8 +105,7 @@ open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
     onAppear(Pattern(<img src="Anerrorhasoc.png" />).similar(<span class="dig">0.80</span>), green_handler)
     observe(<span class="dig">40</span>)
 
-    <span class="kw">if</span> open_project_helper.has_fail():
-        open_project_helper.write_fail(<span class="str">"Failed to open"</span>)
+open_project_helper.write_fail(<span class="str">"Failed to open"</span>)
 </pre>
 </body>
 </html>
