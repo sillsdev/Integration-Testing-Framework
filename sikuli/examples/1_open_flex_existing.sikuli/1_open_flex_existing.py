@@ -1,14 +1,32 @@
+from sikuli import *
+import sys
+sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+from test_helper import TestHelper
+
+helper = TestHelper("open_flex")
+
+def open_handler(event):
+    event.region.stopObserver()
+    helper.write("Successfully opened flex (existing project).")
+    wait(10)
+    exit()
+
 # Open an existing project entitled "hello"
 # Used to restart flex if it is broken...
-# Need to re-write more robust
-click("Openaproject.png")
-wait(1)
-click("0OpenProject.png")
-wait(1)
+# May want to re-write with a way to choose which project is opened.
 
-click("ectfromacoll.png")
-wait(10)
+helper.Click("Openaproject.png", "'Open a project' button not found")
+helper.Click(Pattern("lhello.png").similar(0.90).targetOffset(-39,0), "'hello' project not found on 'Open Project' screen")
 
-#click("coueaouewfhp.png")
+helper.Click("ectfromacoll.png",
+             "'Open' button not found")
+
+# Check that it opens.
+onAppear("1435347136957.png", open_handler)
+
+observe(40)
+
+# If we get here, it failed to open.
+helper.write_fail("Failed to open")
 
 

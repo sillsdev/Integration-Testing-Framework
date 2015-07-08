@@ -30,5 +30,3 @@ def restart_flex():
         # and will probably not work: green screen if hello already exists.)
         else:
             open_new_project()
-
-restart_flex()
