@@ -10,5 +10,5 @@ else
   echo "Process is not running.\n"
 fi
 (fieldworks-flex &)
-(sikuli ~/linux_setup/sikuli/examples/1_open_flex_existing.sikuli)
+sikuli ~/linux_setup/sikuli/examples/1_open_flex_existing.sikuli &
 
