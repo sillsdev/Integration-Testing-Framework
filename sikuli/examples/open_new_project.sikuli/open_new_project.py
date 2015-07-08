@@ -28,7 +28,7 @@ def open_new_project(project_name="hello"):
         open_project_helper.Click(Pattern("Qpen.png").similar(0.80), "Cannot find `Open`")
         
     onAppear("1435347136957.png", open_handler)
-    onAppear(Pattern("Anerrorhasoc.png").similar(0.80), green_handler)
+    onAppear(Pattern("Anerrorhasoc.png").similar(0.90), green_handler)
     observe(40)
     
     if open_project_helper.has_fail():
