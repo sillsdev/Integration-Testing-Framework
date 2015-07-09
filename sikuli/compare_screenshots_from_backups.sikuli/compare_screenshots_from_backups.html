@@ -81,21 +81,23 @@ folder = <span class="str">"/home/vagrant/linux_setup/sikuli/examples/images_for
 
 <span class="cmt"># Open Tagbanwa
 </span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup"</span>, True)
-<span class="cmt"># TODO: see if dictionary view has changed
-</span>check_change.check_word(<span class="str">"dalik"</span>, folder + <img src="Tagbanwa - dalik.png" />) <span class="cmt"># IXTERMINATE</span>
+check_change.check_dictionary(folder + <img src="Tagbanwa - dictionary.png" />)
+check_change.check_word(<span class="str">"dalik"</span>, folder + <img src="Tagbanwa - dalik.png" />) <span class="cmt"># IXTERMINATE</span>
 check_change.check_word(<span class="str">"bugnawan"</span>, folder + <img src="Tagbanwa - bugnawan.png" />)
 
 <span class="cmt"># Open Kamasau
 </span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Kamasau 2015-07-07 1036 for testing purposes.fwbackup"</span>, True)
-<span class="cmt"># TODO: see if dictionary view has changed
-</span>check_change.word(<span class="str">"chiraq"</span>, folder + <img src="Kamasau - chiraq.png" />) <span class="cmt"># like the French president in like the 2000s</span>
+check_change.check_dictionary(folder + <img src="Kamasau - dictionary.png" />)
+check_change.check_word(<span class="str">"chiraq"</span>, folder + <img src="Kamasau - chiraq.png" />) <span class="cmt"># like the French president in like the 2000s</span>
 check_change.check_word(<span class="str">"gre"</span>, folder + <img src="Kamasau - gre.png" />)
 
 <span class="cmt"># Open Ayta Mag-Anchi
 </span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Ayta Mag-Anchi2 2015-07-07 1035 for testing purposes.fwbackup"</span>, True)
 check_change.check_text(<span class="str">"kulot2.ptx"</span>, folder + <img src="Ayta - kulot2.ptx.png" />)
 
-helper.restart_flex()
+<span class="cmt"># Restart flex to hello project, closing the 3 windows
+</span><span class="cmt"># we just opened + whatever was open before
+</span>helper.restart_flex()
 </pre>
 </body>
 </html>

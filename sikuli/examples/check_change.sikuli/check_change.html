@@ -105,7 +105,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
     <span class="cmt"># Goal
 </span>    <span class="cmt">###############
 </span>    <span class="kw">if</span> entry_region.exists(Pattern(compare_path).similar(<span class="dig">0.9</span>)):
-        helper.write_fail(<span class="str">"'"</span> + word + <span class="str">"' field looks the same as in provided image"</span>)
+        helper.write(<span class="str">"'"</span> + word + <span class="str">"' field looks the same as in provided image"</span>)
     <span class="kw">else</span>:
         helper.write(<span class="str">"'"</span> + word + <span class="str">"' field has changed"</span>)
 
@@ -121,8 +121,24 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 
     <span class="cmt"># Find the menu to search for text
 </span>    column_menu = helper.Find(<img src="Show.png" />, <span class="str">"Couldn't find 'Show All'"</span>)
-    column_menu = Regionplus(column_menu.right())
-    column_menu.Click(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Couldn't find arrow for drop-down menu"</span>)
+    column_menu = Regionplus(helper, column_menu.right())
+    <span class="kw">if</span> <span class="kw">not</span> column_menu.Click(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>),
+        <span class="str">"Couldn't find arrow for drop-down menu, trying to expand column"</span>, give_up=False):
+
+        <span class="cmt"># Click on hopefully a different test, so the view of our text will reset
+</span>        helper.Click(Pattern(<img src="Show.png" />).targetOffset(<span class="dig">0</span>, <span class="dig">30</span>),
+            <span class="str">"Couldn't find 'Show All'"</span>, time=<span class="dig">3</span>)
+
+        <span class="cmt"># Drag out the column so the arrow is visible
+</span>        <span class="kw">while</span> <span class="kw">not</span> column_menu.exists(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>)):
+            drag_point = helper.Find(Pattern(<img src="1436455824256.png" />).targetOffset(<span class="dig">8</span>,<span class="dig">0</span>), <span class="str">"Couldn't find point to drag out column"</span>, time=<span class="dig">2</span>)
+            drop_point = helper.Find(Pattern(<img src="Title.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Couldn't find 'Title'"</span>)
+            <span class="skw">dragDrop</span>(drag_point, drop_point)
+
+        <span class="cmt"># Click the arrow
+</span>        column_menu.Click(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>),
+            <span class="str">"Couldn't find arrow for drop-down menu even after expanding column"</span>)
+
     helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>)
     paste(text)
 
@@ -135,15 +151,40 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
     <span class="cmt"># Create a region inside the 'Entry' panel
 </span>    text_header = helper.Find(<img src="1436391807956.png" />,
         <span class="str">"'Text' field not found in right panel"</span>)
-    text_region = Regionplus(text_header.below())
+    text_region = Regionplus(helper, text_header.below())
     text_region.Click(<img src="PrintView.png" />, <span class="str">" Couldn't find 'Print View' tab"</span>)
 
     <span class="cmt"># Goal
 </span>    <span class="cmt">###############
 </span>    <span class="kw">if</span> text_region.exists(Pattern(compare_path).similar(<span class="dig">0.9</span>)):
-        helper.write_fail(<span class="str">"'"</span> + text + <span class="str">"' print view looks the same as in provided image"</span>)
+        helper.write(<span class="str">"'"</span> + text + <span class="str">"' print view looks the same as in provided image"</span>)
     <span class="kw">else</span>:
         helper.write(<span class="str">"'"</span> + text + <span class="str">"' print view has changed"</span>)
+
+
+<span class="kw">def</span> check_dictionary(compare_path):
+
+    <span class="cmt"># Opening
+</span>    <span class="cmt">################
+</span>    helper = TestHelper(<span class="str">"check_dictionary_change"</span>)
+    set_flex_helper(helper)
+
+    helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+    <span class="cmt"># First make sure all entries are showing
+</span>    LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, time=<span class="dig">10</span>)
+    <span class="kw">if</span> <span class="kw">not</span> exists(Pattern(<img src="ieadwordShow.png" />).similar(<span class="dig">0.90</span>)):
+        helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>)
+        helper.Click(Pattern(<img src="Headword-1.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">0</span>,<span class="dig">50</span>), <span class="str">"Couldn't find 'Headword'"</span>, time=<span class="dig">15</span>)
+
+    LEFT_SIDEBAR.Click(<img src="ElDictionary.png" />, <span class="str">"Couldn't find 'Dictionary' button"</span>, time=<span class="dig">15</span>)
+
+    <span class="cmt"># Goal
+</span>    <span class="cmt">#################
+</span>    TOOLBARS.Click(<img src="1436456695019.png" />, <span class="str">"Couldn't find 'First' button -- may already be at start"</span>, give_up=False)
+    <span class="kw">if</span> exists(Pattern(compare_path).similar(<span class="dig">0.9</span>)):
+        helper.write(<span class="str">"Dictionary looks the same as in provided image"</span>)
+    <span class="kw">else</span>:
+        helper.write(<span class="str">"Dictionary print view has changed"</span>)
 </pre>
 </body>
 </html>
