@@ -5,7 +5,6 @@ from test_helper import TestHelper
 from flex_regions import *
 from Regionplus import Regionplus
 
-# Currently sometimes thinks there's a change when there' not. ugh.
 def check_word(word, compare_path):
     helper = TestHelper("check_lexicon_entry_change")
     set_flex_helper(helper)
