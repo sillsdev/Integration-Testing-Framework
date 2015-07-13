@@ -4,19 +4,15 @@ sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 from test_helper import TestHelper
 from flex_regions import *
 
+languages = ["Indonesian", "Malay", "English", "Spanish", "French",
+        "Hungarian", "Portuguese", "Kinyarwanda", "Vietnamese", "Turkish",
+        "Russian", "Farsi", "Hindi", "Telugu", "Korean", "Chinese"]
+
 # If this is True, the script will compare each string on the
 # Lexicon Entry screen with the English strings. Otherwise,
 # it will only compare whole areas of the screen, and look
 # for font problems (i.e. those placeholder box things.)
 see_if_things_are_translated = True
-
-setAutoWaitTimeout(1)
-helper = TestHelper("test_localizations")
-set_flex_helper(helper)
-
-languages = ["Indonesian", "Malay", "English", "Spanish", "French",
-    "Hungarian", "Portuguese", "Kinyarwanda", "Vietnamese", "Turkish",
-    "Russian", "Farsi", "Hindi", "Telugu", "Korean", "Chinese"]
 
 # Data for each area of the screen
 areas = ["top toolbar (file, edit, etc.)", "blue headers",
@@ -46,10 +42,14 @@ english_words = [["File", "Send/Receive", "Edit", "View", "Data", "Insert", "For
 
 for r in area_regions:
     r.setAutoWaitTimeout(1)
+    
+def run_test(language_idx):
 
-for language in languages:
-
-    # Opening: change UI to next language
+    setAutoWaitTimeout(1)
+    helper = TestHelper("test_" + languages[language_idx].lower() + "_localization")
+    set_flex_helper(helper)
+    
+    # Opening: change UI to the language we want
     ################
 
     # Open Options popup
@@ -64,12 +64,11 @@ for language in languages:
     # Get to language drop-down menu
     type(Key.TAB)
     type(Key.TAB)
-    
-    # On first iteration, go to top of list, otherwise, go to next language.
-    if language == "Indonesian":
-        for i in range(len(languages)):
-            type(Key.UP)
-    else:
+
+    # Get to the right language
+    for i in range(len(languages)):
+        type(Key.UP)
+    for i in range(language_idx):
         type(Key.DOWN)
 
     type(Key.ENTER)
@@ -83,11 +82,11 @@ for language in languages:
 
         # First see if there is any English (note: cognates may be
         # flagged as not translated)
-        if language != "English":
+        if language_idx != 2:
             # Check if whole area matches
             if area_regions[k].exists(Pattern(english_reference_images[k]).
                     similar(0.99)):
-                helper.write(language + ": nothing translated in " + area)
+                helper.write_fail("Nothing translated in " + area)
                 # If everything's in English, no need for more tests
                 continue
             
@@ -96,34 +95,34 @@ for language in languages:
                 words = english_words[k]
                 for word in words:
                     if area_regions[k].exists(word):
-                        helper.write(language + ": '" + word + "' not translated in " + area)
+                        helper.write_fail("'" + word + "' not translated in " + area)
         
-            # Look for any placeholder squares
-            if area_regions[k].exists(square_types[k]):
-                helper.write(language + ": unable to render (placeholder boxes found) in " + area)
+        # Look for any placeholder squares
+        if area_regions[k].exists(square_types[k]):
+            helper.write_fail("Unable to render (placeholder boxes found) in " + area)
 
-
-# Closing: Go back to English UI
-##############
-
-# Open Options popup
-type("1", KeyModifier.ALT)
-for i in range(7):
-    type(Key.RIGHT)
-for i in range(5):
-    type(Key.DOWN)
-helper.Type(Key.ENTER)
-
-# Get to language drop-down menu
-type(Key.TAB)
-type(Key.TAB)
     
-# Get to the top of the list, then go down to English
-for i in range(len(languages)):
-    type(Key.UP)
-for i in range(languages.index("English")):
-    type(Key.DOWN)
-type(Key.ENTER)
-wait(40)
-
-helper.write("Finished testing UI localizations")
+    # Closing: Go back to English UI
+    ##############
+    
+    # Open Options popup
+    type("1", KeyModifier.ALT)
+    for i in range(7):
+        type(Key.RIGHT)
+    for i in range(5):
+        type(Key.DOWN)
+    helper.Type(Key.ENTER)
+    
+    # Get to language drop-down menu
+    type(Key.TAB)
+    type(Key.TAB)
+        
+    # Get to the top of the list, then go down to English
+    for i in range(len(languages)):
+        type(Key.UP)
+    for i in range(languages.index("English")):
+        type(Key.DOWN)
+    type(Key.ENTER)
+    wait(40)
+    
+    helper.write_success()

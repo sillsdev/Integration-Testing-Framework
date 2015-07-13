@@ -76,19 +76,15 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 
+languages = [<span class="str">"Indonesian"</span>, <span class="str">"Malay"</span>, <span class="str">"English"</span>, <span class="str">"Spanish"</span>, <span class="str">"French"</span>,
+        <span class="str">"Hungarian"</span>, <span class="str">"Portuguese"</span>, <span class="str">"Kinyarwanda"</span>, <span class="str">"Vietnamese"</span>, <span class="str">"Turkish"</span>,
+        <span class="str">"Russian"</span>, <span class="str">"Farsi"</span>, <span class="str">"Hindi"</span>, <span class="str">"Telugu"</span>, <span class="str">"Korean"</span>, <span class="str">"Chinese"</span>]
+
 <span class="cmt"># If this is True, the script will compare each string on the
 </span><span class="cmt"># Lexicon Entry screen with the English strings. Otherwise,
 </span><span class="cmt"># it will only compare whole areas of the screen, and look
 </span><span class="cmt"># for font problems (i.e. those placeholder box things.)
 </span>see_if_things_are_translated = True
-
-setAutoWaitTimeout(<span class="dig">1</span>)
-helper = TestHelper(<span class="str">"test_localizations"</span>)
-set_flex_helper(helper)
-
-languages = [<span class="str">"Indonesian"</span>, <span class="str">"Malay"</span>, <span class="str">"English"</span>, <span class="str">"Spanish"</span>, <span class="str">"French"</span>,
-    <span class="str">"Hungarian"</span>, <span class="str">"Portuguese"</span>, <span class="str">"Kinyarwanda"</span>, <span class="str">"Vietnamese"</span>, <span class="str">"Turkish"</span>,
-    <span class="str">"Russian"</span>, <span class="str">"Farsi"</span>, <span class="str">"Hindi"</span>, <span class="str">"Telugu"</span>, <span class="str">"Korean"</span>, <span class="str">"Chinese"</span>]
 
 <span class="cmt"># Data for each area of the screen
 </span>areas = [<span class="str">"top toolbar (file, edit, etc.)"</span>, <span class="str">"blue headers"</span>,
@@ -119,9 +115,13 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
 <span class="kw">for</span> r <span class="kw">in</span> area_regions:
     r.setAutoWaitTimeout(<span class="dig">1</span>)
 
-<span class="kw">for</span> language <span class="kw">in</span> languages:
+<span class="kw">def</span> run_test(language_idx):
 
-    <span class="cmt"># Opening: change UI to next language
+    setAutoWaitTimeout(<span class="dig">1</span>)
+    helper = TestHelper(<span class="str">"test_"</span> + languages[language_idx].lower() + <span class="str">"_localization"</span>)
+    set_flex_helper(helper)
+
+    <span class="cmt"># Opening: change UI to the language we want
 </span>    <span class="cmt">################
 </span>
     <span class="cmt"># Open Options popup
@@ -137,11 +137,10 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
 </span>    <span class="skw">type</span>(Key.TAB)
     <span class="skw">type</span>(Key.TAB)
 
-    <span class="cmt"># On first iteration, go to top of list, otherwise, go to next language.
-</span>    <span class="kw">if</span> language == <span class="str">"Indonesian"</span>:
-        <span class="kw">for</span> i <span class="kw">in</span> range(len(languages)):
-            <span class="skw">type</span>(Key.UP)
-    <span class="kw">else</span>:
+    <span class="cmt"># Get to the right language
+</span>    <span class="kw">for</span> i <span class="kw">in</span> range(len(languages)):
+        <span class="skw">type</span>(Key.UP)
+    <span class="kw">for</span> i <span class="kw">in</span> range(language_idx):
         <span class="skw">type</span>(Key.DOWN)
 
     <span class="skw">type</span>(Key.ENTER)
@@ -155,11 +154,11 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
 
         <span class="cmt"># First see if there is any English (note: cognates may be
 </span>        <span class="cmt"># flagged as not translated)
-</span>        <span class="kw">if</span> language != <span class="str">"English"</span>:
+</span>        <span class="kw">if</span> language_idx != <span class="dig">2</span>:
             <span class="cmt"># Check if whole area matches
 </span>            <span class="kw">if</span> area_regions[k].exists(Pattern(english_reference_images[k]).
                     similar(<span class="dig">0.99</span>)):
-                helper.write(language + <span class="str">": nothing translated in "</span> + area)
+                helper.write_fail(<span class="str">"Nothing translated in "</span> + area)
                 <span class="cmt"># If everything's in English, no need for more tests
 </span>                <span class="kw">continue</span>
 
@@ -168,37 +167,37 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
                 words = english_words[k]
                 <span class="kw">for</span> word <span class="kw">in</span> words:
                     <span class="kw">if</span> area_regions[k].exists(word):
-                        helper.write(language + <span class="str">": '"</span> + word + <span class="str">"' not translated in "</span> + area)
+                        helper.write_fail(<span class="str">"'"</span> + word + <span class="str">"' not translated in "</span> + area)
 
-            <span class="cmt"># Look for any placeholder squares
-</span>            <span class="kw">if</span> area_regions[k].exists(square_types[k]):
-                helper.write(language + <span class="str">": unable to render (placeholder boxes found) in "</span> + area)
+        <span class="cmt"># Look for any placeholder squares
+</span>        <span class="kw">if</span> area_regions[k].exists(square_types[k]):
+            helper.write_fail(<span class="str">"Unable to render (placeholder boxes found) in "</span> + area)
 
 
-<span class="cmt"># Closing: Go back to English UI
-</span><span class="cmt">##############
+    <span class="cmt"># Closing: Go back to English UI
+</span>    <span class="cmt">##############
 </span>
-<span class="cmt"># Open Options popup
-</span><span class="skw">type</span>(<span class="str">"1"</span>, KeyModifier.ALT)
-<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">7</span>):
-    <span class="skw">type</span>(Key.RIGHT)
-<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">5</span>):
-    <span class="skw">type</span>(Key.DOWN)
-helper.Type(Key.ENTER)
+    <span class="cmt"># Open Options popup
+</span>    <span class="skw">type</span>(<span class="str">"1"</span>, KeyModifier.ALT)
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">7</span>):
+        <span class="skw">type</span>(Key.RIGHT)
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">5</span>):
+        <span class="skw">type</span>(Key.DOWN)
+    helper.Type(Key.ENTER)
 
-<span class="cmt"># Get to language drop-down menu
-</span><span class="skw">type</span>(Key.TAB)
-<span class="skw">type</span>(Key.TAB)
+    <span class="cmt"># Get to language drop-down menu
+</span>    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
 
-<span class="cmt"># Get to the top of the list, then go down to English
-</span><span class="kw">for</span> i <span class="kw">in</span> range(len(languages)):
-    <span class="skw">type</span>(Key.UP)
-<span class="kw">for</span> i <span class="kw">in</span> range(languages.index(<span class="str">"English"</span>)):
-    <span class="skw">type</span>(Key.DOWN)
-<span class="skw">type</span>(Key.ENTER)
-<span class="skw">wait</span>(<span class="dig">40</span>)
+    <span class="cmt"># Get to the top of the list, then go down to English
+</span>    <span class="kw">for</span> i <span class="kw">in</span> range(len(languages)):
+        <span class="skw">type</span>(Key.UP)
+    <span class="kw">for</span> i <span class="kw">in</span> range(languages.index(<span class="str">"English"</span>)):
+        <span class="skw">type</span>(Key.DOWN)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">wait</span>(<span class="dig">40</span>)
 
-helper.write(<span class="str">"Finished testing UI localizations"</span>)
+    helper.write_success()
 </pre>
 </body>
 </html>
