@@ -114,7 +114,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
     helper.Click(Pattern(<img src="OK.png" />).similar(<span class="dig">0.91</span>), <span class="str">"Couldn't click 'OK'"</span>, restart=True)
 
     <span class="kw">if</span> exists(Pattern(<img src="7ReplaceExls.png" />).similar(<span class="dig">0.88</span>)):
-        helper.Click(Pattern(<img src="Yes.png" />).similar(<span class="dig">0.95</span>), <span class="str">"Couldn't click 'Yes'"</span>, time=<span class="dig">40</span>, restart=True)
+        helper.Click(Pattern(<img src="Yes.png" />).similar(<span class="dig">0.95</span>), <span class="str">"Couldn't click 'Yes'"</span>, time=<span class="dig">60</span>, restart=True)
         helper.write(<span class="str">"Successfully opened project: "</span> + path.split(<span class="str">"/"</span>)[-<span class="dig">1</span>])
     <span class="kw">else</span>:
         helper.write(<span class="str">"Successfully opened project: "</span> + path.split(<span class="str">"/"</span>)[-<span class="dig">1</span>])

@@ -4,8 +4,16 @@ sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 from test_helper import TestHelper
 from flex_regions import *
 
+# If this is True, the script will compare each string on the
+# Lexicon Entry screen with the English strings. Otherwise,
+# it will only compare whole areas of the screen, and look
+# for font problems (i.e. those placeholder box things.)
+see_if_things_are_translated = True
+
+setAutoWaitTimeout(1)
 helper = TestHelper("test_localizations")
 set_flex_helper(helper)
+
 languages = ["Indonesian", "Malay", "English", "Spanish", "French",
     "Hungarian", "Portuguese", "Kinyarwanda", "Vietnamese", "Turkish",
     "Russian", "Farsi", "Hindi", "Telugu", "Korean", "Chinese"]
@@ -36,6 +44,8 @@ english_words = [["File", "Send/Receive", "Edit", "View", "Data", "Insert", "For
                    "Grammatical Info. Details", "Publication"],
                  ["Queue", "No Parser Loaded"]]
 
+for r in area_regions:
+    r.setAutoWaitTimeout(1)
 
 for language in languages:
 
@@ -68,7 +78,7 @@ for language in languages:
     # GOAL
     ################
 
-    for k in range(2, 3):
+    for k in range(len(areas)):
         area = areas[k]
 
         # First see if there is any English (note: cognates may be
@@ -82,10 +92,11 @@ for language in languages:
                 continue
             
             # Look for any English words
-            words = english_words[k]
-            for word in words:
-                if area_regions[k].exists(word):
-                    helper.write(language + ": '" + word + "' not translated in " + area)
+            if see_if_things_are_translated:
+                words = english_words[k]
+                for word in words:
+                    if area_regions[k].exists(word):
+                        helper.write(language + ": '" + word + "' not translated in " + area)
         
             # Look for any placeholder squares
             if area_regions[k].exists(square_types[k]):

@@ -103,7 +103,7 @@ def check_dictionary(compare_path):
         helper.Click(Pattern("LexemeForm.png").targetOffset(-52,23), "'Lexeme Form' column not found")
         helper.Click(Pattern("Headword-1.png").similar(0.90).targetOffset(0,50), "Couldn't find 'Headword'", time=15)
     
-    LEFT_SIDEBAR.Click("ElDictionary.png", "Couldn't find 'Dictionary' button", time=15)
+    LEFT_SIDEBAR.Click("ElDictionary.png", "Couldn't find 'Dictionary' button", time=20)
 
     # Goal
     #################

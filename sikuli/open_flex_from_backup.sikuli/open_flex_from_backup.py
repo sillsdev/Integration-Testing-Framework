@@ -42,7 +42,7 @@ def open_backup(path, flex_is_open):
     helper.Click(Pattern("OK.png").similar(0.91), "Couldn't click 'OK'", restart=True)
     
     if exists(Pattern("7ReplaceExls.png").similar(0.88)):
-        helper.Click(Pattern("Yes.png").similar(0.95), "Couldn't click 'Yes'", time=40, restart=True)
+        helper.Click(Pattern("Yes.png").similar(0.95), "Couldn't click 'Yes'", time=60, restart=True)
         helper.write("Successfully opened project: " + path.split("/")[-1])
     else:
         helper.write("Successfully opened project: " + path.split("/")[-1])

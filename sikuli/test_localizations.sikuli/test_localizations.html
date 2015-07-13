@@ -76,8 +76,16 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 
+<span class="cmt"># If this is True, the script will compare each string on the
+</span><span class="cmt"># Lexicon Entry screen with the English strings. Otherwise,
+</span><span class="cmt"># it will only compare whole areas of the screen, and look
+</span><span class="cmt"># for font problems (i.e. those placeholder box things.)
+</span>see_if_things_are_translated = True
+
+setAutoWaitTimeout(<span class="dig">1</span>)
 helper = TestHelper(<span class="str">"test_localizations"</span>)
 set_flex_helper(helper)
+
 languages = [<span class="str">"Indonesian"</span>, <span class="str">"Malay"</span>, <span class="str">"English"</span>, <span class="str">"Spanish"</span>, <span class="str">"French"</span>,
     <span class="str">"Hungarian"</span>, <span class="str">"Portuguese"</span>, <span class="str">"Kinyarwanda"</span>, <span class="str">"Vietnamese"</span>, <span class="str">"Turkish"</span>,
     <span class="str">"Russian"</span>, <span class="str">"Farsi"</span>, <span class="str">"Hindi"</span>, <span class="str">"Telugu"</span>, <span class="str">"Korean"</span>, <span class="str">"Chinese"</span>]
@@ -108,6 +116,8 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
                    <span class="str">"Grammatical Info. Details"</span>, <span class="str">"Publication"</span>],
                  [<span class="str">"Queue"</span>, <span class="str">"No Parser Loaded"</span>]]
 
+<span class="kw">for</span> r <span class="kw">in</span> area_regions:
+    r.setAutoWaitTimeout(<span class="dig">1</span>)
 
 <span class="kw">for</span> language <span class="kw">in</span> languages:
 
@@ -140,7 +150,7 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
     <span class="cmt"># GOAL
 </span>    <span class="cmt">################
 </span>
-    <span class="kw">for</span> k <span class="kw">in</span> range(<span class="dig">2</span>, <span class="dig">3</span>):
+    <span class="kw">for</span> k <span class="kw">in</span> range(len(areas)):
         area = areas[k]
 
         <span class="cmt"># First see if there is any English (note: cognates may be
@@ -154,10 +164,11 @@ english_words = [[<span class="str">"File"</span>, <span class="str">"Send/Recei
 </span>                <span class="kw">continue</span>
 
             <span class="cmt"># Look for any English words
-</span>            words = english_words[k]
-            <span class="kw">for</span> word <span class="kw">in</span> words:
-                <span class="kw">if</span> area_regions[k].exists(word):
-                    helper.write(language + <span class="str">": '"</span> + word + <span class="str">"' not translated in "</span> + area)
+</span>            <span class="kw">if</span> see_if_things_are_translated:
+                words = english_words[k]
+                <span class="kw">for</span> word <span class="kw">in</span> words:
+                    <span class="kw">if</span> area_regions[k].exists(word):
+                        helper.write(language + <span class="str">": '"</span> + word + <span class="str">"' not translated in "</span> + area)
 
             <span class="cmt"># Look for any placeholder squares
 </span>            <span class="kw">if</span> area_regions[k].exists(square_types[k]):
