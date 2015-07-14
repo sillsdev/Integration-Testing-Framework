@@ -11,7 +11,7 @@ do
 	if [ $? -eq 0 ]; then
 	  continue
 	else
-	  echo "FLEX is not running.\n"
+	  echo "FLEX is not running."
 	  break
 	fi
 done
