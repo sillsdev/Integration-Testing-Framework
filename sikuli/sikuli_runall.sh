@@ -6,4 +6,12 @@ do
 	echo Running $D ...
 	sikuli $D
 	rm /home/vagrant/*.png
+	
+	ps cax | grep mono > /dev/null
+	if [ $? -eq 0 ]; then
+	  continue
+	else
+	  echo "FLEX is not running.\n"
+	  break
+	fi
 done
