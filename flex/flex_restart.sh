@@ -9,6 +9,8 @@ if [ $? -eq 0 ]; then
 else
   echo "Process is not running.\n"
 fi
-(fieldworks-flex &)
-sikuli ~/linux_setup/sikuli/examples/1_open_flex_existing.sikuli
+(fieldworks-flex)
+
+sikuli ~/linux_setup/sikuli/examples/1_open_flex_existing.sikuli &
+sleep 20
 
