@@ -9,8 +9,6 @@ def open_handler(event):
     event.region.stopObserver()
     helper.write("Successfully opened flex (existing project).")
     helper.write_success()
-    wait(5)
- 
 
 # Open an existing project entitled "hello"
 # Used to restart flex if it is broken...

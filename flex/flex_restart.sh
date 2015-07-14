@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
   echo "Process is running.\n"
   sudo kill `pidof mono`
 else
-  echo "Process is not running.\n"
+  echo "Process is not running."
 fi
 (fieldworks-flex)
 
