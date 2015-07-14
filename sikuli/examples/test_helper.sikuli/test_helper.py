@@ -1,6 +1,7 @@
 from __future__ import with_statement
 from sikuli import *
 import sys
+import time
 sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
 
 class TestHelper:
@@ -106,7 +107,7 @@ class TestHelper:
     # Prepends the test name and appends a newline before writing to file.
     def write(self, line):
         with open(self.file, "a") as f:
-            f.write(self.test + line + "\n")
+            f.write(time.strftime("%I:%M:%S %x") + self.test + line + "\n")
 
     # Same as write, but internally remembers that the test failed.
     def write_fail(self, line):
