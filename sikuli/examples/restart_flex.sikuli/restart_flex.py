@@ -6,7 +6,7 @@ from test_helper import TestHelper
 def restart_flex():
     helper = TestHelper("restart_flex")
     
-    helper.Type("t", KeyModifier.CTRL | KeyModifier.ALT)
+    helper.Type("t", KeyModifier.CTRL | KeyModifier.ALT, time=2)
     helper.Type("/home/vagrant/linux_setup/sikuli/examples/restart_flex.sh && exit" + Key.ENTER)
 
     # If the 'hello' project shows up as the last opened project,

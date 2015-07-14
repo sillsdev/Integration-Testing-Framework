@@ -78,7 +78,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 <span class="kw">def</span> restart_flex():
     helper = TestHelper(<span class="str">"restart_flex"</span>)
 
-    helper.Type(<span class="str">"t"</span>, KeyModifier.CTRL | KeyModifier.ALT)
+    helper.Type(<span class="str">"t"</span>, KeyModifier.CTRL | KeyModifier.ALT, time=<span class="dig">2</span>)
     helper.Type(<span class="str">"/home/vagrant/linux_setup/sikuli/examples/restart_flex.sh &amp;&amp; exit"</span> + Key.ENTER)
 
     <span class="cmt"># If the 'hello' project shows up as the last opened project,
