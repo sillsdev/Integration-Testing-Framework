@@ -23,7 +23,7 @@ class TestHelper:
     # If restart is True, FLEX needs to be restarted on failure.
 
     def Click(self, thing, fail_message, give_up=True, restart=False,
-              success_message=None, time=1):
+              success_message=None, time=2):
         try:
             click(thing)
             if success_message:
@@ -41,7 +41,7 @@ class TestHelper:
             raise
     
     def DoubleClick(self, thing, fail_message, give_up=True,
-                    restart=False, success_message=None, time=1):
+                    restart=False, success_message=None, time=2):
         try:
             doubleClick(thing)
             if success_message:
@@ -58,12 +58,12 @@ class TestHelper:
         except:
             raise
     
-    def Type(self, text, modifiers=0, time=1):
+    def Type(self, text, modifiers=0, time=2):
         type(text, modifiers)
         wait(time)
     
     def Find(self, thing, fail_message, give_up=True, restart=False,
-             success_message=None, time=1):
+             success_message=None, time=2):
         try:
             match = find(thing)
             if success_message:
@@ -81,7 +81,7 @@ class TestHelper:
             raise
 
     def Exists(self, thing, fail_message, give_up=True, restart=False,
-               success_message=None, time=1):
+               success_message=None, time=2):
         if exists(thing):
             if success_message:
                 self.write(success_message)

@@ -5,7 +5,7 @@ for D in `find /home/vagrant/linux_setup/sikuli/*.sikuli -type d`
 do
 	echo Running $D ...
 	sikuli $D
-	rm /home/vagrant/*.png
+	rm /home/vagrant/*.png > /dev/null
 
 	ps cax | grep mono > /dev/null
 	if [ $? -eq 0 ]; then

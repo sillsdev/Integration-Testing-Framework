@@ -14,9 +14,10 @@ def open_handler(event):
 def green_handler(event):
     open_project_helper.write_fail("An error has occurred (green), trying to open existing project")
     event.region.stopObserver()
-    #os.system("sudo sh /home/vagrant/linux_setup/flex/flex_restart.sh")
+    #os.system(". /home/vagrant/linux_setup/flex/flex_restart.sh")
     #subprocess.call(["sudo", "/home/vagrant/linux_setup/flex/flex_restart.sh"], shell=True)
     #subprocess.Popen("sudo -u vagrant /home/vagrant/linux_setup/flex/flex_restart.sh")
+    os.system("sudo /home/vagrant/linux_setup/flex/memory_clean.sh")
     open_project_helper.restart_flex()
     open_project_helper.write("Successfully restarted flex.")  
 
