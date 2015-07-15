@@ -3,7 +3,7 @@
 kill `pidof mono`
 
 ps cax | grep mono > /dev/null
-
+echo "examples/restart_flex.sh"
 if [ $? -eq 0 ]; then
   echo "Process is running.\n"
   sudo kill `pidof mono`
