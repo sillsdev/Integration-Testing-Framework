@@ -29,4 +29,5 @@ def restart_flex():
         # As a last resort, try to create the project (this shouldn't happen
         # and will probably not work: green screen if hello already exists.)
         else:
-            open_new_project()
+            helper.write_fail("'hello' project not found, quitting.")
+            exit()

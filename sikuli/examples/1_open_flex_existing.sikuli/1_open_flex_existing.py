@@ -8,7 +8,8 @@ helper = TestHelper("open_flex")
 def open_handler(event):
     event.region.stopObserver()
     helper.write("Successfully opened flex (existing project).")
-    helper.write_success()
+    wait(10)
+    exit(0)
 
 # Open an existing project entitled "hello"
 # Used to restart flex if it is broken...
@@ -25,7 +26,6 @@ onAppear("1435347136957.png", open_handler)
 observe(40)
 
 # If we get here, it failed to open.
-if helper.has_fail():
-     helper.write_fail("Failed to open")
+helper.write_fail("Failed to open")
 
 

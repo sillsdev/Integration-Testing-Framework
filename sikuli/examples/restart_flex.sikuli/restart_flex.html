@@ -101,7 +101,8 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
         <span class="cmt"># As a last resort, try to create the project (this shouldn't happen
 </span>        <span class="cmt"># and will probably not work: green screen if hello already exists.)
 </span>        <span class="kw">else</span>:
-            open_new_project()
+            helper.write_fail(<span class="str">"'hello' project not found, quitting."</span>)
+            exit()
 </pre>
 </body>
 </html>

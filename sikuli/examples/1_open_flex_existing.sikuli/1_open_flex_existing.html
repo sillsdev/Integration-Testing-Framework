@@ -72,8 +72,8 @@
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> sys
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
-<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+<span class="cmt">#sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+</span><span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
 helper = TestHelper(<span class="str">"open_flex"</span>)
 
@@ -81,7 +81,7 @@ helper = TestHelper(<span class="str">"open_flex"</span>)
     event.region.stopObserver()
     helper.write(<span class="str">"Successfully opened flex (existing project)."</span>)
     <span class="skw">wait</span>(<span class="dig">10</span>)
-    exit()
+    exit(<span class="dig">0</span>)
 
 <span class="cmt"># Open an existing project entitled "hello"
 </span><span class="cmt"># Used to restart flex if it is broken...
@@ -95,7 +95,6 @@ helper.Click(<img src="ectfromacoll.png" />,
 
 <span class="cmt"># Check that it opens.
 </span>onAppear(<img src="1435347136957.png" />, open_handler)
-
 observe(<span class="dig">40</span>)
 
 <span class="cmt"># If we get here, it failed to open.
