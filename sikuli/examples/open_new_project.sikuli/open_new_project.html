@@ -85,8 +85,9 @@ open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
 </span>
 <span class="kw">def</span> green_handler(event):
     open_project_helper.write_fail(<span class="str">"An error has occurred (green), trying to open existing project"</span>)
-    os.system(<span class="str">"sudo /home/vagrant/linux_setup/flex/flex_restart.sh"</span>)
     event.region.stopObserver()
+    open_project_helper.restart_flex()
+
 
 <span class="cmt"># Open Flex from the start screen
 </span><span class="kw">def</span> open_new_project(project_name=<span class="str">"hello"</span>):

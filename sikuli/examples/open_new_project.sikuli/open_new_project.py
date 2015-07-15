@@ -14,7 +14,7 @@ def open_handler(event):
 def green_handler(event):
     open_project_helper.write_fail("An error has occurred (green), trying to open existing project")
     event.region.stopObserver()
-    os.system("sudo -u vagrant /home/vagrant/linux_setup/flex/flex_restart.sh")
+    open_project_helper.restart_flex()
     
 
 # Open Flex from the start screen
