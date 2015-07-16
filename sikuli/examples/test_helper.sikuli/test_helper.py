@@ -1,17 +1,29 @@
 from __future__ import with_statement
 from sikuli import *
-import sys
-import time
+import os, shutil, sys, time
 sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples/test_and_log')
+
 
 class TestHelper:
 
     # If a file with the given filename already exists, the Logger will
     # just keep writing to the end of that file.
-    def __init__(self, test_name="", filename="/vagrant/error_log"):
+    def __init__(self, test_name="", filename="/vagrant/error_log",
+                 log_folder="/vagrant/log"):
         self.file = filename
+        self.folder = log_folder
         self.test = test_name + ": "
         self.test_failed = False
+
+        # Create the log folder if it doesn't exist
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
+
+        # Add the CSS stylesheet to the log folder, if it's not there already.
+        if not os.path.exists(log_folder + "/log.css"):
+            shutil.copyfile("./log.css", log_folder + "/log.css")
+
 
     #################################
     # Wrappers for click, type, etc
@@ -81,7 +93,7 @@ class TestHelper:
             raise
 
     def Exists(self, thing, fail_message, give_up=True, restart=False,
-               success_message=None, time=2):
+               success_message=None):
         if exists(thing):
             if success_message:
                 self.write(success_message)
@@ -96,7 +108,7 @@ class TestHelper:
 
     def restart_flex(self):
         self.write_fail("Closing and restarting FLEX")
-        #os.system("sudo -u vagrant /home/vagrant/linux_setup/flex/flex_restart.sh")
+        # os.system("sudo -u vagrant /home/vagrant/linux_setup/flex/flex_restart.sh")
         import restart_flex
         restart_flex.restart_flex()
 
