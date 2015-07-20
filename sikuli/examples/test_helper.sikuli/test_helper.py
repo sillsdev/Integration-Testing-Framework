@@ -21,8 +21,8 @@ class TestHelper:
             os.makedirs(log_folder)
 
         # Add the CSS stylesheet to the log folder, if it's not there already.
-        #if not os.path.exists(log_folder + "/log.css"):
-        #    shutil.copyfile("./log.css", log_folder + "/log.css")
+        if not os.path.exists(log_folder + "/log.css"):
+            shutil.copyfile("/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/log.css", log_folder + "/log.css")
 
 
     #################################
