@@ -10,6 +10,7 @@ if [ $? -eq 0 ]; then
 else
   echo "Process is not running."
 fi
+/home/vagrant/linux_setup/flex/memory_clean.sh
 
 fieldworks-flex &
 disown %1
