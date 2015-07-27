@@ -1,0 +1,15 @@
+# Compiled CPython/Jython code
+*.pyc
+*$py.class
+
+# Temp files
+*~
+
+# Sikuli/OpenCV files
+*.vlog.png
+
+# Git merge stuff
+*.orig
+
+# Pesky IntelliJ folder
+.idea/
