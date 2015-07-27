@@ -1,4 +1,4 @@
-# linux_setup
+# Integration-Testing-Framework
 Project to store files related to automating testing for SIL Software on Linux
 
 vagrant up, vagrant ssh, vagrant halt, vagrant destroy, vagrant provision, vagrant ssh-config
