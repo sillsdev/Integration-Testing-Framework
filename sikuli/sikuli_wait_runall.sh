@@ -1,5 +1,5 @@
 #!/bin/bash
-#sleep 30s
+sleep 20s
 rm -Rf /home/vagrant/.local/share/fieldworks/Projects/hel*
 for D in `find /home/vagrant/linux_setup/sikuli/*.sikuli -type d`
 do
