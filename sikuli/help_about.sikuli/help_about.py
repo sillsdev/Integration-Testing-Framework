@@ -1,5 +1,7 @@
+import os
 import sys
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+wd = os.path.dirname(getBundlePath())
+if (wd + "/examples") not in sys.path: sys.path.append(wd + "/examples")
 
 from flex_regions import *
 from test_helper import TestHelper

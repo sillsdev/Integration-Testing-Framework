@@ -70,8 +70,10 @@
 <h2>help_about.sikuli</h2> <a href="help_about.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">import</span> os
 <span class="kw">import</span> sys
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+wd = os.path.dirname(getBundlePath())
+<span class="kw">if</span> (wd + <span class="str">"/examples"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path: sys.path.append(wd + <span class="str">"/examples"</span>)
 
 <span class="kw">from</span> flex_regions <span class="kw">import</span> *
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper

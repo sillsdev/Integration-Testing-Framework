@@ -9,8 +9,11 @@ import time
 
 from sikuli import *
 
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples/test_and_log')
+examples = os.path.dirname(getBundlePath())
+sikuli_dir = os.path.dirname(examples)
+if examples not in sys.path: sys.path.append(examples)
+if (sikuli_dir + "/test_and_log") not in sys.path:
+    sys.path.append(sikuli_dir + "/test_and_log")
 from yattag import Doc
 
 class TestHelper:
@@ -35,7 +38,7 @@ class TestHelper:
         else:
             glob_result = glob.glob(self.folder + "/*.log")
             if len(glob_result) == 1:
-                self.partial_html = glob_result
+                self.partial_html = glob_result[0]
             else:
                 self.partial_html = self.folder + "/mylog.log"
         

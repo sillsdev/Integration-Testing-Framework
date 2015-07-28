@@ -71,6 +71,7 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> __future__ <span class="kw">import</span> with_statement
+<span class="kw">import</span> glob
 <span class="kw">import</span> os
 <span class="kw">import</span> platform
 <span class="kw">import</span> shutil
@@ -80,8 +81,11 @@
 
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples/test_and_log'</span>)
+examples = os.path.dirname(getBundlePath())
+sikuli_dir = os.path.dirname(examples)
+<span class="kw">if</span> examples <span class="kw">not</span> <span class="kw">in</span> sys.path: sys.path.append(examples)
+<span class="kw">if</span> (sikuli_dir + <span class="str">"/test_and_log"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:
+    sys.path.append(sikuli_dir + <span class="str">"/test_and_log"</span>)
 <span class="kw">from</span> yattag <span class="kw">import</span> Doc
 
 <span class="kw">class</span> TestHelper:
@@ -99,8 +103,16 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 </span>        self.os = Env.getOS()
 
         <span class="cmt"># Create the log folder if it doesn't exist
-</span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(log_folder):
-            os.makedirs(log_folder)
+</span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(self.folder):
+            os.makedirs(self.folder)
+            self.partial_html = self.folder + <span class="str">"/mylog.log"</span>
+        <span class="cmt"># Otherwise, see if there's already a log file
+</span>        <span class="kw">else</span>:
+            glob_result = glob.glob(self.folder + <span class="str">"/*.log"</span>)
+            <span class="kw">if</span> len(glob_result) == <span class="dig">1</span>:
+                self.partial_html = glob_result[<span class="dig">0</span>]
+            <span class="kw">else</span>:
+                self.partial_html = self.folder + <span class="str">"/mylog.log"</span>
 
         <span class="cmt"># Add the CSS stylesheet to the log folder, if it's not there already.
 </span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(log_folder + <span class="str">"/log.css"</span>):
@@ -108,9 +120,9 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
                             log_folder + <span class="str">"/log.css"</span>)
 
         <span class="cmt"># Add the display_log script to /vagrant, if it's not there
-</span>        <span class="cmt"># (so it's accessible from Windows)
+</span>        <span class="cmt"># (so it's accessible from the host machine)
 </span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(<span class="str">"/vagrant/display_log.py"</span>):
-            shutil.copyfile(<span class="str">"/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/log.css/display_log.py"</span>,
+            shutil.copyfile(<span class="str">"/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/display_log.py"</span>,
                             <span class="str">"/vagrant/display_log.py"</span>)
 
     <span class="cmt">#################################
@@ -212,7 +224,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 </span>    <span class="cmt"># Logging methods
 </span>    <span class="cmt">###################
 </span>
-    <span class="cmt"># Prepends the test name and appends a newline before writing to file.
+    <span class="cmt"># Prepends the time and test name and appends a newline before writing to file.
 </span>    <span class="kw">def</span> write(self, line):
         <span class="kw">with</span> open(self.file, <span class="str">"a"</span>) <span class="kw">as</span> f:
             f.write(time.strftime(<span class="str">"%I:%M:%S %x"</span>) + <span class="str">" "</span> + self.test + <span class="str">": "</span> + line + <span class="str">"\n"</span>)
@@ -231,7 +243,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
         <span class="kw">if</span> <span class="kw">not</span> self.test_failed:
             self.write(<span class="str">"Success"</span>)
 
-    <span class="cmt"># Copy a file into the log folder and return the new path.
+    <span class="cmt"># Copy a file into the log folder and return just the name of the file.
 </span>    <span class="kw">def</span> copy_testfile(self, file_to_copy):
         name = os.path.basename(file_to_copy)
         new_path = self.folder + <span class="str">"/"</span> + name
@@ -278,7 +290,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
 </span>        <span class="kw">with</span> tag(<span class="str">"tr"</span>):
             <span class="kw">with</span> tag(<span class="str">"td"</span>):
                 text(time.strftime(<span class="str">"%I:%M:%S %x"</span>))
-                doc.stag(<span class="str">"br"</span>)
+            <span class="kw">with</span> tag(<span class="str">"td"</span>):
                 text(self.test)
             <span class="kw">with</span> tag(<span class="str">"td"</span>):
                 text(action_type)
@@ -328,8 +340,8 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
                 <span class="kw">with</span> tag(<span class="str">"a"</span>, href=screenshot_path):
                     doc.stag(<span class="str">"img"</span>, src=screenshot_path)
 
-        <span class="cmt"># Write the line to a file
-</span>        <span class="kw">with</span> open(self.folder + <span class="str">"/mylog.log"</span>, <span class="str">"a"</span>) <span class="kw">as</span> f:
+        <span class="cmt"># Write the row to the partial html file
+</span>        <span class="kw">with</span> open(self.partial_html, <span class="str">"a"</span>) <span class="kw">as</span> f:
             f.write(doc.getvalue())
 </pre>
 </body>
