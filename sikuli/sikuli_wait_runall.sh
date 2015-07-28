@@ -15,3 +15,4 @@ do
 	  exit #break
 	fi
 done
+python /vagrant/display_log.py
