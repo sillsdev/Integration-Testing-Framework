@@ -21,6 +21,7 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row("Click", thing)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -40,6 +41,7 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row("Double Click", thing)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -59,6 +61,7 @@ class Regionplus(Region):
         except FindFailed, ff:
             if self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row("Find", thing)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -76,6 +79,7 @@ class Regionplus(Region):
         else:
             if self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row("Existence", thing)
             if restart:
                 self.restart_flex()
             if give_up:

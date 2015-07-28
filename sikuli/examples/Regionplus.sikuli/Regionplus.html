@@ -93,6 +93,7 @@
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row(<span class="str">"Click"</span>, thing)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -112,6 +113,7 @@
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row(<span class="str">"Double Click"</span>, thing)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -131,6 +133,7 @@
         <span class="kw">except</span> FindFailed, ff:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row(<span class="str">"Find"</span>, thing)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:
@@ -148,6 +151,7 @@
         <span class="kw">else</span>:
             <span class="kw">if</span> self.helper:
                 self.helper.write_fail(fail_message)
+                self.helper.write_html_row(<span class="str">"Existence"</span>, thing)
             <span class="kw">if</span> restart:
                 self.restart_flex()
             <span class="kw">if</span> give_up:

@@ -1,4 +1,5 @@
 from __future__ import with_statement
+import glob
 import os
 import platform
 import shutil
@@ -27,18 +28,26 @@ class TestHelper:
         self.os = Env.getOS()
 
         # Create the log folder if it doesn't exist
-        if not os.path.exists(log_folder):
-            os.makedirs(log_folder)
-
+        if not os.path.exists(self.folder):
+            os.makedirs(self.folder)
+            self.partial_html = self.folder + "/mylog.log"
+        # Otherwise, see if there's already a log file
+        else:
+            glob_result = glob.glob(self.folder + "/*.log")
+            if len(glob_result) == 1:
+                self.partial_html = glob_result
+            else:
+                self.partial_html = self.folder + "/mylog.log"
+        
         # Add the CSS stylesheet to the log folder, if it's not there already.
         if not os.path.exists(log_folder + "/log.css"):
             shutil.copyfile("/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/log.css",
                             log_folder + "/log.css")
 
         # Add the display_log script to /vagrant, if it's not there
-        # (so it's accessible from Windows)
+        # (so it's accessible from the host machine)
         if not os.path.exists("/vagrant/display_log.py"):
-            shutil.copyfile("/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/log.css/display_log.py",
+            shutil.copyfile("/home/vagrant/linux_setup/sikuli/examples/test_helper.sikuli/display_log.py",
                             "/vagrant/display_log.py")
 
     #################################
@@ -140,7 +149,7 @@ class TestHelper:
     # Logging methods
     ###################
 
-    # Prepends the test name and appends a newline before writing to file.
+    # Prepends the time and test name and appends a newline before writing to file.
     def write(self, line):
         with open(self.file, "a") as f:
             f.write(time.strftime("%I:%M:%S %x") + " " + self.test + ": " + line + "\n")
@@ -159,7 +168,7 @@ class TestHelper:
         if not self.test_failed:
             self.write("Success")
 
-    # Copy a file into the log folder and return the new path.
+    # Copy a file into the log folder and return just the name of the file.
     def copy_testfile(self, file_to_copy):
         name = os.path.basename(file_to_copy)
         new_path = self.folder + "/" + name
@@ -206,7 +215,7 @@ class TestHelper:
         with tag("tr"):
             with tag("td"):
                 text(time.strftime("%I:%M:%S %x"))
-                doc.stag("br")
+            with tag("td"):
                 text(self.test)
             with tag("td"):
                 text(action_type)
@@ -256,6 +265,6 @@ class TestHelper:
                 with tag("a", href=screenshot_path):
                     doc.stag("img", src=screenshot_path)
 
-        # Write the line to a file
-        with open(self.folder + "/mylog.log", "a") as f:
+        # Write the row to the partial html file
+        with open(self.partial_html, "a") as f:
             f.write(doc.getvalue())

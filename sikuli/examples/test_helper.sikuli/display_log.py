@@ -69,6 +69,8 @@ with open(log_folder + "/log.html", "w") as html_file:
             with tag("table"):
                 with tag("thead"):
                     with tag("tr"):
+			with tag("th"):
+                            text("Time and Date")
                         with tag("th"):
                             text("Test name")
                         with tag("th"):
