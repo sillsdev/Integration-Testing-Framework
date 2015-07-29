@@ -9,7 +9,7 @@ import time
 
 from sikuli import *
 
-examples = os.path.dirname(getBundlePath())
+examples = os.path.dirname(getBundlePath()) + "/examples"
 if examples not in sys.path: sys.path.append(examples)
 if (examples + "/test_and_log") not in sys.path:
     sys.path.append(examples + "/test_and_log")
