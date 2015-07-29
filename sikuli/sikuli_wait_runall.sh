@@ -1,6 +1,6 @@
 #!/bin/bash
 sleep 20s
-./sikuli_runall.sh
+/home/vagrant/Integration-Testing-Framework/sikuli/sikuli_runall.sh
 #rm -Rf /home/vagrant/.local/share/fieldworks/Projects/hel*
 #for D in `find /home/vagrant/Integration-Testing-Framework/sikuli/*.sikuli -type d`
 #do
