@@ -1,3 +1,10 @@
+Contributors
+* SIL LS Dev Team
+* Ryan McCoppin
+* Jessica Dawson
+* Karl Rogers
+ 
+
 # Integration-Testing-Framework
 Project to store files related to automating testing for SIL Software on Linux
 
