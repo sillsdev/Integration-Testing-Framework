@@ -1,3 +1,16 @@
+# Does some path manipulation and imports
+# that every test script needs.
+# DO NOT move this to different folder from
+# the main test scripts: they need to be able
+# to find it without editing sys.path.
+# Starts with an 'a' because apparently imports
+# happen in alphabetical order.
+
+# Note: Can be used in helper scripts, but
+# if that helper is **run** directly, and not from a
+# main test script, the imports won't work properly.
+
+
 from sikuli import *
 import os
 import sys

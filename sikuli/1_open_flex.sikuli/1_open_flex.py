@@ -1,6 +1,5 @@
 from sikuli import *
-import sys
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
+import a_setup
 import open_new_project
 
 open_new_project.open_new_project()

@@ -1,5 +1,4 @@
 from sikuli import *
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
 from open_new_project import open_new_project
 from test_helper import TestHelper
 

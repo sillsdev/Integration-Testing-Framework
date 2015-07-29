@@ -1,6 +1,6 @@
 from sikuli import *
 
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
+import a_setup
 from test_helper import TestHelper
 
 helper = TestHelper("close_flex")

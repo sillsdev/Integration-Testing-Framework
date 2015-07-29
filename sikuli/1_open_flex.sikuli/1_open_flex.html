@@ -70,11 +70,11 @@
 <h2>1_open_flex.sikuli</h2> <a href="1_open_flex.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="kw">import</span> sys
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/Integration-Testing-Framework/sikuli/examples'</span>)
-<span class="kw">from</span> open_new_project <span class="kw">import</span> open_new_project
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">import</span> a_setup
+<span class="kw">import</span> open_new_project
 
-open_new_project()
+open_new_project.open_new_project()
 </pre>
 </body>
 </html>

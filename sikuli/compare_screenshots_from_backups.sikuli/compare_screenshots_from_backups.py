@@ -1,6 +1,5 @@
 from sikuli import *
-import sys
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
+import a_setup
 from test_helper import TestHelper
 import open_flex_from_backup, check_change
 

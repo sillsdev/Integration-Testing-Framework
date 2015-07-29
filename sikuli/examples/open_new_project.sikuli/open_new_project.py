@@ -1,6 +1,5 @@
 from sikuli import *
-import sys, os, subprocess
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
+import os
 from test_helper import TestHelper
 
 open_project_helper = TestHelper("open_flex")

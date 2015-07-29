@@ -70,6 +70,19 @@
 <h2>a_setup.sikuli</h2> <a href="a_setup.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="cmt"># Does some path manipulation and imports
+</span><span class="cmt"># that every test script needs.
+</span><span class="cmt"># DO NOT move this to different folder from
+</span><span class="cmt"># the main test scripts: they need to be able
+</span><span class="cmt"># to find it without editing sys.path.
+</span><span class="cmt"># Starts with an 'a' because apparently imports
+</span><span class="cmt"># happen in alphabetical order.
+</span>
+<span class="cmt"># Note: Can be used in helper scripts, but
+</span><span class="cmt"># if that helper is **run** directly, and not from a
+</span><span class="cmt"># main test script, the imports won't work properly.
+</span>
+
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> os
 <span class="kw">import</span> sys

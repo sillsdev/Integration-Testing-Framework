@@ -71,28 +71,28 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
-<span class="kw">import</span> sys
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/Integration-Testing-Framework/sikuli/examples'</span>)
+<span class="kw">import</span> a_setup
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 <span class="kw">import</span> open_flex_from_backup, check_change
 
 helper = TestHelper(<span class="str">"run_tests_from_backups"</span>)
 folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"</span>
+backups_folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/flex/projects/"</span>
 
 <span class="cmt"># Open Tagbanwa
-</span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup"</span>, True)
+</span>open_flex_from_backup.open_backup(backups_folder + <span class="str">"Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup"</span>, True)
 check_change.check_dictionary(folder + <img src="Tagbanwa - dictionary.png" />)
 check_change.check_word(<span class="str">"dalik"</span>, folder + <img src="Tagbanwa - dalik.png" />) <span class="cmt"># IXTERMINATE</span>
 check_change.check_word(<span class="str">"bugnawan"</span>, folder + <img src="Tagbanwa - bugnawan.png" />)
 
 <span class="cmt"># Open Kamasau
-</span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Kamasau 2015-07-07 1036 for testing purposes.fwbackup"</span>, True)
+</span>open_flex_from_backup.open_backup(backups_folder + <span class="str">"Kamasau 2015-07-07 1036 for testing purposes.fwbackup"</span>, True)
 check_change.check_dictionary(folder + <img src="Kamasau - dictionary.png" />)
 check_change.check_word(<span class="str">"chiraq"</span>, folder + <img src="Kamasau - chiraq.png" />) <span class="cmt"># like the French president in like the 2000s</span>
 check_change.check_word(<span class="str">"gre"</span>, folder + <img src="Kamasau - gre.png" />)
 
 <span class="cmt"># Open Ayta Mag-Anchi
-</span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Ayta Mag-Anchi2 2015-07-07 1035 for testing purposes.fwbackup"</span>, True)
+</span>open_flex_from_backup.open_backup(backups_folder + <span class="str">"Ayta Mag-Anchi2 2015-07-07 1035 for testing purposes.fwbackup"</span>, True)
 check_change.check_text(<span class="str">"kulot2.ptx"</span>, folder + <img src="Ayta - kulot2.ptx.png" />)
 
 <span class="cmt"># Restart flex to hello project, closing the 3 windows

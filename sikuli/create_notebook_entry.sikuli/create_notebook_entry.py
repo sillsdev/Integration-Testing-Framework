@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
-
+import a_setup
 from sikuli import *
 from test_helper import TestHelper
 from flex_regions import *
