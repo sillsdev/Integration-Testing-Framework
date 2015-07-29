@@ -71,7 +71,7 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/Integration-Testing-Framework/sikuli/examples'</span>)
 <span class="kw">from</span> open_new_project <span class="kw">import</span> open_new_project
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
@@ -79,7 +79,7 @@ sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/lin
     helper = TestHelper(<span class="str">"restart_flex"</span>)
 
     helper.Type(<span class="str">"t"</span>, KeyModifier.CTRL | KeyModifier.ALT, time=<span class="dig">2</span>)
-    helper.Type(<span class="str">"/home/vagrant/linux_setup/sikuli/examples/restart_flex.sh &amp;&amp; exit"</span> + Key.ENTER)
+    helper.Type(<span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/restart_flex.sh &amp;&amp; exit"</span> + Key.ENTER)
 
     <span class="cmt"># If the 'hello' project shows up as the last opened project,
 </span>    <span class="cmt"># just press enter

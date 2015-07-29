@@ -1,7 +1,7 @@
 #!/bin/bash
 #sleep 30s
 rm -Rf /home/vagrant/.local/share/fieldworks/Projects/hel*
-for D in `find /home/vagrant/linux_setup/sikuli/*.sikuli -type d`
+for D in `find /home/vagrant/Integration-Testing-Framework/sikuli/*.sikuli -type d`
 do
 	ps cax | grep mono > /dev/null
 	if [ $? -eq 0 ]; then

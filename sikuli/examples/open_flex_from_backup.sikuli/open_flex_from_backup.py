@@ -1,6 +1,6 @@
 from sikuli import *
 import sys
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
 from test_helper import TestHelper
 from Regionplus import Regionplus
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-for D in `find /home/vagrant/linux_setup/sikuli/*.sikuli -type d`
+for D in `find /home/vagrant/Integration-Testing-Framework/sikuli/*.sikuli -type d`
 do
         echo Running $D ...
         sikuli $D

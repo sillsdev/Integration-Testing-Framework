@@ -72,12 +72,12 @@
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> sys
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/linux_setup/sikuli/examples'</span>)
+sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/Integration-Testing-Framework/sikuli/examples'</span>)
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 <span class="kw">import</span> open_flex_from_backup, check_change
 
 helper = TestHelper(<span class="str">"run_tests_from_backups"</span>)
-folder = <span class="str">"/home/vagrant/linux_setup/sikuli/examples/images_for_comparison/"</span>
+folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"</span>
 
 <span class="cmt"># Open Tagbanwa
 </span>open_flex_from_backup.open_backup(<span class="str">"/vagrant/flex projects/Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup"</span>, True)

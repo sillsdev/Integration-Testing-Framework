@@ -1,6 +1,6 @@
 from sikuli import *
 import sys, os, subprocess
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
 from test_helper import TestHelper
 
 open_project_helper = TestHelper("open_flex")
@@ -14,10 +14,10 @@ def open_handler(event):
 def green_handler(event):
     open_project_helper.write_fail("An error has occurred (green), trying to open existing project")
     event.region.stopObserver()
-    #os.system(". /home/vagrant/linux_setup/flex/flex_restart.sh")
-    #subprocess.call(["sudo", "/home/vagrant/linux_setup/flex/flex_restart.sh"], shell=True)
-    #subprocess.Popen("sudo -u vagrant /home/vagrant/linux_setup/flex/flex_restart.sh")
-    os.system("sudo /home/vagrant/linux_setup/flex/memory_clean.sh")
+    #os.system(". /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
+    #subprocess.call(["sudo", "/home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh"], shell=True)
+    #subprocess.Popen("sudo -u vagrant /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
+    os.system("sudo /home/vagrant/Integration-Testing-Framework/flex/memory_clean.sh")
     open_project_helper.restart_flex()
     open_project_helper.write("Successfully restarted flex.")  
 

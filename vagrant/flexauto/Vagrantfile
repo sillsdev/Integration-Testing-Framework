@@ -55,12 +55,12 @@ Vagrant.configure(2) do |config|
 
    config.vm.provision "shell", inline: <<-SHELL
 
-	sudo git clone http://github.com/rrmhearts/linux_setup 
+	sudo git clone http://github.com/rrmhearts/Integration-Testing-Framework 
 	sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
 	
 	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
-	sudo expect linux_setup/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
-	#sudo expect linux_setup/flex/fwapp_install.exp 2>> /vagrant/error_log
+	sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
+	#sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
 	sudo apt-get -y install fieldworks-l10n-*
 	
 	### Could be done in autostart script - it exists, but needs to finish before sikuli starts
@@ -72,11 +72,11 @@ Vagrant.configure(2) do |config|
 	### Set permissions and ownership on /home/vagrant
 	#sudo find . -name '.*' -prune -o -exec chmod u=rwx,g=rx,o=r {} +
 	#sudo find . -name '.*' -prune -o -exec chown -R vagrant . {} +
-	sudo chown -R vagrant /home/vagrant/linux_setup
+	sudo chown -R vagrant /home/vagrant/Integration-Testing-Framework
 	
 	### Set autostart programs
 	sudo mkdir /home/vagrant/.config/autostart/
-	sudo cp /home/vagrant/linux_setup/scripts/autostart/*.desktop /home/vagrant/.config/autostart/
+	sudo cp /home/vagrant/Integration-Testing-Framework/scripts/autostart/*.desktop /home/vagrant/.config/autostart/
 	sudo chown -R vagrant /home/vagrant/.config/autostart
 	 
    SHELL

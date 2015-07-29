@@ -1,5 +1,5 @@
 from sikuli import *
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
 from open_new_project import open_new_project
 from test_helper import TestHelper
 
@@ -7,7 +7,7 @@ def restart_flex():
     helper = TestHelper("restart_flex")
     helper.write("restarting flex")
     helper.Type("t", KeyModifier.CTRL | KeyModifier.ALT, time=5)
-    helper.Type("sudo /home/vagrant/linux_setup/sikuli/examples/restart_flex.sh && exit" + Key.ENTER)
+    helper.Type("sudo /home/vagrant/Integration-Testing-Framework/sikuli/examples/restart_flex.sh && exit" + Key.ENTER)
 
     # If the 'hello' project shows up as the last opened project,
     # just press enter
