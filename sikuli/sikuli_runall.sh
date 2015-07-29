@@ -1,7 +1,7 @@
 #!/bin/bash
 #sleep 30s
 rm -Rf /home/vagrant/.local/share/fieldworks/Projects/hel*
-./sikuli_no_remove_runall.sh
+/home/vagrant/Integration-Testing-Framework/sikuli/sikuli_no_remove_runall.sh
 #for D in `find /home/vagrant/Integration-Testing-Framework/sikuli/*.sikuli -type d`
 #do
 #	ps cax | grep mono > /dev/null
