@@ -1,12 +1,11 @@
+# Integration-Testing-Framework
+Project to store files related to automating testing for SIL Software on Linux and Windows
+
 Contributors
 * SIL LS Dev Team
 * Ryan McCoppin
 * Jessica Dawson
 * Karl Rogers
- 
-
-# Integration-Testing-Framework
-Project to store files related to automating testing for SIL Software on Linux
 
 Packaging a Vagrant Box: 
 C:\Users\mccoppinR>vagrant package --base box_to_package
