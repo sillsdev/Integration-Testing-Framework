@@ -82,10 +82,9 @@
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 
 examples = os.path.dirname(getBundlePath())
-sikuli_dir = os.path.dirname(examples)
 <span class="kw">if</span> examples <span class="kw">not</span> <span class="kw">in</span> sys.path: sys.path.append(examples)
-<span class="kw">if</span> (sikuli_dir + <span class="str">"/test_and_log"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:
-    sys.path.append(sikuli_dir + <span class="str">"/test_and_log"</span>)
+<span class="kw">if</span> (examples + <span class="str">"/test_and_log"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:
+    sys.path.append(examples + <span class="str">"/test_and_log"</span>)
 <span class="kw">from</span> yattag <span class="kw">import</span> Doc
 
 <span class="kw">class</span> TestHelper:

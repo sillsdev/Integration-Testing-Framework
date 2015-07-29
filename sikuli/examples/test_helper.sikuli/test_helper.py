@@ -10,10 +10,9 @@ import time
 from sikuli import *
 
 examples = os.path.dirname(getBundlePath())
-sikuli_dir = os.path.dirname(examples)
 if examples not in sys.path: sys.path.append(examples)
-if (sikuli_dir + "/test_and_log") not in sys.path:
-    sys.path.append(sikuli_dir + "/test_and_log")
+if (examples + "/test_and_log") not in sys.path:
+    sys.path.append(examples + "/test_and_log")
 from yattag import Doc
 
 class TestHelper:
