@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=sh /home/vagrant/linux_setup/sikuli/sikuli_wait_runall.sh
+Exec=sh /home/vagrant/Integration-Testing-Framework/sikuli/sikuli_wait_runall.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

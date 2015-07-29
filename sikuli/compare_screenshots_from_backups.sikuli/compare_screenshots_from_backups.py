@@ -1,12 +1,12 @@
 from sikuli import *
 import sys
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples')
+sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples')
 from test_helper import TestHelper
 import open_flex_from_backup, check_change
 
 helper = TestHelper("run_tests_from_backups")
-folder = "/home/vagrant/linux_setup/sikuli/examples/images_for_comparison/"
-backups_folder = "/home/vagrant/linux_setup/flex/projects/"
+folder = "/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"
+backups_folder = "/home/vagrant/Integration-Testing-Framework/flex/projects/"
 
 # Open Tagbanwa
 open_flex_from_backup.open_backup(backups_folder + "Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup", True)

@@ -6,7 +6,7 @@ import sys
 import webbrowser
 import subprocess
 
-sys.path.insert(0, '/home/vagrant/linux_setup/sikuli/examples/test_and_log')
+sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_and_log')
 from yattag import Doc
 
 #

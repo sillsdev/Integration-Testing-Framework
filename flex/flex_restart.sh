@@ -12,7 +12,7 @@ else
 fi
 (fieldworks-flex &)
 
-sikuli ~/linux_setup/sikuli/examples/1_open_flex_existing.sikuli
+sikuli ~/Integration-Testing-Framework/sikuli/examples/1_open_flex_existing.sikuli
 echo "Sikuli ran " $?
 #sleep 20 # with & one line up?
 
