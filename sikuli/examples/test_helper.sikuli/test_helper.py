@@ -1,18 +1,14 @@
 from __future__ import with_statement
+from a_setup import *
+from sikuli import *
 import glob
-import os
 import platform
 import shutil
-import sys
 import time
 
 
-from sikuli import *
-
-examples = os.path.dirname(getBundlePath()) + "/examples"
-if examples not in sys.path: sys.path.append(examples)
-if (examples + "/test_and_log") not in sys.path:
-    sys.path.append(examples + "/test_and_log")
+if wd + "/examples/test_and_log" not in sys.path:
+    sys.path.append(wd + "/examples/test_and_log")
 from yattag import Doc
 
 class TestHelper:

@@ -1,10 +1,6 @@
-import os
-import sys
-wd = os.path.dirname(getBundlePath())
-if (wd + "/examples") not in sys.path: sys.path.append(wd + "/examples")
-
-from flex_regions import *
+import a_setup
 from test_helper import TestHelper
+from flex_regions import *
 
 # Setup
 helper = TestHelper("help_about")

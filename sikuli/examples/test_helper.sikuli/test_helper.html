@@ -71,20 +71,16 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> __future__ <span class="kw">import</span> with_statement
+<span class="kw">from</span> a_setup <span class="kw">import</span> *
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
 <span class="kw">import</span> glob
-<span class="kw">import</span> os
 <span class="kw">import</span> platform
 <span class="kw">import</span> shutil
-<span class="kw">import</span> sys
 <span class="kw">import</span> time
 
 
-<span class="kw">from</span> sikuli <span class="kw">import</span> *
-
-examples = os.path.dirname(getBundlePath()) + <span class="str">"/examples"</span>
-<span class="kw">if</span> examples <span class="kw">not</span> <span class="kw">in</span> sys.path: sys.path.append(examples)
-<span class="kw">if</span> (examples + <span class="str">"/test_and_log"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:
-    sys.path.append(examples + <span class="str">"/test_and_log"</span>)
+<span class="kw">if</span> wd + <span class="str">"/examples/test_and_log"</span> <span class="kw">not</span> <span class="kw">in</span> sys.path:
+    sys.path.append(wd + <span class="str">"/examples/test_and_log"</span>)
 <span class="kw">from</span> yattag <span class="kw">import</span> Doc
 
 <span class="kw">class</span> TestHelper:
