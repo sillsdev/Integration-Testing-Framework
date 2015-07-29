@@ -127,7 +127,7 @@ Vagrant.configure(2) do |config|
 	#                  To be run once. Please package the machine at this point.
 	#                  Also, change default desktop from unity to gnome!
 	
-	# sudo git clone http://github.com/rrmhearts/Integration-Testing-Framework 
+	# sudo git clone http://github.com/sillsdev/Integration-Testing-Framework 
 	# sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
 	
 	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.

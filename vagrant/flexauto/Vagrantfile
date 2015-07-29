@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
 
    config.vm.provision "shell", inline: <<-SHELL
 
-	sudo git clone http://github.com/rrmhearts/Integration-Testing-Framework 
+	sudo git clone http://github.com/sillsdev/Integration-Testing-Framework 
 	sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
 	
 	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
