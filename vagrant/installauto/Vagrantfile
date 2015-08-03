@@ -14,8 +14,8 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   #config.vm.box = "chrisvire/precise64"
   config.vm.box = "hashicorp/precise64"
+  config.ssh.password="vagrant"
 
-  config.vm.name = "itf_base_box"
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -45,20 +45,14 @@ Vagrant.configure(2) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  config.ssh.password="vagrant"
   config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
+
+  # Display the VirtualBox GUI when booting the machine
     vb.gui = true
+    vb.name = "itf_base_box"
     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
 
-  #   # Customize the amount of memory on the VM:
+  # Customize the amount of memory on the VM:
     vb.memory = "1024"
   end
   
