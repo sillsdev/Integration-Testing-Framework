@@ -116,6 +116,9 @@ Vagrant.configure(2) do |config|
 	sudo echo user-session=gnome-fallback >> /etc/lightdm/lightdm.conf
 	sudo echo autologin-user=vagrant >> /etc/lightdm/lightdm.conf
 
+	# Prevent prompting for Ubuntu upgrades
+	sudo sed -i 's/Prompt=.*/Prompt=never/' /etc/update-manager/release-upgrades
+
 	sudo echo deb http://packages.sil.org/ubuntu precise main >> /etc/apt/sources.list
 	sudo echo deb http://packages.sil.org/ubuntu precise-experimental main >> /etc/apt/sources.list
 	wget http://packages.sil.org/sil.gpg -O- | sudo apt-key add -
