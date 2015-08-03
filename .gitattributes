@@ -1,0 +1,5 @@
+# Enable sane line ending behavior to avoid Linux/Windows mismatches
+* text=auto
+
+# Binary files that should be ignored with regards to line endings
+*.png binary
