@@ -60,6 +60,7 @@ Vagrant.configure(2) do |config|
 	sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
 	
 	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
+	sudo echo "debconf debconf/frontend select Readline" | sudo debconf-set-selections
 	sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
 	#sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
 	sudo apt-get -y install fieldworks-l10n-*
