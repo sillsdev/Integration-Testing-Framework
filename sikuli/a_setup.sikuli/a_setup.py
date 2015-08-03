@@ -20,8 +20,10 @@ import sys
 myOS = Env.getOS()
 if myOS == OS.LINUX:
     wd = os.path.dirname(getBundlePath())
+    # addImagePath(/* linux image directory */)
 elif myOS == OS.WINDOWS:
     wd = os.path.dirname(os.path.dirname(getBundlePath()))
+    # addImagePath(/* windows image directory */)
 else:
     print "Unsupported OS."
     exit(1)

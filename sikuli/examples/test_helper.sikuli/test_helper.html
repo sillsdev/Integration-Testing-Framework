@@ -265,8 +265,11 @@
 </span>        <span class="kw">elif</span> os.path.isfile(img):
             <span class="kw">return</span> img
 
-        <span class="cmt"># Look in all the sys.path dirs to see if it's there
-</span>        <span class="kw">for</span> dir <span class="kw">in</span> sys.path:
+        <span class="cmt"># Look in all the SIKULI_IMAGE_PATH dirs to see if it's there
+</span>        image_dirs = list(getImagePath())
+        image_dirs.insert(<span class="dig">0</span>, getBundlePath())
+        <span class="kw">for</span> dir <span class="kw">in</span> image_dirs:
+            <span class="kw">print</span> dir
             <span class="kw">if</span> dir[-<span class="dig">1</span>] != <span class="str">'/'</span>:
                 dir = dir + <span class="str">'/'</span>
             <span class="cmt"># If found, return the full path

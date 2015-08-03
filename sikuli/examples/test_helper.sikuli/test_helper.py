@@ -193,8 +193,11 @@ class TestHelper:
         elif os.path.isfile(img):
             return img
         
-        # Look in all the sys.path dirs to see if it's there
-        for dir in sys.path:
+        # Look in all the SIKULI_IMAGE_PATH dirs to see if it's there
+        image_dirs = list(getImagePath())
+        image_dirs.insert(0, getBundlePath())
+        for dir in image_dirs:
+            print dir
             if dir[-1] != '/':
                 dir = dir + '/'
             # If found, return the full path

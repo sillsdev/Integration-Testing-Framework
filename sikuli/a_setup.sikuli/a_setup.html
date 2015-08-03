@@ -92,9 +92,11 @@
 </span>myOS = Env.getOS()
 <span class="kw">if</span> myOS == OS.LINUX:
     wd = os.path.dirname(getBundlePath())
-<span class="kw">elif</span> myOS == OS.WINDOWS:
+    <span class="cmt"># addImagePath(/* linux image directory */)
+</span><span class="kw">elif</span> myOS == OS.WINDOWS:
     wd = os.path.dirname(os.path.dirname(getBundlePath()))
-<span class="kw">else</span>:
+    <span class="cmt"># addImagePath(/* windows image directory */)
+</span><span class="kw">else</span>:
     <span class="kw">print</span> <span class="str">"Unsupported OS."</span>
     exit(<span class="dig">1</span>)
 
