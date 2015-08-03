@@ -100,7 +100,8 @@ Vagrant.configure(2) do |config|
 
 	# Use for VirtualBox 4.3.28. Please update for your version of VB
 	VB_VERSION='4.3.28'	
-	sudo apt-get install linux-headers-generic build-essential dkms
+	sudo apt-get -y install linux-headers-generic build-essential dkms
+	sudo apt-get -y install linux-headers-$(uname -r)
 	wget http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
 	sudo mkdir /media/VBoxGuestAdditions
 	sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
