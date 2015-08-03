@@ -1,0 +1,41 @@
+img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 400px;
+}
+td:nth-child(1), th:nth-child(1) {
+    width: 10%;
+}
+td:nth-child(2), th:nth-child(2) {
+    width: 10%;
+}
+td:nth-child(3), th:nth-child(3) {
+	width: 10%
+}
+td:nth-child(4), th:nth-child(4) {
+    width: 35%
+}
+td:nth-child(5), th:nth-child(5) {
+    width: 35%;
+}
+
+table {
+	position: relative;
+    table-layout: fixed;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    max-height: 100vh;
+}
+
+tbody tr:hover {
+    background: #eee;
+}
+
+.table-header {
+	position: fixed;
+}
+
+//tbody {display: block;}
+//thead tr {display: block;}

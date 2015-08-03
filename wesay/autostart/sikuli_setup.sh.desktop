@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/vagrant/Integration-Testing-Framework/sikuli/sikuli_setup.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Sikuli Setup
+Name=Sikuli Setup
+Comment[en_US]=
+Comment=
