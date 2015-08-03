@@ -96,11 +96,11 @@ Vagrant.configure(2) do |config|
 	sudo apt-get -y install sikuli-ide
 	sudo apt-get -y install git
 	sudo apt-get -y install git-gui
-	#sudo dpkg-reconfigure --frontend=readline --priority=critical debconf
 	sudo apt-get -y install expect
 	sudo apt-get -y install expect-dev
 	sudo apt-get install -y gnome-shell
 	sudo apt-get -f -y install
+	sudo echo "debconf debconf/frontend select Readline" | sudo debconf-set-selections
 	
 	sudo apt-get -y install linux-headers-generic build-essential dkms
 	sudo apt-get -y install linux-headers-$(uname -r)
