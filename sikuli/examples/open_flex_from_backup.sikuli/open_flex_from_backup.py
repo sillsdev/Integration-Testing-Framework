@@ -24,7 +24,7 @@ def open_backup(path, flex_is_open):
     else:
         # Not sure if this line is needed...
         #subprocess.Popen("fieldworks-flex &")
-        helper.Click(Pattern("Restoreaproj.png").similar(0.89), 
+        helper.Click(Pattern("icon_Restoreaproj.png").similar(0.89), 
             "Couldn't find 'Restore a project from a backup file...'")
         
     # Goal: Find the backup
