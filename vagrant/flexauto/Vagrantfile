@@ -68,6 +68,9 @@ Vagrant.configure(2) do |config|
 	
 	### Language libraries
 	sudo apt-get -y install fieldworks-l10n-*
+
+	### Install French keyboard (and keep English keyboard)
+	gsettings set org.gnome.libgnomekbd.keyboard layouts "['us', 'fr']"
 	
 	### Could be done in autostart script - it exists, but needs to finish before sikuli starts
 	sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel
