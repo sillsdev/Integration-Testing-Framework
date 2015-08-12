@@ -118,6 +118,26 @@ class TestHelper:
         except:
             raise
 
+    def Wait(self, thing, wait_time, fail_message, give_up=True,
+             restart=False, success_message=None, time=2):
+
+        try:
+            match = wait(thing, wait_time)
+            if success_message:
+                self.write(success_message)
+            wait(time)
+            return match
+        except FindFailed:
+            self.write_fail(fail_message)
+            self.write_html_row("Appearance", thing)
+            if restart:
+                self.restart_flex()
+            if give_up:
+                exit()
+            return None
+        except:
+            raise
+
     def Exists(self, thing, fail_message, give_up=True, restart=False,
                success_message=None):
 

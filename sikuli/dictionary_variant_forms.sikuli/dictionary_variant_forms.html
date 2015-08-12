@@ -1,0 +1,145 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>dictionary_variant_forms.sikuli</h2> <a href="dictionary_variant_forms.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> a_setup
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+
+helper = TestHelper(<span class="str">"help_about"</span>)
+
+<span class="cmt"># Opening
+</span><span class="cmt">#############
+</span>
+<span class="cmt"># Filter for "agbas"
+</span>helper.Click(<img src="LexiconEdit-1.png" />, <span class="str">"'Lexicon Edit' not found"</span>, time=<span class="dig">10</span>)
+helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>)
+helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>)
+paste(<span class="str">"agbas"</span>)
+<span class="skw">type</span>(Key.ENTER)
+<span class="skw">wait</span>(<span class="dig">15</span>)
+
+<span class="cmt"># Open Configure menu
+</span>helper.Click(<img src="Tools.png" />, <span class="str">"'Tools' menu not found"</span>)
+helper.Click(<img src="Configure.png" />, <span class="str">"'Configure' menu not found"</span>)
+helper.Click(Pattern(<img src="Dictionary-1.png" />).similar(<span class="dig">0.95</span>), <span class="str">"'Dictionary...' menu not found"</span>)
+
+<span class="cmt"># Switch to Stem-based
+</span><span class="kw">if</span> <span class="kw">not</span> exists(<img src="1439408395678.png" />):
+    helper.Click(Pattern(<img src="1439408329695.png" />).targetOffset(-<span class="dig">54</span>,<span class="dig">0</span>), <span class="str">"Drop down menu next to 'Manage Views' not found"</span>)
+    helper.Click(<img src="Stembased.png" />, <span class="str">"'Stem-based' not found"</span>)
+
+<span class="cmt"># Uncheck all check boxes
+</span>main_entry = helper.Find(<img src="MainEntrv.png" />, <span class="str">"'Main Entry' not found"</span>)
+<span class="skw">click</span>(main_entry)
+
+<span class="cmt"># Get the region under and to the right of Main Entry
+</span>under = main_entry.below()
+rightt = main_entry.right()
+myregion = Region(under.getX(), under.getY(),
+    under.getW() + rightt.getW(), under.getH())
+
+<span class="kw">while</span> <span class="kw">not</span> myregion.exists(<img src="MinorEntrv.png" />):
+    <span class="kw">while</span> myregion.exists(Pattern(<img src="1439410798330.png" />).similar(<span class="dig">0.85</span>)):
+        myregion.<span class="skw">click</span>(Pattern(<img src="1439410798330.png" />).similar(<span class="dig">0.85</span>))
+    <span class="skw">type</span>(Key.PAGE_DOWN)
+<span class="kw">while</span> myregion.exists(Pattern(<img src="1439410798330.png" />).similar(<span class="dig">0.85</span>)):
+        myregion.<span class="skw">click</span>(Pattern(<img src="1439410798330.png" />).similar(<span class="dig">0.85</span>))
+
+<span class="cmt"># Check the Variant Forms boxes
+</span><span class="kw">while</span> <span class="kw">not</span> exists(<img src="VariantForms.png" />):
+    <span class="skw">type</span>(Key.PAGE_UP)
+<span class="skw">click</span>(<img src="VariantForms.png" />)
+variant_forms = helper.Find(<img src="1439412239108.png" />, <span class="str">"'Variant Forms' not found"</span>)
+focus_region = variant_forms
+
+<span class="cmt"># This assumes all the "Variant Forms" options (expanded), and
+</span><span class="cmt"># "Etymology" (collapsed) are on the same screen, with no scrolling.
+</span><span class="kw">while</span> <span class="kw">not</span> focus_region.exists(<img src="Etvmoloav.png" />):
+    <span class="cmt"># Check box if unchecked
+</span>    <span class="kw">if</span> <span class="kw">not</span> focus_region.exists(Pattern(<img src="1439410798330.png" />).similar(<span class="dig">0.85</span>)):
+        <span class="skw">type</span>(Key.SPACE)
+    <span class="cmt"># Move focus region down 16 px
+</span>    focus_region = focus_region.offset(Location(<span class="dig">0</span>, <span class="dig">16</span>))
+    <span class="skw">type</span>(Key.DOWN)
+
+helper.Click(Pattern(<img src="OK.png" />).similar(<span class="dig">0.95</span>), <span class="str">"'OK' button not found"</span>)
+
+<span class="cmt"># Go to Dictionary view and wait (up to 30 seconds) for it to load
+</span>helper.Click(Pattern(<img src="Dictionary.png" />).similar(<span class="dig">0.90</span>), <span class="str">"'Dictionary' not found"</span>)
+helper.Wait(<img src="MainDictiona.png" />, <span class="dig">30</span>, <span class="str">"Dictionary loading timed out"</span>)
+
+<span class="cmt"># Goal
+</span><span class="cmt">###############
+</span>helper.Exists(<img src="frvarFreeVar.png" />, <span class="str">"Variant Forms dictionary view incorrect"</span>)
+helper.write_success()
+</pre>
+</body>
+</html>
