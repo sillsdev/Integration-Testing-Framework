@@ -1,4 +1,5 @@
 from sikuli import *
+from a_setup import *
 
 #
 # This class provides the same wrapper methods as TestHelper,
@@ -10,10 +11,9 @@ from sikuli import *
 # argument to the Regionplus constructor must be the TestHelper
 # (use a None placeholder if not providing a TestHelper.)
 #
-# Regionplus copies default arguments to wrapper functions
-# from its TestHelper when the TestHelper is set. Note that
-# these defaults can be overwritten afterwards, and different
-# arguments can always be given at each method call.
+# time_default, giveup_default, restart_default, successmsg_default
+# all configure default behavior for the wrapper methods.
+# They are set in a_setup, and can be modified there.
 #
 
 class Regionplus(Region):
@@ -22,29 +22,23 @@ class Regionplus(Region):
         Region.__init__(self, *args)
         self.helper = test_helper
 
-        if self.helper:
-            self.time_default = self.helper.time_default
-            self.giveup_default = self.helper.giveup_default
-            self.restart_default = self.helper.restart_default
-            self.successmsg_default = self.helper.successmsg_default
-        else:
-            self.time_default = 1
-            self.giveup_default = True
-            self.restart_default = False
-            self.successmsg_default = None
-
     def set_helper(self, test_helper):
         self.helper = test_helper
-        if self.helper:
-            self.time_default = self.helper.time_default
-            self.giveup_default = self.helper.giveup_default
-            self.restart_default = self.helper.restart_default
-            self.successmsg_default = self.helper.successmsg_default
-        
 
-    def Click(self, thing, fail_message, give_up=self.giveup_default,
-              restart=self.restart_default,
-              success_message=self.successmsg_default, time=self.time_default):
+    # Wrapper methods:
+    # Return True on success, False on FindFailed error;
+    # in relevant cases, return instead a Match object on success,
+    # None on error.
+    # In case of success, wait the number of seconds specified by time.
+    # Log errors in both text and html logs. If a success message
+    # is given, log success in text log.
+    # If give_up is True, exit the script using exit() on failure.
+    # If restart is True, FLEx is restarted on failure.
+
+
+    def Click(self, thing, fail_message, give_up=giveup_default,
+              restart=restart_default,
+              success_message=successmsg_default, time=time_default):
         try:
             self.click(thing)
             if success_message:
@@ -63,9 +57,9 @@ class Regionplus(Region):
         except:
             raise
     
-    def DoubleClick(self, thing, fail_message, give_up=self.giveup_default,
-                    restart=self.restart_default,
-                    success_message=self.successmsg_default, time=self.time_default):
+    def DoubleClick(self, thing, fail_message, give_up=giveup_default,
+                    restart=restart_default,
+                    success_message=successmsg_default, time=time_default):
         try:
             self.doubleClick(thing)
             if success_message:
@@ -84,9 +78,9 @@ class Regionplus(Region):
         except:
             raise
     
-    def Find(self, thing, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    def Find(self, thing, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
         try:
             match = self.find(thing)
             if success_message:
@@ -105,9 +99,9 @@ class Regionplus(Region):
         except:
             raise
 
-    def Wait(self, thing, wait_time, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    def Wait(self, thing, wait_time, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
 
         try:
             match = self.wait(thing, wait_time)
@@ -127,9 +121,9 @@ class Regionplus(Region):
         except:
             raise
 
-    def Exists(self, thing, fail_message, give_up=self.giveup_default,
-               restart=self.restart_default,
-               success_message=self.successmsg_default, time=self.time_default):
+    def Exists(self, thing, fail_message, give_up=giveup_default,
+               restart=restart_default,
+               success_message=successmsg_default, time=time_default):
         if self.exists(thing):
             if success_message:
                 self.helper.write(success_message)

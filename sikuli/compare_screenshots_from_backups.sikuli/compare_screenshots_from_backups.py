@@ -1,5 +1,6 @@
 from sikuli import *
 import a_setup
+a_setup.restart_default = True
 from test_helper import TestHelper
 import open_flex_from_backup, check_change
 

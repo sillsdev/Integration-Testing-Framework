@@ -11,17 +11,15 @@ import time
 # Sikuli functions (click, doubleClick, type, find, wait, exists).
 # One instance of a TestHelper should be created for each test.
 #
-# Member variables intended for configuration when necessary:
-#
 # time_default, giveup_default, restart_default, successmsg_default
-# all configure default behavior for the wrappers methods (see
+# all configure default behavior for the wrapper methods (see
 # comment above the methods for a description of the individual
-# variables.)
+# variables.) They are set in a_setup, and can be modified there.
 #
-# test_failed keeps track of whether or not a failure has been logged.
-# It is set to True whenever one of the wrapper methods fails,
-# but can also be set manually.
-#
+# The instance variable test_failed keeps track of whether or not a
+# failure has been logged. It is set to True whenever one of the
+# wrapper methods fails, but can also be set manually.
+# 
 
 
 if wd + "/examples/test_and_log" not in sys.path:
@@ -38,12 +36,6 @@ class TestHelper:
         self.folder = log_folder
         self.test = test_name
         self.test_failed = False
-
-        # Set defaults for wrapper methods
-        self.time_default = 1
-        self.giveup_default = True
-        self.restart_default = False
-        self.successmsg_default = None
 
         # Determine which OS we're on
         self.os = Env.getOS()
@@ -84,9 +76,9 @@ class TestHelper:
     # If give_up is True, exit the script using exit() on failure.
     # If restart is True, FLEx is restarted on failure.
 
-    def Click(self, thing, fail_message, give_up=self.giveup_default,
-              restart=self.restart_default,
-              success_message=self.successmsg_default, time=self.time_default):
+    def Click(self, thing, fail_message, give_up=giveup_default,
+              restart=restart_default,
+              success_message=successmsg_default, time=time_default):
         try:
             click(thing)
             if success_message:
@@ -104,10 +96,10 @@ class TestHelper:
         except:
             raise
 
-    def DoubleClick(self, thing, fail_message, give_up=self.giveup_default,
-                    restart=self.restart_default,
-                    success_message=self.successmsg_default,
-                    time=self.time_default):
+    def DoubleClick(self, thing, fail_message, give_up=giveup_default,
+                    restart=restart_default,
+                    success_message=successmsg_default,
+                    time=time_default):
         try:
             doubleClick(thing)
             if success_message:
@@ -125,13 +117,13 @@ class TestHelper:
         except:
             raise
 
-    def Type(self, text, modifiers=0, time=self.time_default):
+    def Type(self, text, modifiers=0, time=time_default):
         type(text, modifiers)
         wait(time)
 
-    def Find(self, thing, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    def Find(self, thing, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
         try:
             match = find(thing)
             if success_message:
@@ -149,9 +141,9 @@ class TestHelper:
         except:
             raise
 
-    def Wait(self, thing, wait_time, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    def Wait(self, thing, wait_time, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
 
         try:
             match = wait(thing, wait_time)
@@ -170,9 +162,9 @@ class TestHelper:
         except:
             raise
 
-    def Exists(self, thing, fail_message, give_up=self.giveup_default,
-               restart=self.restart_default,
-               success_message=self.successmsg_default):
+    def Exists(self, thing, fail_message, give_up=giveup_default,
+               restart=restart_default,
+               success_message=successmsg_default):
 
         if exists(thing):
             if success_message:
@@ -250,7 +242,6 @@ class TestHelper:
         image_dirs = list(getImagePath())
         image_dirs.insert(0, getBundlePath())
         for dir in image_dirs:
-            print dir
             if dir[-1] != '/':
                 dir = dir + '/'
             # If found, return the full path

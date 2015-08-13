@@ -100,6 +100,15 @@
     <span class="kw">print</span> <span class="str">"Unsupported OS."</span>
     exit(<span class="dig">1</span>)
 
+<span class="cmt"># Set defaults for wrapper methods in TestHelper and Regionplus.
+</span><span class="cmt"># If you want to modify these defaults within your program,
+</span><span class="cmt"># do so *before* importing TestHelper/Regionplus, otherwise the
+</span><span class="cmt"># new value will not be used.
+</span>time_default = <span class="dig">1</span>
+giveup_default = True
+restart_default = False
+successmsg_default = None
+
 <span class="cmt"># Put the examples directory in sys.path.
 </span><span class="kw">if</span> (wd + <span class="str">"/examples"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:
     sys.path.append(wd + <span class="str">"/examples"</span>)

@@ -83,17 +83,15 @@
 </span><span class="cmt"># Sikuli functions (click, doubleClick, type, find, wait, exists).
 </span><span class="cmt"># One instance of a TestHelper should be created for each test.
 </span><span class="cmt">#
-</span><span class="cmt"># Member variables intended for configuration when necessary:
-</span><span class="cmt">#
 </span><span class="cmt"># time_default, giveup_default, restart_default, successmsg_default
-</span><span class="cmt"># all configure default behavior for the wrappers methods (see
+</span><span class="cmt"># all configure default behavior for the wrapper methods (see
 </span><span class="cmt"># comment above the methods for a description of the individual
-</span><span class="cmt"># variables.)
+</span><span class="cmt"># variables.) They are set in a_setup, and can be modified there.
 </span><span class="cmt">#
-</span><span class="cmt"># test_failed keeps track of whether or not a failure has been logged.
-</span><span class="cmt"># It is set to True whenever one of the wrapper methods fails,
-</span><span class="cmt"># but can also be set manually.
-</span><span class="cmt">#
+</span><span class="cmt"># The instance variable test_failed keeps track of whether or not a
+</span><span class="cmt"># failure has been logged. It is set to True whenever one of the
+</span><span class="cmt"># wrapper methods fails, but can also be set manually.
+</span><span class="cmt"># 
 </span>
 
 <span class="kw">if</span> wd + <span class="str">"/examples/test_and_log"</span> <span class="kw">not</span> <span class="kw">in</span> sys.path:
@@ -110,12 +108,6 @@
         self.folder = log_folder
         self.test = test_name
         self.test_failed = False
-
-        <span class="cmt"># Set defaults for wrapper methods
-</span>        self.time_default = <span class="dig">1</span>
-        self.giveup_default = True
-        self.restart_default = False
-        self.successmsg_default = None
 
         <span class="cmt"># Determine which OS we're on
 </span>        self.os = Env.getOS()
@@ -156,9 +148,9 @@
 </span>    <span class="cmt"># If give_up is True, exit the script using exit() on failure.
 </span>    <span class="cmt"># If restart is True, FLEx is restarted on failure.
 </span>
-    <span class="kw">def</span> Click(self, thing, fail_message, give_up=self.giveup_default,
-              restart=self.restart_default,
-              success_message=self.successmsg_default, time=self.time_default):
+    <span class="kw">def</span> Click(self, thing, fail_message, give_up=giveup_default,
+              restart=restart_default,
+              success_message=successmsg_default, time=time_default):
         <span class="kw">try</span>:
             <span class="skw">click</span>(thing)
             <span class="kw">if</span> success_message:
@@ -176,10 +168,10 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=self.giveup_default,
-                    restart=self.restart_default,
-                    success_message=self.successmsg_default,
-                    time=self.time_default):
+    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=giveup_default,
+                    restart=restart_default,
+                    success_message=successmsg_default,
+                    time=time_default):
         <span class="kw">try</span>:
             <span class="skw">doubleClick</span>(thing)
             <span class="kw">if</span> success_message:
@@ -197,13 +189,13 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Type(self, text, modifiers=<span class="dig">0</span>, time=self.time_default):
+    <span class="kw">def</span> Type(self, text, modifiers=<span class="dig">0</span>, time=time_default):
         <span class="skw">type</span>(text, modifiers)
         <span class="skw">wait</span>(time)
 
-    <span class="kw">def</span> Find(self, thing, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    <span class="kw">def</span> Find(self, thing, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
         <span class="kw">try</span>:
             match = <span class="skw">find</span>(thing)
             <span class="kw">if</span> success_message:
@@ -221,9 +213,9 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Wait(self, thing, wait_time, fail_message, give_up=self.giveup_default,
-             restart=self.restart_default,
-             success_message=self.successmsg_default, time=self.time_default):
+    <span class="kw">def</span> Wait(self, thing, wait_time, fail_message, give_up=giveup_default,
+             restart=restart_default,
+             success_message=successmsg_default, time=time_default):
 
         <span class="kw">try</span>:
             match = <span class="skw">wait</span>(thing, wait_time)
@@ -242,9 +234,9 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Exists(self, thing, fail_message, give_up=self.giveup_default,
-               restart=self.restart_default,
-               success_message=self.successmsg_default):
+    <span class="kw">def</span> Exists(self, thing, fail_message, give_up=giveup_default,
+               restart=restart_default,
+               success_message=successmsg_default):
 
         <span class="kw">if</span> exists(thing):
             <span class="kw">if</span> success_message:
@@ -322,7 +314,6 @@
 </span>        image_dirs = list(getImagePath())
         image_dirs.insert(<span class="dig">0</span>, getBundlePath())
         <span class="kw">for</span> dir <span class="kw">in</span> image_dirs:
-            <span class="kw">print</span> dir
             <span class="kw">if</span> dir[-<span class="dig">1</span>] != <span class="str">'/'</span>:
                 dir = dir + <span class="str">'/'</span>
             <span class="cmt"># If found, return the full path

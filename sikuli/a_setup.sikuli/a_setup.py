@@ -28,6 +28,15 @@ else:
     print "Unsupported OS."
     exit(1)
 
+# Set defaults for wrapper methods in TestHelper and Regionplus.
+# If you want to modify these defaults within your program,
+# do so *before* importing TestHelper/Regionplus, otherwise the
+# new value will not be used.
+time_default = 1
+giveup_default = True
+restart_default = False
+successmsg_default = None
+
 # Put the examples directory in sys.path.
 if (wd + "/examples") not in sys.path:
     sys.path.append(wd + "/examples")

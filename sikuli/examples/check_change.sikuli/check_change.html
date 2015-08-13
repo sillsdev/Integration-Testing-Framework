@@ -81,22 +81,22 @@
 
     <span class="cmt"># Opening
 </span>    <span class="cmt">###############
-</span>    helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>, restart=True)
-    LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, time=<span class="dig">10</span>, restart=True)
-    helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>, restart=True)
-    helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>, restart=True)
+</span>    helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+    LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, time=<span class="dig">10</span>)
+    helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>)
+    helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>)
     paste(word)
 
     <span class="cmt"># Now the 'Filter for' box is up, so if we can't click something
 </span>    <span class="cmt"># we should restart Flex
-</span>    helper.Click(Pattern(<img src="W_holeitem.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">0</span>), <span class="str">"'Whole item' option not found"</span>, restart=True)
-    helper.Click(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.85</span>), <span class="str">"OK button not found"</span>, time=<span class="dig">10</span>, restart=True)
+</span>    helper.Click(Pattern(<img src="W_holeitem.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">0</span>), <span class="str">"'Whole item' option not found"</span>)
+    helper.Click(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.85</span>), <span class="str">"OK button not found"</span>, time=<span class="dig">10</span>)
     <span class="cmt"># 'Filter for' box is gone now, word should be selected automatically
 </span>
 
     <span class="cmt"># Create a region inside the 'Entry' panel
 </span>    entry_header = helper.Find(<img src="9Entry.png" />,
-        <span class="str">"'Entry' field not found in right panel"</span>, restart=True)
+        <span class="str">"'Entry' field not found in right panel"</span>)
     below_region = entry_header.below()
     right_region = entry_header.right()
     entry_region = Region(below_region.getX(), below_region.getY(),
@@ -117,48 +117,48 @@
 </span>    helper = TestHelper(<span class="str">"check_text_change"</span>)
     set_flex_helper(helper)
 
-    helper.Click(<img src="TUTextsWord.png" />, <span class="str">"Couldn't find 'Texts &amp; Words' button"</span>, restart=True)
-    LEFT_SIDEBAR.Click(<img src="InterlinearT.png" />, <span class="str">"Couldn't find 'Interlinear Texts' button"</span>, restart=True)
+    helper.Click(<img src="TUTextsWord.png" />, <span class="str">"Couldn't find 'Texts &amp; Words' button"</span>)
+    LEFT_SIDEBAR.Click(<img src="InterlinearT.png" />, <span class="str">"Couldn't find 'Interlinear Texts' button"</span>)
 
     <span class="cmt"># Find the menu to search for text
-</span>    column_menu = helper.Find(<img src="Show.png" />, <span class="str">"Couldn't find 'Show All'"</span>, restart=True)
+</span>    column_menu = helper.Find(<img src="Show.png" />, <span class="str">"Couldn't find 'Show All'"</span>)
     column_menu = Regionplus(helper, column_menu.right())
     <span class="kw">if</span> <span class="kw">not</span> column_menu.Click(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>),
-        <span class="str">"Couldn't find arrow for drop-down menu, trying to expand column"</span>, give_up=False):
+        <span class="str">"Couldn't find arrow for drop-down menu, trying to expand column"</span>, give_up=False, restart=False):
 
         <span class="cmt"># Click on hopefully a different test, so the view of our text will reset
 </span>        helper.Click(Pattern(<img src="Show.png" />).targetOffset(<span class="dig">0</span>, <span class="dig">30</span>),
-            <span class="str">"Couldn't find 'Show All'"</span>, time=<span class="dig">3</span>, restart=True)
+            <span class="str">"Couldn't find 'Show All'"</span>, time=<span class="dig">3</span>)
 
         <span class="cmt"># Drag out the column so the arrow is visible
 </span>        <span class="kw">while</span> <span class="kw">not</span> column_menu.exists(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>)):
-            drag_point = helper.Find(Pattern(<img src="1436455824256.png" />).targetOffset(<span class="dig">8</span>,<span class="dig">0</span>), <span class="str">"Couldn't find point to drag out column"</span>, time=<span class="dig">2</span>, restart=True)
-            drop_point = helper.Find(Pattern(<img src="Title.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Couldn't find 'Title'"</span>, restart=True)
+            drag_point = helper.Find(Pattern(<img src="1436455824256.png" />).targetOffset(<span class="dig">8</span>,<span class="dig">0</span>), <span class="str">"Couldn't find point to drag out column"</span>, time=<span class="dig">2</span>)
+            drop_point = helper.Find(Pattern(<img src="Title.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Couldn't find 'Title'"</span>)
             <span class="skw">dragDrop</span>(drag_point, drop_point)
 
         <span class="cmt"># Click the arrow
 </span>        column_menu.Click(Pattern(<img src="1436391324903.png" />).similar(<span class="dig">0.90</span>),
-            <span class="str">"Couldn't find arrow for drop-down menu even after expanding column"</span>, restart=True)
+            <span class="str">"Couldn't find arrow for drop-down menu even after expanding column"</span>)
 
-    helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>, restart=True)
+    helper.Click(<img src="lterfor.png" />, <span class="str">"'Filter for' button not found"</span>)
     paste(text)
 
     <span class="cmt"># Now the 'Filter for' box is up, so if we can't click something
 </span>    <span class="cmt"># we should restart Flex
-</span>    helper.Click(Pattern(<img src="W_holeitem.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">0</span>), <span class="str">"'Whole item' option not found"</span>, restart=True)
-    helper.Click(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.85</span>), <span class="str">"OK button not found"</span>, time=<span class="dig">10</span>, restart=True)
+</span>    helper.Click(Pattern(<img src="W_holeitem.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">0</span>), <span class="str">"'Whole item' option not found"</span>)
+    helper.Click(Pattern(<img src="OK-1.png" />).similar(<span class="dig">0.85</span>), <span class="str">"OK button not found"</span>, time=<span class="dig">10</span>)
     <span class="cmt"># 'Filter for' box is gone now, text should be selected automatically
 </span>
     <span class="cmt"># Create a region inside the 'Text' panel
 </span>    text_header = helper.Find(Pattern(<img src="1439476758260.png" />).similar(<span class="dig">0.90</span>),
-        <span class="str">"'Text' field not found in right panel"</span>, restart=True)
+        <span class="str">"'Text' field not found in right panel"</span>)
     below_region = text_header.below()
     right_region = text_header.right()
     text_region = Regionplus(helper, below_region.getX(),
                              below_region.getY(),
                              below_region.getW() + right_region.getW(),
                              below_region.getH())
-    text_region.Click(<img src="PrintView.png" />, <span class="str">" Couldn't find 'Print View' tab"</span>, restart=True)
+    text_region.Click(<img src="PrintView.png" />, <span class="str">" Couldn't find 'Print View' tab"</span>)
 
     <span class="cmt"># Goal
 </span>    <span class="cmt">###############
@@ -175,18 +175,18 @@
 </span>    helper = TestHelper(<span class="str">"check_dictionary_change"</span>)
     set_flex_helper(helper)
 
-    helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>, restart=True)
+    helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
     <span class="cmt"># First make sure all entries are showing
-</span>    LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, time=<span class="dig">10</span>, restart=True)
+</span>    LEFT_SIDEBAR.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, time=<span class="dig">10</span>)
     <span class="kw">if</span> <span class="kw">not</span> exists(Pattern(<img src="ieadwordShow.png" />).similar(<span class="dig">0.90</span>)):
-        helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>, restart=True)
-        helper.Click(Pattern(<img src="Headword-1.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">0</span>,<span class="dig">50</span>), <span class="str">"Couldn't find 'Headword'"</span>, time=<span class="dig">15</span>, restart=True)
+        helper.Click(Pattern(<img src="LexemeForm.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">23</span>), <span class="str">"'Lexeme Form' column not found"</span>)
+        helper.Click(Pattern(<img src="Headword-1.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">0</span>,<span class="dig">50</span>), <span class="str">"Couldn't find 'Headword'"</span>, time=<span class="dig">15</span>)
 
-    LEFT_SIDEBAR.Click(<img src="ElDictionary.png" />, <span class="str">"Couldn't find 'Dictionary' button"</span>, time=<span class="dig">20</span>, restart=True)
+    LEFT_SIDEBAR.Click(<img src="ElDictionary.png" />, <span class="str">"Couldn't find 'Dictionary' button"</span>, time=<span class="dig">20</span>)
 
     <span class="cmt"># Goal
 </span>    <span class="cmt">#################
-</span>    TOOLBARS.Click(<img src="1436456695019.png" />, <span class="str">"Couldn't find 'First' button -- may already be at start"</span>, give_up=False)
+</span>    TOOLBARS.Click(<img src="1436456695019.png" />, <span class="str">"Couldn't find 'First' button -- may already be at start"</span>, give_up=False, restart=False)
     <span class="kw">if</span> exists(Pattern(compare_path).similar(<span class="dig">0.9</span>)):
         helper.write(<span class="str">"Dictionary looks the same as in provided image"</span>)
     <span class="kw">else</span>:
