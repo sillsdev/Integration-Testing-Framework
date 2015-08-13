@@ -1,4 +1,7 @@
 from sikuli import *
+import a_setup    # set some defaults to be sure we don't enter a loop
+a_setup.giveup_default = True
+a_setup.restart_default = False
 from open_new_project import open_new_project
 from test_helper import TestHelper
 
@@ -11,7 +14,7 @@ def restart_flex():
     # If the 'hello' project shows up as the last opened project,
     # just press enter
     if helper.Exists(Pattern("iii3iuE.png").similar(0.90), "'hello' project not showing as last opened, " +
-              "trying to open via 'Open a project'", give_up=False):
+              "trying to open via 'Open a project'", give_up=False, restart=False):
         helper.write("Success")
         helper.Type(Key.ENTER, time=20)
 

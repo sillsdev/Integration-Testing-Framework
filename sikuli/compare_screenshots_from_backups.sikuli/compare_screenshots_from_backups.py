@@ -2,7 +2,8 @@ from sikuli import *
 import a_setup
 a_setup.restart_default = True
 from test_helper import TestHelper
-import open_flex_from_backup, check_change
+a_setup.restart_default = False
+import check_change, open_flex_from_backup
 
 helper = TestHelper("run_tests_from_backups")
 folder = "/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"

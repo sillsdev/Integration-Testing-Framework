@@ -74,7 +74,8 @@
 <span class="kw">import</span> a_setup
 a_setup.restart_default = True
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
-<span class="kw">import</span> open_flex_from_backup, check_change
+a_setup.restart_default = False
+<span class="kw">import</span> check_change, open_flex_from_backup
 
 helper = TestHelper(<span class="str">"run_tests_from_backups"</span>)
 folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"</span>

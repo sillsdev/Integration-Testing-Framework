@@ -71,6 +71,9 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
+<span class="kw">import</span> a_setup    <span class="cmt"># set some defaults to be sure we don't enter a loop</span>
+a_setup.giveup_default = True
+a_setup.restart_default = False
 <span class="kw">from</span> open_new_project <span class="kw">import</span> open_new_project
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
@@ -83,7 +86,7 @@
     <span class="cmt"># If the 'hello' project shows up as the last opened project,
 </span>    <span class="cmt"># just press enter
 </span>    <span class="kw">if</span> helper.Exists(Pattern(<img src="iii3iuE.png" />).similar(<span class="dig">0.90</span>), <span class="str">"'hello' project not showing as last opened, "</span> +
-              <span class="str">"trying to open via 'Open a project'"</span>, give_up=False):
+              <span class="str">"trying to open via 'Open a project'"</span>, give_up=False, restart=False):
         helper.write(<span class="str">"Success"</span>)
         helper.Type(Key.ENTER, time=<span class="dig">20</span>)
 

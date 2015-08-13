@@ -32,6 +32,8 @@ else:
 # If you want to modify these defaults within your program,
 # do so *before* importing TestHelper/Regionplus, otherwise the
 # new value will not be used.
+# Please change them back after importing TestHelper/Regionplus
+# to prevent any negative side effects.
 time_default = 1
 giveup_default = True
 restart_default = False
