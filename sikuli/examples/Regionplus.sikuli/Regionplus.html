@@ -72,18 +72,51 @@
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 
+<span class="cmt">#
+</span><span class="cmt"># This class provides the same wrapper methods as TestHelper,
+</span><span class="cmt"># but when acting on regions rather than the whole screen.
+</span><span class="cmt"># A TestHelper instance must be set for the logging to occur,
+</span><span class="cmt"># either on initialization or with the set_helper method.
+</span><span class="cmt"># A Regionplus object can be created from any Region object
+</span><span class="cmt"># or by any other Region constructor; the first
+</span><span class="cmt"># argument to the Regionplus constructor must be the TestHelper
+</span><span class="cmt"># (use a None placeholder if not providing a TestHelper.)
+</span><span class="cmt">#
+</span><span class="cmt"># Regionplus copies default arguments to wrapper functions
+</span><span class="cmt"># from its TestHelper when the TestHelper is set. Note that
+</span><span class="cmt"># these defaults can be overwritten afterwards, and different
+</span><span class="cmt"># arguments can always be given at each method call.
+</span><span class="cmt">#
+</span>
 <span class="kw">class</span> Regionplus(Region):
 
     <span class="kw">def</span> __init__(self, test_helper, *args):
         Region.__init__(self, *args)
         self.helper = test_helper
 
+        <span class="kw">if</span> self.helper:
+            self.time_default = self.helper.time_default
+            self.giveup_default = self.helper.giveup_default
+            self.restart_default = self.helper.restart_default
+            self.successmsg_default = self.helper.successmsg_default
+        <span class="kw">else</span>:
+            self.time_default = <span class="dig">1</span>
+            self.giveup_default = True
+            self.restart_default = False
+            self.successmsg_default = None
+
     <span class="kw">def</span> set_helper(self, test_helper):
         self.helper = test_helper
+        <span class="kw">if</span> self.helper:
+            self.time_default = self.helper.time_default
+            self.giveup_default = self.helper.giveup_default
+            self.restart_default = self.helper.restart_default
+            self.successmsg_default = self.helper.successmsg_default
 
 
-    <span class="kw">def</span> Click(self, thing, fail_message, give_up=True, restart=False,
-              success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Click(self, thing, fail_message, give_up=self.giveup_default,
+              restart=self.restart_default,
+              success_message=self.successmsg_default, time=self.time_default):
         <span class="kw">try</span>:
             self.<span class="skw">click</span>(thing)
             <span class="kw">if</span> success_message:
@@ -102,8 +135,9 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=True, restart=False,
-                    success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> DoubleClick(self, thing, fail_message, give_up=self.giveup_default,
+                    restart=self.restart_default,
+                    success_message=self.successmsg_default, time=self.time_default):
         <span class="kw">try</span>:
             self.<span class="skw">doubleClick</span>(thing)
             <span class="kw">if</span> success_message:
@@ -122,8 +156,9 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Find(self, thing, fail_message, give_up=True, restart=False,
-             success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Find(self, thing, fail_message, give_up=self.giveup_default,
+             restart=self.restart_default,
+             success_message=self.successmsg_default, time=self.time_default):
         <span class="kw">try</span>:
             match = self.<span class="skw">find</span>(thing)
             <span class="kw">if</span> success_message:
@@ -142,8 +177,31 @@
         <span class="kw">except</span>:
             <span class="kw">raise</span>
 
-    <span class="kw">def</span> Exists(self, thing, fail_message, give_up=True, restart=False,
-               success_message=None, time=<span class="dig">1</span>):
+    <span class="kw">def</span> Wait(self, thing, wait_time, fail_message, give_up=self.giveup_default,
+             restart=self.restart_default,
+             success_message=self.successmsg_default, time=self.time_default):
+
+        <span class="kw">try</span>:
+            match = self.<span class="skw">wait</span>(thing, wait_time)
+            <span class="kw">if</span> success_message:
+                self.helper.write(success_message)
+            <span class="skw">wait</span>(time)
+            <span class="kw">return</span> match
+        <span class="kw">except</span> FindFailed:
+            <span class="kw">if</span> self.helper:
+                self.helper.write_fail(fail_message)
+                self.helper.write_html_row(<span class="str">"Appearance"</span>, thing)
+            <span class="kw">if</span> restart:
+                self.helper.restart_flex()
+            <span class="kw">if</span> give_up:
+                exit()
+            <span class="kw">return</span> None
+        <span class="kw">except</span>:
+            <span class="kw">raise</span>
+
+    <span class="kw">def</span> Exists(self, thing, fail_message, give_up=self.giveup_default,
+               restart=self.restart_default,
+               success_message=self.successmsg_default, time=self.time_default):
         <span class="kw">if</span> self.exists(thing):
             <span class="kw">if</span> success_message:
                 self.helper.write(success_message)

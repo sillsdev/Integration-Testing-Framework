@@ -6,6 +6,23 @@ import platform
 import shutil
 import time
 
+#
+# This class provides a logging system and wrappers for common
+# Sikuli functions (click, doubleClick, type, find, wait, exists).
+# One instance of a TestHelper should be created for each test.
+#
+# Member variables intended for configuration when necessary:
+#
+# time_default, giveup_default, restart_default, successmsg_default
+# all configure default behavior for the wrappers methods (see
+# comment above the methods for a description of the individual
+# variables.)
+#
+# test_failed keeps track of whether or not a failure has been logged.
+# It is set to True whenever one of the wrapper methods fails,
+# but can also be set manually.
+#
+
 
 if wd + "/examples/test_and_log" not in sys.path:
     sys.path.append(wd + "/examples/test_and_log")
@@ -21,6 +38,12 @@ class TestHelper:
         self.folder = log_folder
         self.test = test_name
         self.test_failed = False
+
+        # Set defaults for wrapper methods
+        self.time_default = 1
+        self.giveup_default = True
+        self.restart_default = False
+        self.successmsg_default = None
 
         # Determine which OS we're on
         self.os = Env.getOS()
@@ -52,13 +75,18 @@ class TestHelper:
     # Wrappers for click, type, etc
     #################################
 
-    # Return True on success, False on FindFailed error, after
-    # logging the error.
-    # If give_up is True, exits the script using exit() on failure.
+    # Return True on success, False on FindFailed error;
+    # in relevant cases, return instead a Match object on success,
+    # None on error.
+    # In case of success, wait the number of seconds specified by time.
+    # Log errors in both text and html logs. If a success message
+    # is given, log success in text log.
+    # If give_up is True, exit the script using exit() on failure.
     # If restart is True, FLEx is restarted on failure.
 
-    def Click(self, thing, fail_message, give_up=True, restart=False,
-              success_message=None, time=2):
+    def Click(self, thing, fail_message, give_up=self.giveup_default,
+              restart=self.restart_default,
+              success_message=self.successmsg_default, time=self.time_default):
         try:
             click(thing)
             if success_message:
@@ -76,8 +104,10 @@ class TestHelper:
         except:
             raise
 
-    def DoubleClick(self, thing, fail_message, give_up=True,
-                    restart=False, success_message=None, time=2):
+    def DoubleClick(self, thing, fail_message, give_up=self.giveup_default,
+                    restart=self.restart_default,
+                    success_message=self.successmsg_default,
+                    time=self.time_default):
         try:
             doubleClick(thing)
             if success_message:
@@ -95,12 +125,13 @@ class TestHelper:
         except:
             raise
 
-    def Type(self, text, modifiers=0, time=2):
+    def Type(self, text, modifiers=0, time=self.time_default):
         type(text, modifiers)
         wait(time)
 
-    def Find(self, thing, fail_message, give_up=True, restart=False,
-             success_message=None, time=2):
+    def Find(self, thing, fail_message, give_up=self.giveup_default,
+             restart=self.restart_default,
+             success_message=self.successmsg_default, time=self.time_default):
         try:
             match = find(thing)
             if success_message:
@@ -118,8 +149,9 @@ class TestHelper:
         except:
             raise
 
-    def Wait(self, thing, wait_time, fail_message, give_up=True,
-             restart=False, success_message=None, time=2):
+    def Wait(self, thing, wait_time, fail_message, give_up=self.giveup_default,
+             restart=self.restart_default,
+             success_message=self.successmsg_default, time=self.time_default):
 
         try:
             match = wait(thing, wait_time)
@@ -138,8 +170,9 @@ class TestHelper:
         except:
             raise
 
-    def Exists(self, thing, fail_message, give_up=True, restart=False,
-               success_message=None):
+    def Exists(self, thing, fail_message, give_up=self.giveup_default,
+               restart=self.restart_default,
+               success_message=self.successmsg_default):
 
         if exists(thing):
             if success_message:
