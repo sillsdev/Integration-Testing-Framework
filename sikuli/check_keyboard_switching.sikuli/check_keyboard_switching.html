@@ -1,0 +1,151 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>check_keyboard_switching.sikuli</h2> <a href="check_keyboard_switching.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> a_setup
+a_setup.giveup_default=False
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+<span class="kw">from</span> Regionplus <span class="kw">import</span> Regionplus
+a_setup.giveup_default=True
+
+<span class="cmt"># Note: if anything fails after the keyboard is set to French,
+</span><span class="cmt"># try to switch it back to English before shutting down.
+</span>
+helper = TestHelper(<span class="str">"check_keyboard_switching"</span>)
+helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+helper.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>, give_up=True)
+
+<span class="cmt"># If always_restart is on, restart when clicks fail even if
+</span><span class="cmt"># the dialog box is not supposed to be open.
+</span><span class="cmt"># (used when trying to set the keyboard back to English, when
+</span><span class="cmt"># trying to recover from another error.)
+</span><span class="kw">def</span> open_keyboard_selection(always_restart):
+    helper.Click(Pattern(<img src="Format.png" />).similar(<span class="dig">0.80</span>), <span class="str">"'Format' not found"</span>, give_up=True, restart=always_restart)
+    helper.Click(<img src="SetupWriting.png" />, <span class="str">"'Set up Writing Systems' not found in Format menu"</span>, give_up=True, restart=always_restart)
+    analysis = helper.Find(<img src="Analysis_Wri-1.png" />, <span class="str">"'Analysis Writing Systems' not found"</span>, restart=True)
+    Regionplus(helper, analysis.above().right()).Click(<img src="Modify.png" />,
+        <span class="str">"'Modify...' button not found above and to the right of 'Analysis Writing Systems'"</span>,
+        restart=True)
+    helper.Click(Pattern(<img src="f__AIII_l__l.png" />).similar(<span class="dig">0.80</span>), <span class="str">"'Keyboard' tab not found"</span>, restart=True)
+
+<span class="kw">def</span> close_keyboard_selection():
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">2</span>):
+        helper.Click(Pattern(<img src="OK.png" />).similar(<span class="dig">0.90</span>), <span class="str">"OK button not found"</span>, restart=True)
+
+<span class="kw">def</span> set_english_keyboard():
+    open_keyboard_selection(True)
+    helper.Click(<img src="EnqlishUSEnq.png" />, <span class="str">"English keyboard not found"</span>, restart=True)
+    close_keyboard_selection()
+
+<span class="kw">def</span> recover():
+    app_region = helper.Find(<img src="1438702584115.png" />, <span class="str">"'Applications' not found"</span>, restart=True)
+    exclude_height = <span class="dig">2</span> * app_region.getH()
+    screen_region = Region(<span class="dig">0</span>, exclude_height, SCREEN.getW(),
+                           SCREEN.getH() - exclude_height)
+
+    <span class="kw">while</span> screen_region.exists(Pattern(<img src="X.png" />).similar(<span class="dig">0.90</span>)):
+        helper.Click(Pattern(<img src="X.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Tried to close window"</span>, restart=True)
+    set_english_keyboard()
+    exit()
+
+
+<span class="cmt"># Set Vernacular keyboard to French
+</span>open_keyboard_selection(False)
+helper.Click(<img src="FrenchFrench.png" />, <span class="str">"French keyboard not found"</span>, restart=True)
+close_keyboard_selection()
+
+<span class="cmt"># Create new entry
+</span><span class="kw">if</span> <span class="kw">not</span> helper.Click(<img src="1435675185765.png" />, <span class="str">"'Create new lexical entry' button not found"</span>):
+    recover()
+paste(<span class="str">"asdfgh"</span>)
+<span class="kw">if</span> <span class="kw">not</span> helper.Click(Pattern(<img src="Gloss.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">10</span>,<span class="dig">21</span>), <span class="str">"'Gloss' field not found"</span>):
+    recover()
+paste(<span class="str">"hahaha"</span>)
+<span class="kw">if</span> <span class="kw">not</span> helper.Click(Pattern(<img src="Create.png" />).similar(<span class="dig">0.90</span>), <span class="str">"'Create' button not found"</span>, time=<span class="dig">3</span>):
+    recover()
+
+<span class="cmt"># Verify input languages
+</span><span class="kw">if</span> <span class="kw">not</span> helper.Click(Pattern(<img src="FreLexemeFON.png" />).targetOffset(<span class="dig">114</span>,<span class="dig">4</span>), <span class="str">"'Lexeme Form' field not found"</span>):
+    recover()
+Regionplus(helper, <span class="skw">find</span>(<img src="1438702584115.png" />).right()).Exists(<img src="Eh-1.png" />,
+    <span class="str">"Lexeme Form field input keyboard not in French"</span>)
+<span class="kw">if</span> <span class="kw">not</span> helper.Click(Pattern(<img src="EngNote.png" />).targetOffset(<span class="dig">94</span>,<span class="dig">1</span>), <span class="str">"'Note' field not found"</span>):
+    recover()
+Regionplus(helper, <span class="skw">find</span>(<img src="1438702584115.png" />).right()).Exists(<img src="Een-1.png" />,
+    <span class="str">"Note field input keyboard not in English"</span>)
+
+helper.write_success()
+
+<span class="cmt"># Change keyboard back to English to avoid side effects
+</span>set_english_keyboard()
+</pre>
+</body>
+</html>

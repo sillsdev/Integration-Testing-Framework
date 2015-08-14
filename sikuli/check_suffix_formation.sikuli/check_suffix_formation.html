@@ -1,0 +1,120 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>check_suffix_formation.sikuli</h2> <a href="check_suffix_formation.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> a_setup
+<span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
+<span class="kw">from</span> Regionplus <span class="kw">import</span> Regionplus
+
+helper = TestHelper(<span class="str">"check_suffix_formation"</span>)
+
+<span class="cmt"># Make sure the word exists
+</span>helper.Click(<img src="Lexicon.png" />, <span class="str">"Couldn't find 'Lexicon' button"</span>)
+helper.Click(<img src="LexiconEdit.png" />, <span class="str">"Couldn't find 'Lexicon Edit' button"</span>)
+helper.Exists(<img src="asdfghasdfgh.png" />, <span class="str">"'asdfgh' word does not exist"</span>)
+
+<span class="cmt"># Enter text if it's not there
+</span>helper.Click(<img src="VTexts6W0rc.png" />, <span class="str">"'Texts &amp; Words' not found"</span>)
+helper.Click(Pattern(<img src="Basehne.png" />).similar(<span class="dig">0.90</span>), <span class="str">"'Baseline' tab not found"</span>)
+helper.Click(<img src="1438706667507.png" />, <span class="str">"Blank space not found"</span>)    <span class="cmt"># Move cursor to blank space</span>
+<span class="kw">if</span> <span class="kw">not</span> exists(<img src="1439580090308.png" />):
+    paste(<span class="str">"asdfgh jjjj"</span>)
+
+<span class="cmt"># View Analyze tab, put jjjj in focus
+</span>helper.Click(Pattern(<img src="Analyze.png" />).similar(<span class="dig">0.90</span>), <span class="str">"'Analyze' tab not found"</span>)
+hover(<img src="1438706667507-2.png" />)    <span class="cmt"># Move to blank space so the hovertext doesn't appear</span>
+<span class="kw">if</span> <span class="kw">not</span> exists(Pattern(<img src="LJLoooLJLooo.png" />).similar(<span class="dig">0.80</span>)):
+    helper.Click(<img src="LukuboouLuku.png" />, <span class="str">"jjjj word not found"</span>)
+
+<span class="cmt"># Split word
+</span>helper.Click(Pattern(<img src="1438704084589.png" />).targetOffset(<span class="dig">4</span>,<span class="dig">2</span>), <span class="str">"'jjjj' not found on Morpheme line"</span>)
+<span class="skw">type</span>(<span class="str">"-"</span>)
+helper.Exists(Pattern(<img src="1438704193830.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Word not split into two morphemes"</span>)
+
+<span class="cmt"># Verify that second morpheme is a suffix
+</span>helper.Click(Pattern(<img src="LJLoooLJLooo-1.png" />).targetOffset(<span class="dig">10</span>,<span class="dig">0</span>), <span class="str">"Drop down menu not found"</span>)
+helper.Click(<img src="CreateNewEnt.png" />, <span class="str">"'Create New Entry' not found in drop down menu"</span>)
+<span class="skw">wait</span>(<span class="dig">2</span>)
+helper.Exists(Pattern(<img src="MorphemeType.png" />).similar(<span class="dig">0.90</span>), <span class="str">"Morpheme type not listed as '-suffix'"</span>)
+helper.Click(Pattern(<img src="Cancel.png" />).similar(<span class="dig">0.91</span>), <span class="str">"'Cancel' button not found"</span>, restart=True)
+
+<span class="cmt"># Put 'jjjj' back into one word so the test works next time
+</span><span class="cmt"># Maybe not necessary? Since a new project gets created every time
+</span><span class="cmt"># all scripts are run....
+</span>helper.Click(Pattern(<img src="1438704193830-1.png" />).targetOffset(-<span class="dig">37</span>,<span class="dig">1</span>), <span class="str">"Drop down menu not found"</span>)
+helper.Click(Pattern(<img src="1438706343069.png" />).similar(<span class="dig">0.95</span>).targetOffset(-<span class="dig">23</span>,<span class="dig">1</span>), <span class="str">"'jjjj' option not found in drop down menu"</span>)
+helper.Click(<img src="Lexicon-1.png" />, <span class="str">"'Lexicon' button not found"</span>)
+
+
+helper.write_success()
+</pre>
+</body>
+</html>

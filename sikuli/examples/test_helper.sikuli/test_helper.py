@@ -187,9 +187,9 @@ class TestHelper:
 
     def restart_flex(self):
         self.write_fail("Closing and restarting FLEx")
-        # os.system("sudo -u vagrant /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
         import restart_flex
         restart_flex.restart_flex()
+        exit()
 
     def get_os(self):
         return self.os

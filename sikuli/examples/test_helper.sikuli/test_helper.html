@@ -259,9 +259,9 @@
 
     <span class="kw">def</span> restart_flex(self):
         self.write_fail(<span class="str">"Closing and restarting FLEx"</span>)
-        <span class="cmt"># os.system("sudo -u vagrant /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
-</span>        <span class="kw">import</span> restart_flex
+        <span class="kw">import</span> restart_flex
         restart_flex.restart_flex()
+        exit()
 
     <span class="kw">def</span> get_os(self):
         <span class="kw">return</span> self.os
