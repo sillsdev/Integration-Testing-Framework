@@ -102,8 +102,14 @@
 
     <span class="cmt"># If a file with the given filename already exists, the Logger will
 </span>    <span class="cmt"># just keep writing to the end of that file.
-</span>    <span class="kw">def</span> __init__(self, test_name=<span class="str">""</span>, filename=<span class="str">"/vagrant/error_log"</span>,
-                 log_folder=<span class="str">"/vagrant/log"</span>):
+</span>    <span class="cmt"># filename is the path to the text log. If a file with the given
+</span>    <span class="cmt"># filename already exists, the Logger will just keep writing
+</span>    <span class="cmt"># to the end of that file.
+</span>    <span class="cmt"># log_folder is the path to the directory which stores the
+</span>    <span class="cmt"># html log and its assiocated images.
+</span>    <span class="kw">def</span> __init__(self, test_name=<span class="str">""</span>,
+                 filename=shared_folder + <span class="str">"/error_log"</span>,
+                 log_folder=shared_folder + <span class="str">"/log"</span>):
         self.file = filename
         self.folder = log_folder
         self.test = test_name
@@ -126,14 +132,14 @@
 
         <span class="cmt"># Add the CSS stylesheet to the log folder, if it's not there already.
 </span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(log_folder + <span class="str">"/log.css"</span>):
-            shutil.copyfile(<span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/log.css"</span>,
+            shutil.copyfile(home_folder + <span class="str">"/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/log.css"</span>,
                             log_folder + <span class="str">"/log.css"</span>)
 
         <span class="cmt"># Add the display_log script to /vagrant, if it's not there
 </span>        <span class="cmt"># (so it's accessible from the host machine)
-</span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(<span class="str">"/vagrant/display_log.py"</span>):
-            shutil.copyfile(<span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py"</span>,
-                            <span class="str">"/vagrant/display_log.py"</span>)
+</span>        <span class="kw">if</span> <span class="kw">not</span> os.path.exists(shared_folder + <span class="str">"/display_log.py"</span>):
+            shutil.copyfile(home_folder + <span class="str">"/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py"</span>,
+                            shared_folder + <span class="str">"/display_log.py"</span>)
 
     <span class="cmt">#################################
 </span>    <span class="cmt"># Wrappers for click, type, etc

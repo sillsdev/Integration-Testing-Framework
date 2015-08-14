@@ -30,8 +30,14 @@ class TestHelper:
 
     # If a file with the given filename already exists, the Logger will
     # just keep writing to the end of that file.
-    def __init__(self, test_name="", filename="/vagrant/error_log",
-                 log_folder="/vagrant/log"):
+    # filename is the path to the text log. If a file with the given
+    # filename already exists, the Logger will just keep writing
+    # to the end of that file.
+    # log_folder is the path to the directory which stores the
+    # html log and its assiocated images.
+    def __init__(self, test_name="",
+                 filename=shared_folder + "/error_log",
+                 log_folder=shared_folder + "/log"):
         self.file = filename
         self.folder = log_folder
         self.test = test_name
@@ -54,14 +60,14 @@ class TestHelper:
         
         # Add the CSS stylesheet to the log folder, if it's not there already.
         if not os.path.exists(log_folder + "/log.css"):
-            shutil.copyfile("/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/log.css",
+            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/log.css",
                             log_folder + "/log.css")
 
         # Add the display_log script to /vagrant, if it's not there
         # (so it's accessible from the host machine)
-        if not os.path.exists("/vagrant/display_log.py"):
-            shutil.copyfile("/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py",
-                            "/vagrant/display_log.py")
+        if not os.path.exists(shared_folder + "/display_log.py"):
+            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py",
+                            shared_folder + "/display_log.py")
 
     #################################
     # Wrappers for click, type, etc

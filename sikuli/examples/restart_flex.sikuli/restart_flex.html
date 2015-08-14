@@ -80,8 +80,13 @@ a_setup.restart_default = False
 <span class="kw">def</span> restart_flex():
     helper = TestHelper(<span class="str">"restart_flex"</span>)
     helper.write(<span class="str">"restarting flex"</span>)
-    helper.Type(<span class="str">"t"</span>, KeyModifier.CTRL | KeyModifier.ALT, time=<span class="dig">5</span>)
-    helper.Type(<span class="str">"sudo /home/vagrant/Integration-Testing-Framework/sikuli/examples/restart_flex.sh &amp;&amp; exit"</span> + Key.ENTER)
+    <span class="kw">if</span> a_setup.myOS == OS.LINUX:
+        helper.Type(<span class="str">"t"</span>, KeyModifier.CTRL | KeyModifier.ALT, time=<span class="dig">5</span>)
+        helper.Type(<span class="str">"sudo /home/vagrant/Integration-Testing-Framework/sikuli/examples/restart_flex.sh &amp;&amp; exit"</span> + Key.ENTER)
+    <span class="kw">else</span>:
+        <span class="skw">popup</span>(<span class="str">"Only able to restart FLEx on Linux!"</span>)
+        helper.write_fail(<span class="str">"Only able to restart FLEx on Linux!"</span>)
+        exit(<span class="dig">1</span>)
 
     <span class="cmt"># If the 'hello' project shows up as the last opened project,
 </span>    <span class="cmt"># just press enter

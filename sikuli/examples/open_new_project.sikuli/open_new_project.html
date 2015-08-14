@@ -71,8 +71,7 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
-<span class="kw">import</span> sys, os
-sys.path.insert(<span class="dig">0</span>, <span class="str">'/home/vagrant/Integration-Testing-Framework/sikuli/examples'</span>)
+<span class="kw">import</span> os
 <span class="kw">from</span> test_helper <span class="kw">import</span> TestHelper
 
 open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
@@ -86,8 +85,17 @@ open_project_helper = TestHelper(<span class="str">"open_flex"</span>)
 <span class="kw">def</span> green_handler(event):
     open_project_helper.write_fail(<span class="str">"An error has occurred (green), trying to open existing project"</span>)
     event.region.stopObserver()
+    <span class="cmt">#os.system(". /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
+</span>    <span class="cmt">#subprocess.call(["sudo", "/home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh"], shell=True)
+</span>    <span class="cmt">#subprocess.Popen("sudo -u vagrant /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
+</span>    <span class="kw">if</span> Env.getOS() == OS.LINUX:
+        os.system(<span class="str">"sudo /home/vagrant/Integration-Testing-Framework/scripts/memory_clean.sh"</span>)
+    <span class="kw">else</span>:
+        <span class="skw">popup</span>(<span class="str">"Only able to recover from green screen on Linux!"</span>)
+        helper.write_fail(<span class="str">"Only able to recover from green screen on Linux!"</span>)
+        exit(<span class="dig">1</span>)
     open_project_helper.restart_flex()
-
+    open_project_helper.write(<span class="str">"Successfully restarted flex."</span>)
 
 <span class="cmt"># Open Flex from the start screen
 </span><span class="kw">def</span> open_new_project(project_name=<span class="str">"hello"</span>):

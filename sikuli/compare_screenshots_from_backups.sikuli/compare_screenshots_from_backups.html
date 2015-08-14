@@ -78,8 +78,8 @@ a_setup.restart_default = False
 <span class="kw">import</span> check_change, open_flex_from_backup
 
 helper = TestHelper(<span class="str">"run_tests_from_backups"</span>)
-folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"</span>
-backups_folder = <span class="str">"/home/vagrant/Integration-Testing-Framework/flex/projects/"</span>
+folder = a_setup.home_folder + <span class="str">"/Integration-Testing-Framework/sikuli/examples/images_for_comparison/"</span>
+backups_folder = a_setup.home_folder + <span class="str">"/Integration-Testing-Framework/flex/projects/"</span>
 
 <span class="cmt"># Open Tagbanwa
 </span>open_flex_from_backup.open_backup(backups_folder + <span class="str">"Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup"</span>, True)

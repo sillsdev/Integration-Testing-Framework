@@ -16,7 +16,12 @@ def green_handler(event):
     #os.system(". /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
     #subprocess.call(["sudo", "/home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh"], shell=True)
     #subprocess.Popen("sudo -u vagrant /home/vagrant/Integration-Testing-Framework/flex/flex_restart.sh")
-    os.system("sudo /home/vagrant/Integration-Testing-Framework/scripts/memory_clean.sh")
+    if Env.getOS() == OS.LINUX:
+        os.system("sudo /home/vagrant/Integration-Testing-Framework/scripts/memory_clean.sh")
+    else:
+        popup("Only able to recover from green screen on Linux!")
+        helper.write_fail("Only able to recover from green screen on Linux!")
+        exit(1)
     open_project_helper.restart_flex()
     open_project_helper.write("Successfully restarted flex.")  
 

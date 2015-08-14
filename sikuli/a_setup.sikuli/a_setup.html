@@ -89,12 +89,17 @@
 
 <span class="cmt"># Get the folder right above the script's folder.
 </span><span class="cmt"># (aka the sikuli folder, with all the tests.)
+</span><span class="cmt"># Also get the path to the shared vagrant folder.
 </span>myOS = Env.getOS()
 <span class="kw">if</span> myOS == OS.LINUX:
     wd = os.path.dirname(getBundlePath())
+    shared_folder = <span class="str">"/vagrant"</span>
+    home_folder = <span class="str">"/home/vagrant"</span>
     <span class="cmt"># addImagePath(/* linux image directory */)
 </span><span class="kw">elif</span> myOS == OS.WINDOWS:
     wd = os.path.dirname(os.path.dirname(getBundlePath()))
+    shared_folder = <span class="str">"C:/vagrant"</span>
+    home_folder = <span class="str">"C:/Users/vagrant"</span>
     <span class="cmt"># addImagePath(/* windows image directory */)
 </span><span class="kw">else</span>:
     <span class="kw">print</span> <span class="str">"Unsupported OS."</span>

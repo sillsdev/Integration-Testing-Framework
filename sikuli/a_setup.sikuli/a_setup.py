@@ -17,12 +17,17 @@ import sys
 
 # Get the folder right above the script's folder.
 # (aka the sikuli folder, with all the tests.)
+# Also get the path to the shared vagrant folder.
 myOS = Env.getOS()
 if myOS == OS.LINUX:
     wd = os.path.dirname(getBundlePath())
+    shared_folder = "/vagrant"
+    home_folder = "/home/vagrant"
     # addImagePath(/* linux image directory */)
 elif myOS == OS.WINDOWS:
     wd = os.path.dirname(os.path.dirname(getBundlePath()))
+    shared_folder = "C:/vagrant"
+    home_folder = "C:/Users/vagrant"
     # addImagePath(/* windows image directory */)
 else:
     print "Unsupported OS."
