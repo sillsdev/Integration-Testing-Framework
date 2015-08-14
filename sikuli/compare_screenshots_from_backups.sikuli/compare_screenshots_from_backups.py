@@ -1,8 +1,9 @@
 from sikuli import *
-from a_setup import *
+import a_setup
 a_setup.restart_default = True
 from test_helper import TestHelper
 a_setup.restart_default = False
+from a_setup import *
 import check_change, open_flex_from_backup
 
 helper = TestHelper("run_tests_from_backups")

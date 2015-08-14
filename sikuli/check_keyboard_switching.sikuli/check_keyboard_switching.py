@@ -1,8 +1,9 @@
-from a_setup import *
+import a_setup
 a_setup.giveup_default=False
 from test_helper import TestHelper
 from Regionplus import Regionplus
 a_setup.giveup_default=True
+from a_setup import *
 
 # Note: if anything fails after the keyboard is set to French,
 # try to switch it back to English before shutting down.

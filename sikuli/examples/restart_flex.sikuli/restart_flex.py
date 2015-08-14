@@ -1,9 +1,10 @@
 from sikuli import *
-from a_setup import *    # set some defaults to be sure we don't enter a loop
+import a_setup    # set some defaults to be sure we don't enter a loop
 a_setup.giveup_default = True
 a_setup.restart_default = False
 from open_new_project import open_new_project
 from test_helper import TestHelper
+from a_setup import *
 
 def restart_flex():
     helper = TestHelper("restart_flex")
