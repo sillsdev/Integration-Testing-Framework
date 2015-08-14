@@ -1,4 +1,4 @@
-import a_setup
+from a_setup import *
 from test_helper import TestHelper
 from flex_regions import *
 

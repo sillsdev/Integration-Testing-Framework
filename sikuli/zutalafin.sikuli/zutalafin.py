@@ -1,6 +1,6 @@
 from sikuli import *
 
-import a_setup
+from a_setup import *
 from test_helper import TestHelper
 
 helper = TestHelper("close_flex")

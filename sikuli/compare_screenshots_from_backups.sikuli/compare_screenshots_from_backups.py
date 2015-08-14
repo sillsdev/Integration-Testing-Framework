@@ -1,5 +1,5 @@
 from sikuli import *
-import a_setup
+from a_setup import *
 a_setup.restart_default = True
 from test_helper import TestHelper
 a_setup.restart_default = False

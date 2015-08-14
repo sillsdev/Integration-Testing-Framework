@@ -111,10 +111,15 @@
 </span><span class="cmt"># new value will not be used.
 </span><span class="cmt"># Please change them back after importing TestHelper/Regionplus
 </span><span class="cmt"># to prevent any negative side effects.
-</span>time_default = <span class="dig">1</span>
+</span>time_default = <span class="dig">3</span>
 giveup_default = True
 restart_default = False
 successmsg_default = None
+
+<span class="kw">import</span> sikuli
+<span class="kw">def</span> <span class="skw">wait</span>(n):
+    sikuli.<span class="skw">wait</span>(<span class="dig">3</span>*n)
+
 
 <span class="cmt"># Put the examples directory in sys.path.
 </span><span class="kw">if</span> (wd + <span class="str">"/examples"</span>) <span class="kw">not</span> <span class="kw">in</span> sys.path:

@@ -1,4 +1,4 @@
-import a_setup
+from a_setup import *
 a_setup.giveup_default=False
 from test_helper import TestHelper
 from Regionplus import Regionplus

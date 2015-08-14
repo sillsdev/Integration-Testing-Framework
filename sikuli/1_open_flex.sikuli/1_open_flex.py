@@ -1,5 +1,5 @@
 from sikuli import *
-import a_setup
+from a_setup import *
 import open_new_project
 
 open_new_project.open_new_project()

@@ -1,5 +1,5 @@
 from sikuli import *
-import a_setup    # set some defaults to be sure we don't enter a loop
+from a_setup import *    # set some defaults to be sure we don't enter a loop
 a_setup.giveup_default = True
 a_setup.restart_default = False
 from open_new_project import open_new_project

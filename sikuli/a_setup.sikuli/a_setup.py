@@ -39,10 +39,15 @@ else:
 # new value will not be used.
 # Please change them back after importing TestHelper/Regionplus
 # to prevent any negative side effects.
-time_default = 1
+time_default = 3
 giveup_default = True
 restart_default = False
 successmsg_default = None
+
+import sikuli
+def wait(n):
+    sikuli.wait(3*n)
+
 
 # Put the examples directory in sys.path.
 if (wd + "/examples") not in sys.path:
