@@ -9,6 +9,7 @@ from a_setup import *
 # try to switch it back to English before shutting down.
 
 helper = TestHelper("check_keyboard_switching")
+wait("Lexicon.png",300)
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
 helper.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button", give_up=True)
 

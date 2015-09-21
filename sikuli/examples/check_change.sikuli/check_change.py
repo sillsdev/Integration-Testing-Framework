@@ -9,6 +9,7 @@ def check_word(word, compare_path):
     
     # Opening
     ###############
+    wait("Lexicon.png",60)
     helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
     LEFT_SIDEBAR.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button", time=10)
     helper.Click(Pattern("LexemeForm.png").targetOffset(-52,23), "'Lexeme Form' column not found")
@@ -44,8 +45,9 @@ def check_text(text, compare_path):
     ###############
     helper = TestHelper("check_text_change")
     set_flex_helper(helper)
-    
+    wait("TUTextsWord.png", 60) 
     helper.Click("TUTextsWord.png", "Couldn't find 'Texts & Words' button")
+    LEFT_SIDEBAR.wait("InterlinearT.png",60)
     LEFT_SIDEBAR.Click("InterlinearT.png", "Couldn't find 'Interlinear Texts' button")
     
     # Find the menu to search for text
@@ -102,7 +104,7 @@ def check_dictionary(compare_path):
     ################
     helper = TestHelper("check_dictionary_change")
     set_flex_helper(helper)
-    
+    wait("Lexicon.png", 60)
     helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
     # First make sure all entries are showing
     LEFT_SIDEBAR.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button", time=10)

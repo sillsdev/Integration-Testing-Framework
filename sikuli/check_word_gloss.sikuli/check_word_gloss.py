@@ -5,6 +5,7 @@ from Regionplus import Regionplus
 helper = TestHelper("check_word_gloss")
 
 # Make sure the word exists
+wait("Lexicon.png",300)
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
 helper.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
 helper.Exists("asdfghasdfgh.png", "'asdfgh' word does not exist")

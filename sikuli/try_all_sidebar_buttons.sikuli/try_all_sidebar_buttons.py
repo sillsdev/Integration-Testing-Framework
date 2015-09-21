@@ -26,6 +26,7 @@ def stop_observer(event):
     
 # Opening
 ###############
+wait("Lexicon.png",300)
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
 first_region = Region(21,127,115,15)
 click(first_region.getCenter())

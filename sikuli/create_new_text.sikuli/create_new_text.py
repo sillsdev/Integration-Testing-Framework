@@ -10,6 +10,7 @@ set_flex_helper(helper)
 
 # Opening
 ##############
+wait("OTextsWord.png",300)
 helper.Click("OTextsWord.png", "Couldn't find 'Texts & Words' button")
 LEFT_SIDEBAR.Click("InterlinearT.png", "Couldn't find 'Interlinear Texts' button")
 TOOLBARS.Click(Pattern("1435693467339.png").similar(0.90), "Couldn't find 'Add new text' button")

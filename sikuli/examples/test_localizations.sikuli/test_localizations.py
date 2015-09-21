@@ -51,23 +51,28 @@ def run_test(language_idx):
     ################
 
     # Open Options popup
-    wait(2)
+    wait(5)
     type("1", KeyModifier.ALT)
     for i in range(7):
         type(Key.RIGHT)
+        wait(.5)
     for i in range(5):
         type(Key.DOWN)
+        wait(.5)
     helper.Type(Key.ENTER)
-
+    wait(.5)
     # Get to language drop-down menu
     type(Key.TAB)
+    wait(.5)
     type(Key.TAB)
-
+    wait(.5)
     # Get to the right language
     for i in range(len(languages)):
         type(Key.UP)
+        wait(.5)
     for i in range(language_idx):
         type(Key.DOWN)
+        wait(.5)
 
     type(Key.ENTER)
     wait(10)
@@ -107,19 +112,26 @@ def run_test(language_idx):
     type("1", KeyModifier.ALT)
     for i in range(7):
         type(Key.RIGHT)
+        wait(.5)
     for i in range(5):
         type(Key.DOWN)
+        wait(.5)
     helper.Type(Key.ENTER)
+    wait(.5)
     
     # Get to language drop-down menu
     type(Key.TAB)
+    wait(.5)
     type(Key.TAB)
+    wait(.5)
         
     # Get to the top of the list, then go down to English
     for i in range(len(languages)):
         type(Key.UP)
+        wait(.5)
     for i in range(languages.index("English")):
         type(Key.DOWN)
+        wait(.5)
     type(Key.ENTER)
     wait(40)
     

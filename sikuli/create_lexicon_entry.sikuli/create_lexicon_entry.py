@@ -11,15 +11,18 @@ set_flex_helper(helper)
 
 # Opening
 #############
+wait("Lexicon.png",300)
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
+LEFT_SIDEBAR.wait("LexiconEdit.png", 60)
 LEFT_SIDEBAR.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
 MID_TOOLBAR.Click("Headword.png", "Couldn't find Headword button")
 TOOLBARS.Click("1435675185765.png", "Couldn't find 'Create new lexical entry' button")
 
 # Goal
 #############
-helper.Type("cat" + Key.ENTER)
-
+helper.Type("cat")
+wait(10)
+helper.Type(Key.ENTER)
 Regionplus(helper, Region(147,101,537,692)).Exists("catcat.png",
     "Cannot find new 'cat' entry")
 

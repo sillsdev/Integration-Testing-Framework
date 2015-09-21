@@ -7,6 +7,8 @@ open_project_helper = TestHelper("open_flex")
 # Handlers for things appearing on-screen
 def open_handler(event):
     open_project_helper.write("Successfully opened flex.")
+    stopObserver()
+    wait(45)
     # Don't stop observer, to give it time to open before
     # the next script runs.
 
@@ -27,7 +29,8 @@ def green_handler(event):
 
 # Open Flex from the start screen
 def open_new_project(project_name="hello"):
-    
+
+    wait("Createanewpr.png", 300)
     open_project_helper.Click("Createanewpr.png", "Cannot find `Create a new project`")
     type(project_name)
     open_project_helper.Click("OK.png", "Cannot find `OK`")
@@ -38,7 +41,7 @@ def open_new_project(project_name="hello"):
         
     onAppear("1435347136957.png", open_handler)
     onAppear(Pattern("Anerrorhasoc.png").similar(0.90), green_handler)
-    observe(40)
+    observe(300)
     
     if open_project_helper.has_fail():
         open_project_helper.write_fail("Failed to open")

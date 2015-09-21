@@ -8,6 +8,7 @@ set_flex_helper(helper)
 
 # Opening
 #############
+TOOLBARS.wait("Help.png",300)
 TOOLBARS.Click("Help.png", "Help button not found")
 helper.Click("AboutLanguag.png", "About Language Explorer button not found")
 

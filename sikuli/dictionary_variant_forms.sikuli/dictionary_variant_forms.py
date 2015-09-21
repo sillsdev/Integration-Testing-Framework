@@ -7,6 +7,7 @@ helper = TestHelper("help_about")
 #############
 
 # Filter for "agbas"
+wait("LexiconEdit-1.png",300)
 helper.Click("LexiconEdit-1.png", "'Lexicon Edit' not found", time=10)
 helper.Click(Pattern("LexemeForm.png").targetOffset(-52,23), "'Lexeme Form' column not found")
 helper.Click("lterfor.png", "'Filter for' button not found")

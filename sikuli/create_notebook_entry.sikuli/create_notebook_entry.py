@@ -10,7 +10,9 @@ set_flex_helper(helper)
 
 # Opening
 ##############
+wait("Notebook5.png",300)
 helper.Click("Notebook5.png", "Couldn't find 'Notebook' button")
+LEFT_SIDEBAR.wait("RecordEdit.png",60)
 LEFT_SIDEBAR.Click("RecordEdit.png", "Couldn't find 'Record Edit' button")
 TOOLBARS.Click(Pattern("1435614864882.png").similar(0.96), "Couldn't find 'Create new record' button")
 

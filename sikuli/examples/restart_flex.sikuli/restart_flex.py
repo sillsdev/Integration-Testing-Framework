@@ -39,4 +39,4 @@ def restart_flex():
         else:
             helper.write_fail("'hello' project not found, quitting.")
             exit()
-    wait(2)
+    wait(180)

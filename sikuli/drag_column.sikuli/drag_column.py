@@ -10,6 +10,7 @@ set_flex_helper(helper)
 
 # Opening
 #############
+wait("Lexicon.png", 300)
 helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
 LEFT_SIDEBAR.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
 

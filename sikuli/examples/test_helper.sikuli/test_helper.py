@@ -201,7 +201,7 @@ class TestHelper:
     # Prepends the time and test name and appends a newline before writing to file.
     def write(self, line):
         with open(self.file, "a") as f:
-            f.write(time.strftime("%I:%M:%S %x") + " " + self.test + ": " + line + "\n")
+            f.write(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
 
     # Same as write, but internally remembers that the test failed.
     def write_fail(self, line):
@@ -265,7 +265,7 @@ class TestHelper:
         # Test name, Action, Expected, Screenshot
         with tag("tr"):
             with tag("td"):
-                text(time.strftime("%I:%M:%S %x"))
+                text(time.strftime("%H:%M:%S %x"))
             with tag("td"):
                 text(self.test)
             with tag("td"):

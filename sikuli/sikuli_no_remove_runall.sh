@@ -5,8 +5,8 @@ for D in `find /home/vagrant/Integration-Testing-Framework/sikuli/*.sikuli -type
 do
 	ps cax | grep mono > /dev/null
 	if [ $? -eq 0 ]; then
-	  echo Running $D ...
-	  echo Running $D ... >> /vagrant/error_log
+	  (echo -n `date +"%T"`; echo -n"" `date +"%D"`; echo "" Running $D ...)
+	  (echo -n `date +"%T"`; echo -n "" `date +"%D"`;echo "" Running $D ...) >> /vagrant/error_log
           sikuli $D
           rm /home/vagrant/*.png > /dev/null
 	else
