@@ -10,7 +10,7 @@ from javax.swing import (JFrame, JPanel, JLabel, ImageIcon, BorderFactory, JButt
 from java.awt import Color
 #/\ last 2 for show_PNG2, may be removed.
 
-class ImageGrabber:
+class ImageUpdater:
     def __init__(self, test_name=""):
         self.myOS = Env.getOS()
         print(self.myOS)
@@ -19,7 +19,7 @@ class ImageGrabber:
         self.make_hotkeys()
         #manually made new OS and temp/working folders
         # TODO Automate.
-        self.my_path = "/home/vagrant/image_grabber.sikuli"
+        self.my_path = "/home/vagrant/Integration-Testing-Framework/image_updater.sikuli"
         self.old_scripts_path = "/home/vagrant/Integration-Testing-Framework/sikuli/"
         self.new_scripts_path = "/home/vagrant/Integration-Testing-Framework/sikuli_windows/"
         self.temp_scripts_path = self.my_path+"/Integration-Testing-Framework/sikuli/"
@@ -53,7 +53,6 @@ class ImageGrabber:
     def make_sub_dir(self, directory_name):
         if not os.path.exists(self.temp_scripts_path+directory_name):
             #print("Making directory "+self.temp_scripts_path+directory_name)
-            wait(.25)
             os.makedirs(os.path.join(self.temp_scripts_path,directory_name))
 
     def recursive_make(self, folder=None):
@@ -99,8 +98,8 @@ class ImageGrabber:
         else:
             name = "sys.argv[0]"
             temp_file.write("import sys\n")
-        temp_file.write("from image_grabber import ImageGrabber\n")
-        temp_file.write('my_image_grabber = ImageGrabber('+name+')\n')
+        temp_file.write("from image_updater import ImageUpdater\n")
+        temp_file.write('my_image_updater = ImageUpdater('+name+')\n')
         temp_file.write('print("#######################\\nworking in :"+'+name+'+"\\n#######################")\n')
         # get all images from folder
         images = [s for s in os.listdir(os.path.join(self.old_scripts_path,existing_script_folder)) if s.endswith('.png')  or s.endswith('.jpeg') or s.endswith('.jpg')]
@@ -125,7 +124,7 @@ class ImageGrabber:
                             else:
                                 pass
                                 #print("----More than one similarity on a line----")
-                            temp_file.write(start_whites+'my_image_grabber.prompt("'+image+'", '+str(my_similarity)+', \"\"\"'+line_data+'\"\"\")\n')
+                            temp_file.write(start_whites+'my_image_updater.prompt("'+image+'", '+str(my_similarity)+', \"\"\"'+line_data+'\"\"\")\n')
                 temp_file.write(line)
                 line_num +=1
         old_file.close()
@@ -193,7 +192,7 @@ class ImageGrabber:
     #    height = int(h)
     #Region(L.getX()-width/2, L.getY()-height/2, width,height).highlight(1)
 
-    def my_capture(self, event):
+    def capture_new_image(self, event):
         print("capture an image")
         if self.showing_PNG:
             popup("Close all popups. The program cannot proceed unless they are closed.", "capturing ERROR")
@@ -308,7 +307,7 @@ class ImageGrabber:
     def make_hotkeys(self):
         Env.addHotkey(Key.F1, KeyModifier.SHIFT+KeyModifier.CTRL, self.show_instructions)
         Env.addHotkey(Key.F2, KeyModifier.SHIFT+KeyModifier.CTRL, self.show_image)
-        Env.addHotkey(Key.F3, KeyModifier.SHIFT+KeyModifier.CTRL, self.my_capture)
+        Env.addHotkey(Key.F3, KeyModifier.SHIFT+KeyModifier.CTRL, self.capture_new_image)
         Env.addHotkey(Key.F4, KeyModifier.SHIFT+KeyModifier.CTRL, self.show_capture)
         Env.addHotkey(Key.F5, KeyModifier.SHIFT+KeyModifier.CTRL, self.move_on)
         Env.addHotkey(Key.F6, KeyModifier.SHIFT+KeyModifier.CTRL, self.use_existing)
@@ -329,20 +328,23 @@ class ImageGrabber:
         temp_images = [s for s in os.listdir(os.path.join(self.temp_scripts_path,self.pwd)) if s.endswith('.png')  or s.endswith('.jpeg') or s.endswith('.jpg')]
         #TODO Copy old non-captured files.
 
-    def run_test(self):
-        print("running self test.")
-        exit(0)
-        make_hotkeys()
-        self.wd = self.temp_scripts_path
-        self.image_name = "smile.png" #--- parse image path for image name
-        prompt(self.image_name)
-        remove_hotkeys()
-
 #recursive loop for sikuli folders
 if __name__ == "__main__":
-    from image_grabber import ImageGrabber
-    my_image_grabber = ImageGrabber("test")
-    my_image_grabber.recursive_make() #This copies the files and folders to the temporary folder.
+    from image_updater import ImageUpdater
+    my_image_updater = ImageUpdater("test")
+    my_image_updater.recursive_make() #This copies the files and folders to the temporary folder.
+
+    # Make image_updater directory in temp_scripts_path/examples
+    my_image_updater.make_sub_dir("examples/image_updater.sikuli")
+    my_new_path = my_image_updater.temp_scripts_path+"examples/image_updater.sikuli"
+    # Copy all files from image_updater to new directory
+    source_files = os.listdir(my_image_updater.my_path)
+    for file in source_files:
+        if os.path.isfile(os.path.join(my_image_updater.my_path, file)):
+            old_file = os.path.join(my_image_updater.my_path,file)
+            new_file = os.path.join(my_new_path,file)
+            shutil.copyfile(old_file, new_file)
+
     # Run prompt scripts
     # Copy old scripts over prompt scripts
     # Test new script
