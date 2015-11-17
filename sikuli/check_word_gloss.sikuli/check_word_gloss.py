@@ -29,7 +29,7 @@ helper.Exists(Pattern("Luhukooo-1.png").similar(0.86), "'jjjj' word not in focus
 
 # View Analyze tab, make sure focus is kept
 helper.Click(Pattern("Analyze.png").similar(0.90), "'Analyze' tab not found")
-hover("1438706667507-1.png")    # Move to blank space so the hovertext doesn't appear
+hover("1438706667507.png")    # Move to blank space so the hovertext doesn't appear
 helper.Exists(Pattern("LJLoooLJLooo.png").similar(0.80), "'jjjj' word not in focus in Analyze tab")
 
 # Go back to Lexicon Edit

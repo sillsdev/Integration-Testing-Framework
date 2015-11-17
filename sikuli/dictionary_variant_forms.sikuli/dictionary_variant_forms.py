@@ -1,14 +1,23 @@
-from a_setup import *
+import a_setup
 from test_helper import TestHelper
+import open_flex_from_backup
 
-helper = TestHelper("help_about")
+
+helper = TestHelper("dictionary_variant_forms")
 
 # Opening
 #############
 
+backups_folder = a_setup.home_folder + "/Integration-Testing-Framework/flex/projects/"
+
+# Open Tagbanwa
+open_flex_from_backup.open_backup(backups_folder + "Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup", True)
+wait(60)
+
+
 # Filter for "agbas"
-wait("LexiconEdit-1.png",300)
-helper.Click("LexiconEdit-1.png", "'Lexicon Edit' not found", time=10)
+wait("LexiconEdit.png",300)
+helper.Click("LexiconEdit.png", "'Lexicon Edit' not found", time=10)
 helper.Click(Pattern("LexemeForm.png").targetOffset(-52,23), "'Lexeme Form' column not found")
 helper.Click("lterfor.png", "'Filter for' button not found")
 paste("agbas")
@@ -68,4 +77,8 @@ helper.Wait("MainDictiona.png", 30, "Dictionary loading timed out")
 # Goal
 ###############
 helper.Exists("frvarFreeVar.png", "Variant Forms dictionary view incorrect")
+
+App.focus("Tagbanwa")
+helper.Click("1436902218392.png", "Cannot find orange close button")
+
 helper.write_success()

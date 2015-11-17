@@ -9,6 +9,8 @@ from javax.swing import (ImageIcon, JOptionPane)
 from javax.swing import (JFrame, JPanel, JLabel, ImageIcon, BorderFactory, JButton,WindowConstants)
 from java.awt import Color
 #/\ last 2 for show_PNG2, may be removed.
+#Settings.ActionLogs = False
+Settings.InfoLogs = False
 
 class ImageUpdater:
     def __init__(self, test_name=""):
@@ -16,7 +18,7 @@ class ImageUpdater:
         print(self.myOS)
 
         self.test = test_name
-        self.make_hotkeys()
+
         #manually made new OS and temp/working folders
         # TODO Automate.
         self.my_path = "/home/vagrant/Integration-Testing-Framework/image_updater.sikuli"
@@ -39,16 +41,17 @@ class ImageUpdater:
         self.my_event2 = threading.Event()
         self.my_event2.set()
         self.showing_PNG = False
-        self.image_name = ""
-        self.image_path = ""
+        self.image_name = "-"
+        self.image_path = "-"
         self.capture_path = "-"
-        self.line_text = ""
+        self.line_text = "-"
         self.similarity = "default"
         self.show_prompt = True
 
     def __del__(self):
         #self.check_images()
-        self.remove_hotkeys()
+        pass
+
 
     def make_sub_dir(self, directory_name):
         if not os.path.exists(self.temp_scripts_path+directory_name):
@@ -136,6 +139,7 @@ class ImageUpdater:
 
 
     def prompt(self, my_image, my_sim, line_data):
+        self.make_hotkeys()
         print(line_data)
         self.image_name = my_image
         self.line_text = line_data
@@ -177,6 +181,7 @@ class ImageUpdater:
         #show image
         self.show_PNG(self.image_path, "<- This is the original image. The image will be searched for after you press OK.\n"+self.line_text)
         self.showing_PNG = False
+        wait(3)
         #test if existing image works
         found_it = self.test_find(None)
         if found_it:
@@ -222,9 +227,10 @@ class ImageUpdater:
         else:
             self.my_event.set()
             self.capture_path ="-"
-            self.image_name = ""
-            self.image_path = ""
-            self.line_text = ""
+            self.image_name = "-"
+            self.image_path = "-"
+            self.line_text = "-"
+            self.remove_hotkeys()
 
     def use_existing(self, event):
         print("use_existing")
@@ -334,9 +340,9 @@ if __name__ == "__main__":
     my_image_updater = ImageUpdater("test")
     my_image_updater.recursive_make() #This copies the files and folders to the temporary folder.
 
-    # Make image_updater directory in temp_scripts_path/examples
-    my_image_updater.make_sub_dir("examples/image_updater.sikuli")
-    my_new_path = my_image_updater.temp_scripts_path+"examples/image_updater.sikuli"
+    # Make image_updater directory in temp_scripts_path
+    my_image_updater.make_sub_dir("image_updater.sikuli")
+    my_new_path = my_image_updater.temp_scripts_path+"image_updater.sikuli"
     # Copy all files from image_updater to new directory
     source_files = os.listdir(my_image_updater.my_path)
     for file in source_files:
@@ -352,3 +358,4 @@ if __name__ == "__main__":
     ### NOTES ###
     #make hash of image paths (old_name, old_image, new_image)
     #keep track of last known location and try it
+

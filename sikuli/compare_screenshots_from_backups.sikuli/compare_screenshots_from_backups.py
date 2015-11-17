@@ -40,6 +40,8 @@ helper.Click("1436902218392.png", "Cannot find orange close button")
 # we just opened + whatever was open before
 ###helper.restart_flex()
 
+helper.write_success()
+
 
 
 
