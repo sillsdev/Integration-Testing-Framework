@@ -69,6 +69,14 @@ class TestHelper:
             shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py",
                             shared_folder + "/display_log.py")
 
+        doc, tag, text = Doc().tagtext()
+        with tag("tr"):
+            with tag("td", style="text-align: center; background-color:lightskyblue", colspan="6"):
+                text(test_name)
+        with open(self.partial_html, "a") as f:
+            f.write(doc.getvalue())
+
+
     #################################
     # Wrappers for click, type, etc
     #################################
@@ -86,14 +94,17 @@ class TestHelper:
               restart=restart_default,
               success_message=successmsg_default, time=time_default):
         try:
+            screenshot = capture(SCREEN)
             click(thing)
+            self.write_html_row("Click", thing, "Success", screenshot)
             if success_message:
                 self.write(success_message)
             wait(time)
             return True
         except FindFailed:
+            screenshot = capture(SCREEN)
             self.write_fail(fail_message)
-            self.write_html_row("Click", thing)
+            self.write_html_row("Click", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -107,14 +118,17 @@ class TestHelper:
                     success_message=successmsg_default,
                     time=time_default):
         try:
+            screenshot = capture(SCREEN)
             doubleClick(thing)
+            self.write_html_row("Double Click", thing, "Success", screenshot)
             if success_message:
                 self.write(success_message)
             wait(time)
             return True
         except FindFailed:
+            screenshot = capture(SCREEN)
             self.write_fail(fail_message)
-            self.write_html_row("Double Click", thing)
+            self.write_html_row("Double Click", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -131,14 +145,17 @@ class TestHelper:
              restart=restart_default,
              success_message=successmsg_default, time=time_default):
         try:
+            screenshot = capture(SCREEN)
             match = find(thing)
+            self.write_html_row("Find", thing, "Success", screenshot)
             if success_message:
                 self.write(success_message)
             wait(time)
             return match
         except FindFailed:
+            screenshot = capture(SCREEN)
             self.write_fail(fail_message)
-            self.write_html_row("Find", thing)
+            self.write_html_row("Find", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -152,14 +169,17 @@ class TestHelper:
              success_message=successmsg_default, time=time_default):
 
         try:
+            screenshot = capture(SCREEN)
             match = wait(thing, wait_time)
+            self.write_html_row("Appearance", thing, "Success", screenshot)
             if success_message:
                 self.write(success_message)
             wait(time)
             return match
         except FindFailed:
+            screenshot = capture(SCREEN)
             self.write_fail(fail_message)
-            self.write_html_row("Appearance", thing)
+            self.write_html_row("Appearance", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -172,13 +192,16 @@ class TestHelper:
                restart=restart_default,
                success_message=successmsg_default):
 
+        screenshot = capture(SCREEN)
         if exists(thing):
+            self.write_html_row("Existence", thing, "Success", screenshot)
             if success_message:
                 self.write(success_message)
             return True
         else:
+            screenshot = capture(SCREEN)
             self.write_fail(fail_message)
-            self.write_html_row("Existence", thing)
+            self.write_html_row("Existence", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -202,6 +225,7 @@ class TestHelper:
     def write(self, line):
         with open(self.file, "a") as f:
             f.write(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
+            print(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
 
     # Same as write, but internally remembers that the test failed.
     def write_fail(self, line):
@@ -258,12 +282,21 @@ class TestHelper:
 
     # Write a log entry into the "mylog.log" file in the log
     # folder, in the form of an html table row (<tr>).
-    def write_html_row(self, action_type, expected):
+    def write_html_row(self, action_type, expected, result_type, screenshot):
         doc, tag, text = Doc().tagtext()
 
         # Create the row
         # Test name, Action, Expected, Screenshot
         with tag("tr"):
+            if result_type == "Success":
+                with tag("td", ('bgcolor', 'green')):
+                    text("+++")
+            elif result_type == "Fail":
+                with tag("td", ('bgcolor', 'red')):
+                    text("---")
+            else:
+                with tag("td"):
+                    text("???")
             with tag("td"):
                 text(time.strftime("%H:%M:%S %x"))
             with tag("td"):
@@ -310,8 +343,6 @@ class TestHelper:
                             doc.stag("img", src=expected_path)
 
             with tag("td"):
-                # Take screenshot
-                screenshot = capture(SCREEN)
                 screenshot_path = self.copy_testfile(screenshot)
                 with tag("a", href=screenshot_path):
                     doc.stag("img", src=screenshot_path)

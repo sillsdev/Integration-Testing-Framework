@@ -75,6 +75,8 @@ with open(log_folder + "/log.html", "w") as html_file:
                 with tag("thead"):
                     with tag("tr"):
                         with tag("th"):
+                            text("Type")
+                        with tag("th"):
                             text("Time and Date")
                         with tag("th"):
                             text("Test name")
@@ -96,3 +98,4 @@ with open(log_folder + "/log.html", "w") as html_file:
 new = 2  # open in a new tab if possible
 url = "file://" + log_folder + "/log.html"
 webbrowser.open(url, new=new)
+
