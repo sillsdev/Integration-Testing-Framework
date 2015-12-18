@@ -56,41 +56,6 @@ Vagrant.configure(2) do |config|
 
    config.vm.provision "bootstrap", type: "shell", inline: <<-SHELL
 
-	rm -rf Integration-Testing-Framework 
-	sudo git clone http://github.com/sillsdev/Integration-Testing-Framework 
-	sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
-	
-	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
-	sudo apt-get update
-	sudo echo "debconf debconf/frontend select Readline" | sudo debconf-set-selections
-	sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
-	
-	### For manual install, use [more] exp script
-	#sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
-	
-	### Language libraries
-	sudo apt-get -y install fieldworks-l10n-*
-
-	### Could be done in autostart script - it exists, but needs to finish before sikuli starts
-	sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel
-	sudo rm -r /tmp/sikuli
-	sudo mkdir -p /tmp/sikuli
-	sudo ln -s /usr/share/tesseract-ocr/tessdata/ /tmp/sikuli
-	
-	### Set permissions and ownership on /home/vagrant
-	#sudo find . -name '.*' -prune -o -exec chmod u=rwx,g=rx,o=r {} +
-	#sudo find . -name '.*' -prune -o -exec chown -R vagrant . {} +
-	sudo chown -R vagrant /home/vagrant/Integration-Testing-Framework
-	
-	### Set autostart programs
-	sudo mkdir /home/vagrant/.config/autostart/
-	sudo cp /home/vagrant/Integration-Testing-Framework/scripts/autostart/*.desktop /home/vagrant/.config/autostart/
-	sudo chown -R vagrant /home/vagrant/.config/autostart
-
-   SHELL
-
-   config.vm.provision "gui", type: "shell", inline: <<-SHELL
-
 	#### Vagrant User Configurations
 	####
 	sudo su vagrant << EOF
@@ -100,18 +65,43 @@ export DISPLAY=:0.0
 gsettings set org.gnome.libgnomekbd.keyboard layouts "['us', 'fr']"
 
 ### Disable the screen blackout:
-sudo gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac 0
-sudo gsettings set org.gnome.settings-daemon.plugins.power sleep-display-battery 0
+gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac 0
+gsettings set org.gnome.settings-daemon.plugins.power sleep-display-battery 0
 
 ### Disable the screen lock:
-sudo gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
 
-### Change screen resolution
-sudo xrandr --output VGA-0 --mode 1024x768
+### Could be done in autostart script - it exists, but needs to finish before sikuli starts
+sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel
+rm -r /tmp/sikuli
+mkdir -p /tmp/sikuli
+ln -s /usr/share/tesseract-ocr/tessdata/ /tmp/sikuli
+
 EOF
 # The EOF is not indented because whitespace (a tab) causes an error.
 	####
 	####
 
+	rm -rf Integration-Testing-Framework
+	git clone http://github.com/sillsdev/Integration-Testing-Framework
+	echo "Installing fieldworks-applications..." > /vagrant/error_log
+
+	### Set permissions and ownership on /home/vagrant
+	#sudo find . -name '.*' -prune -o -exec chmod u=rwx,g=rx,o=r {} +
+	#sudo find . -name '.*' -prune -o -exec chown -R vagrant . {} +
+	sudo chown -R vagrant /home/vagrant/Integration-Testing-Framework
+
+	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
+	sudo apt-get update
+	sudo echo "debconf debconf/frontend select Readline" | sudo debconf-set-selections
+	sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
+
+	### For manual install, use [more] exp script
+	#sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
+
+	### Language libraries
+	sudo apt-get -y install fieldworks-l10n-*
+
    SHELL
+
 end

@@ -40,15 +40,18 @@ class Regionplus(Region):
               restart=restart_default,
               success_message=successmsg_default, time=time_default):
         try:
+            screenshot = capture(SCREEN)
             self.click(thing)
+            self.helper.write_html_row("Click", thing, "Success", screenshot)
             if success_message:
                 self.helper.write(success_message)
             wait(time)
             return True
         except FindFailed, ff:
             if self.helper:
+                screenshot = capture(SCREEN)
                 self.helper.write_fail(fail_message)
-                self.helper.write_html_row("Click", thing)
+                self.helper.write_html_row("Click", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -56,20 +59,23 @@ class Regionplus(Region):
             return False
         except:
             raise
-    
+
     def DoubleClick(self, thing, fail_message, give_up=giveup_default,
                     restart=restart_default,
                     success_message=successmsg_default, time=time_default):
         try:
+            screenshot = capture(SCREEN)
             self.doubleClick(thing)
+            self.helper.write_html_row("Double Click", thing, "Success", screenshot)
             if success_message:
                 self.helper.write(success_message)
             wait(time)
             return True
         except FindFailed, ff:
             if self.helper:
+                screenshot = capture(SCREEN)
                 self.helper.write_fail(fail_message)
-                self.helper.write_html_row("Double Click", thing)
+                self.helper.write_html_row("Double Click", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -82,15 +88,18 @@ class Regionplus(Region):
              restart=restart_default,
              success_message=successmsg_default, time=time_default):
         try:
+            screenshot = capture(SCREEN)
             match = self.find(thing)
+            self.helper.write_html_row("Find", thing, "Success", screenshot)
             if success_message:
                 self.helper.write(success_message)
             wait(time)
             return match
         except FindFailed, ff:
             if self.helper:
+                screenshot = capture(SCREEN)
                 self.helper.write_fail(fail_message)
-                self.helper.write_html_row("Find", thing)
+                self.helper.write_html_row("Find", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:
@@ -104,15 +113,18 @@ class Regionplus(Region):
              success_message=successmsg_default, time=time_default):
 
         try:
+            screenshot = capture(SCREEN)
             match = self.wait(thing, wait_time)
+            self.helper.write_html_row("Appearance", thing, "Success", screenshot)
             if success_message:
                 self.helper.write(success_message)
             wait(time)
             return match
         except FindFailed:
             if self.helper:
+                screenshot = capture(SCREEN)
                 self.helper.write_fail(fail_message)
-                self.helper.write_html_row("Appearance", thing)
+                self.helper.write_html_row("Appearance", thing, "Fail", screenshot)
             if restart:
                 self.helper.restart_flex()
             if give_up:
@@ -123,15 +135,19 @@ class Regionplus(Region):
 
     def Exists(self, thing, fail_message, give_up=giveup_default,
                restart=restart_default,
-               success_message=successmsg_default, time=time_default):
+               success_message=successmsg_default):
+
+        screenshot = capture(SCREEN)
         if self.exists(thing):
+            self.helper.write_html_row("Existence", thing, "Success", screenshot)
             if success_message:
                 self.helper.write(success_message)
             return True
         else:
             if self.helper:
+                screenshot = capture(SCREEN)
                 self.helper.write_fail(fail_message)
-                self.helper.write_html_row("Existence", thing)
+                self.helper.write_html_row("Existence", thing, "Fail", screenshot)
             if restart:
                 self.restart_flex()
             if give_up:

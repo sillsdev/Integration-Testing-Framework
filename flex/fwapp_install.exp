@@ -43,7 +43,7 @@ if {$force_conservative} {
 
 
 set timeout -1
-spawn apt-get -y -f install fieldworks-applications
+spawn apt-get -y -f install fieldworks
 match_max 100000
 expect -exact "\[More\]"
 send -- "\r"

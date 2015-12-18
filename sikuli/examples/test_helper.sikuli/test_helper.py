@@ -43,6 +43,8 @@ class TestHelper:
         self.test = test_name
         self.test_failed = False
 
+        self.write("Running...")
+
         # Determine which OS we're on
         self.os = Env.getOS()
 
@@ -75,7 +77,6 @@ class TestHelper:
                 text(test_name)
         with open(self.partial_html, "a") as f:
             f.write(doc.getvalue())
-
 
     #################################
     # Wrappers for click, type, etc
@@ -225,7 +226,7 @@ class TestHelper:
     def write(self, line):
         with open(self.file, "a") as f:
             f.write(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
-            print(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
+        print(time.strftime("%H:%M:%S %x") + " " + self.test + ": " + line + "\n")
 
     # Same as write, but internally remembers that the test failed.
     def write_fail(self, line):
@@ -307,31 +308,17 @@ class TestHelper:
                 # If 'expected' is given, figure out what kind
                 # of thing it is
                 if expected:
-                    if isinstance(expected, str):
-                        full_path = self.find_valid_image(expected)
-
-                        # If a path was found, add a clickable image.
-                        # If not, add text.
-                        if full_path:
-                            expected_path = self.copy_testfile(full_path)
-                            with tag("a", href=expected_path):
-                                doc.stag("img", src=expected_path)
-                        else:
-                            text(expected)
+                    expected_path = ""
                     # If it's a pattern, get the image
-                    elif isinstance(expected, Pattern):
+                    if isinstance(expected, Pattern):
                         full_path = self.find_valid_image(expected.getFilename())
                         expected_path = self.copy_testfile(full_path)
-                        with tag("a", href=expected_path):
-                            doc.stag("img", src=expected_path)
                     # If it's a match or a region, take a
                     # screenshot of the area
                     elif (isinstance(expected, Match) or
                           isinstance(expected, Region)):
                         screencap = capture(expected)
                         expected_path = self.copy_testfile(screencap)
-                        with tag("a", href=expected_path):
-                            doc.stag("img", src=expected_path)
                     elif isinstance(expected, Location):
                         # Create an area 50px around the location
                         r = Region(expected.getX(), expected.getY(), 0, 0)
@@ -339,13 +326,24 @@ class TestHelper:
                         # take a screenshot
                         screencap = capture(r)
                         expected_path = self.copy_testfile(screencap)
-                        with tag("a", href=expected_path):
-                            doc.stag("img", src=expected_path)
+                    elif isinstance(expected, str):
+                        full_path = self.find_valid_image(expected)
+
+                        # If a path was found, add a clickable image.
+                        # If not, add text.
+                        if full_path:
+                            expected_path = self.copy_testfile(full_path)
+
+                    if expected_path == "":
+                        text(expected)
+                    else:
+                        with tag("a", href="./log/"+expected_path):
+                            doc.stag("img", src="./log/"+expected_path)
 
             with tag("td"):
                 screenshot_path = self.copy_testfile(screenshot)
-                with tag("a", href=screenshot_path):
-                    doc.stag("img", src=screenshot_path)
+                with tag("a", href="./log/"+screenshot_path):
+                    doc.stag("img", src="./log/"+screenshot_path)
 
         # Write the row to the partial html file
         with open(self.partial_html, "a") as f:

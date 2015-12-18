@@ -61,7 +61,7 @@ else:
     css_file = os.path.basename(glob_result_css[0])
 
 # Build the html log
-with open(log_folder + "/log.html", "w") as html_file:
+with open(os.path.dirname(log_folder) + "/log.html", "w") as html_file:
     doc, tag, text = Doc().tagtext()
     doc.asis('<!DOCTYPE html>')
 
@@ -69,13 +69,11 @@ with open(log_folder + "/log.html", "w") as html_file:
         with tag("head"):
             with tag("title"):
                 text("Test Results")
-            doc.stag("link", href=css_file, rel="stylesheet", type="text/css")
+            doc.stag("link", href="./log/"+css_file, rel="stylesheet", type="text/css")
         with tag("body"):
             with tag("table"):
                 with tag("thead"):
                     with tag("tr"):
-                        with tag("th"):
-                            text("Type")
                         with tag("th"):
                             text("Time and Date")
                         with tag("th"):
@@ -96,6 +94,5 @@ with open(log_folder + "/log.html", "w") as html_file:
 
 # Open a browser tab with the file displayed in it
 new = 2  # open in a new tab if possible
-url = "file://" + log_folder + "/log.html"
+url = "file://" + os.path.dirname(log_folder) + "/log.html"
 webbrowser.open(url, new=new)
-

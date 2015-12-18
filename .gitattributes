@@ -3,3 +3,5 @@
 
 # Binary files that should be ignored with regards to line endings
 *.png binary
+
+*.sh eol=lf
