@@ -1,0 +1,181 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  #config.vm.box = "chrisvire/trusty64"
+  #config.vm.box = "chrisvire/precise64"
+  #config.vm.box = "chrisvire/wasta64-12"
+  #config.vm.box = "chrisvire/wasta64-14"
+  #config.vm.box = "ubuntu/precise64"
+  config.vm.box = "ubuntu/trusty64"
+  #config.vm.box = "hashicorp/precise64"
+  config.ssh.password="vagrant"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider "virtualbox" do |vb|
+
+  # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+    vb.name = "itf_trusty_base_box"
+    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+
+  # Customize the amount of memory on the VM:
+    vb.memory = "4096"
+  end
+
+
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   sudo apt-get update
+  #   sudo apt-get install -y apache2
+  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+
+	sudo apt-get update
+	sudo apt-get install unzip
+	sudo apt-get -y install ubuntu-desktop
+	sudo telinit 5
+	sudo apt-get -y install python
+	sudo apt-get -y install python-pip
+	sudo apt-get -y install python-dev build-essential gcc g++
+
+	sudo apt-get -y install openjdk-7-jdk
+	sudo echo "JAVA_HOME=/usr/lib/jvm/jdk-1.7.0-openjdk-amd64" >> ~/.bashrc
+	sudo echo "export JAVA_HOME" >> ~/.bashrc
+	sudo pip install cython
+
+	sudo apt-get install -y opencv2.4
+
+	sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel
+	rm -r /tmp/sikuli
+	mkdir -p /tmp/sikuli
+	ln -s /usr/share/tesseract-ocr/tessdata/ /tmp/sikuli
+
+	sudo apt-get install wmctrl
+	sudo apt-get -y install xdotool
+
+	wget https://launchpad.net/sikuli/sikulix/1.1.0/+download/sikulixsetup-1.1.0.jar
+	java -jar sikulixsetup-1.1.0.jar options 1.1 2 3 4.3
+
+	sudo apt-get -y install git
+	sudo apt-get -y install git-gui
+	## sudo dpkg-reconfigure --frontend=readline --priority=critical debconf
+	sudo apt-get -y install expect
+	sudo apt-get -y install expect-dev
+	sudo apt-get install -y gnome-shell
+	sudo apt-get -f -y install
+
+
+	# Use for VirtualBox 5.0.10. Please update for your version of VB
+	VB_VERSION='5.0.10'
+	sudo apt-get -y install linux-headers-generic build-essential dkms
+	sudo apt-get -y install linux-headers-$(uname -r)
+	wget http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
+	sudo mkdir /media/VBoxGuestAdditions
+	sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
+	sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+	rm VBoxGuestAdditions_$VB_VERSION.iso
+	sudo umount /media/VBoxGuestAdditions
+	sudo rmdir /media/VBoxGuestAdditions
+
+	# Set the machine to log in automatically, and make the desktop Gnome Fallback (e.g. Gnome Classic with no effects.)
+	sudo echo [SeatDefaults] > /etc/lightdm/lightdm.conf
+	sudo echo greeter-session=unity-greeter >> /etc/lightdm/lightdm.conf
+	sudo echo user-session=gnome-fallback >> /etc/lightdm/lightdm.conf
+	sudo echo autologin-user=vagrant >> /etc/lightdm/lightdm.conf
+
+	# Prevent prompting for Ubuntu upgrades
+	sudo sed -i 's/Prompt=.*/Prompt=never/' /etc/update-manager/release-upgrades
+
+	sudo echo deb http://packages.sil.org/ubuntu trusty main >> /etc/apt/sources.list
+	sudo echo deb http://packages.sil.org/ubuntu trusty-experimental main >> /etc/apt/sources.list
+	wget http://packages.sil.org/sil.gpg -O- | sudo apt-key add -
+	sudo apt-get update
+	sudo apt-get autoremove
+	sudo apt-get autoclean
+
+	#------------------- The code below this line -------------------------------
+	#                  Is to be run on every machine where the code above is
+	#                  To be run once. Please package the machine at this point.
+	#                  Also, change default desktop from unity to gnome!
+
+	# sudo git clone http://github.com/sillsdev/Integration-Testing-Framework
+	# sudo echo "Installing fieldworks-applications..." > /vagrant/error_log
+
+	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
+	# sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
+	## sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
+	# sudo apt-get -y install fieldworks-l10n-*
+
+	### Could be done in autostart script - it exists, but needs to finish before sikuli starts
+	# sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel
+	# sudo rm -r /tmp/sikuli
+	# sudo mkdir -p /tmp/sikuli
+	# sudo ln -s /usr/share/tesseract-ocr/tessdata/ /tmp/sikuli
+
+	### Set permissions and ownership on /home/vagrant
+	# sudo find . -name '.*' -prune -o -exec chmod u=rwx,g=rx,o=r {} +
+	# sudo find . -name '.*' -prune -o -exec chown -R vagrant . {} +
+	# sudo chown -R vagrant /home/vagrant/Integration-Testing-Framework
+
+	### Set autostart programs
+	# sudo mkdir /home/vagrant/.config/autostart/
+	# sudo cp /home/vagrant/Integration-Testing-Framework/scripts/autostart/*.desktop /home/vagrant/.config/autostart/
+	# sudo chown -R vagrant /home/vagrant/.config/autostart
+
+	## sudo shutdown 0
+
+  SHELL
+
+end
