@@ -44,5 +44,5 @@ def open_backup(path, flex_is_open):
         helper.write("Successfully opened project: " + path.split("/")[-1])
     else:
         helper.write("Successfully opened project: " + path.split("/")[-1])
-    wait(300)
+    wait(120)
         

@@ -49,6 +49,6 @@ successmsg_default = None
 #    sikuli.wait(3*n)
 
 
-# Put the examples directory in sys.path.
-if (wd + "/examples") not in sys.path:
-    sys.path.append(wd + "/examples")
+# Put the helpers directory in sys.path.
+if (wd + "/helpers") not in sys.path:
+    sys.path.append(wd + "/helpers")

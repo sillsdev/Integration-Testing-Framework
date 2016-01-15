@@ -22,8 +22,8 @@ import time
 # 
 
 
-if wd + "/examples/test_and_log" not in sys.path:
-    sys.path.append(wd + "/examples/test_and_log")
+if wd + "/helpers/test_and_log" not in sys.path:
+    sys.path.append(wd + "/helpers/test_and_log")
 from yattag import Doc
 
 class TestHelper:
@@ -62,13 +62,13 @@ class TestHelper:
         
         # Add the CSS stylesheet to the log folder, if it's not there already.
         if not os.path.exists(log_folder + "/log.css"):
-            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/log.css",
+            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/helpers/test_helper.sikuli/log.css",
                             log_folder + "/log.css")
 
         # Add the display_log script to /vagrant, if it's not there
         # (so it's accessible from the host machine)
         if not os.path.exists(shared_folder + "/display_log.py"):
-            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/examples/test_helper.sikuli/display_log.py",
+            shutil.copyfile(home_folder + "/Integration-Testing-Framework/sikuli/helpers/test_helper.sikuli/display_log.py",
                             shared_folder + "/display_log.py")
 
         doc, tag, text = Doc().tagtext()

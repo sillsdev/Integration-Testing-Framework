@@ -8,7 +8,7 @@ import subprocess
 
 try:
     if "lin" in platform.platform().lower():
-        sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/examples/test_and_log')
+        sys.path.insert(0, '/home/vagrant/Integration-Testing-Framework/sikuli/helpers/test_and_log')
     from yattag import Doc
 except ImportError:
     subprocess.call("pip install yattag")
