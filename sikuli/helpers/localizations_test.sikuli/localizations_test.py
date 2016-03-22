@@ -1,6 +1,5 @@
 from sikuli import *
-from test_helper import TestHelper
-from flex_regions import *
+from test_helper import *
 
 languages = ["Indonesian", "Malay", "English", "Spanish", "French",
         "Hungarian", "Portuguese", "Kinyarwanda", "Vietnamese", "Turkish",
@@ -44,8 +43,6 @@ for r in area_regions:
 def run_test(language_idx):
 
     setAutoWaitTimeout(1)
-    helper = TestHelper("test_" + languages[language_idx].lower() + "_localization")
-    set_flex_helper(helper)
     
     # Opening: change UI to the language we want
     ################
@@ -59,7 +56,7 @@ def run_test(language_idx):
     for i in range(5):
         type(Key.DOWN)
         wait(.5)
-    helper.Type(Key.ENTER)
+    type(Key.ENTER)
     wait(.5)
     # Get to language drop-down menu
     type(Key.TAB)
@@ -93,7 +90,7 @@ def run_test(language_idx):
                 # Check if whole area matches
                 if area_regions[k].exists(Pattern(english_reference_images[k]).
                         similar(0.99)):
-                    helper.write_fail("Nothing translated in " + area)
+                    Debug.user("Nothing translated in " + area)
                     # If everything's in English, no need for more tests
                     continue
 
@@ -102,11 +99,11 @@ def run_test(language_idx):
                     words = english_words[k]
                     for word in words:
                         if area_regions[k].exists(word):
-                            helper.write_fail("'" + word + "' not translated in " + area)
+                            Debug.user("'" + word + "' not translated in " + area)
             
             # Look for any placeholder squares
             #if area_regions[k].exists(square_types[k]):
-            #    helper.write_fail("Unable to render (placeholder boxes found) in " + area)
+            #    Debug.user("---","FAIL","Unable to render (placeholder boxes found) in " + area)
 
     
     # Closing: Go back to English UI
@@ -120,7 +117,7 @@ def run_test(language_idx):
     for i in range(5):
         type(Key.DOWN)
         wait(.5)
-    helper.Type(Key.ENTER)
+    type(Key.ENTER)
     wait(.5)
     
     # Get to language drop-down menu
@@ -138,5 +135,3 @@ def run_test(language_idx):
         wait(.5)
     type(Key.ENTER)
     wait(40)
-    
-    helper.write_success()

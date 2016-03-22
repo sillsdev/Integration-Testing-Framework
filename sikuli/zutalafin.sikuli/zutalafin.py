@@ -1,15 +1,7 @@
-from sikuli import *
-
-from a_setup import *
-from test_helper import TestHelper
-
-helper = TestHelper("close_flex")
+from test_helper import *
 
 # Close FLEX - This is the last script
 switchApp("FieldWorks Language Explorer")
-helper.Click("1436902218392.png", "Cannot find orange close button")
-
-if helper.has_fail():
-    helper.write_fail("Failed to close")
-helper.write_success()
+click("1436902218392.png")
+Debug.user("Success")
 

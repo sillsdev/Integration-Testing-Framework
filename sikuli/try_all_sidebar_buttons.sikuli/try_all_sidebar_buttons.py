@@ -1,8 +1,4 @@
-from a_setup import *
-
-from sikuli import *
-from flex_regions import *
-from test_helper import TestHelper
+from test_helper import *
 
 """
 Click through all of the buttons in the left sidebar
@@ -14,20 +10,18 @@ Return to first option when done.
 """
 
 # Setup
-helper = TestHelper("try_all_side_bar_buttons")
-set_flex_helper(helper)
-
 def stop_observer(event):
     global changed
     changed = True
     event.region.stopObserver()
     if Region(148,139,544,545).exists("information_popup.png"):
-        helper.Type(Key.ENTER, time=5)
+        type(Key.ENTER)
+        wait(5)
     
 # Opening
 ###############
 wait("Lexicon.png",300)
-helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
+click("Lexicon.png")
 first_region = Region(21,127,115,15)
 click(first_region.getCenter())
 
@@ -47,7 +41,7 @@ while not region.exists(Pattern("blank_space.png").similar(0.99)):
     # keep count and make sure we don't go too far
     count += 1
     if count > 9:
-        helper.write_fail("Script malfunction: went too far down the left column")
+        Debug.user("Script malfunction: went too far down the left column")
         break;
 
     # Click in the middle of the region and react to change
@@ -56,7 +50,7 @@ while not region.exists(Pattern("blank_space.png").similar(0.99)):
     MID_TOOLBAR.observe(5)
     # Check if the observer stopped as intended
     if not changed:
-        helper.write_fail("No change when clicking item " + str(count))
+        Debug.user("No change when clicking item " + str(count))
 
     # Move region down by 18 pixels
     region = region.offset(Location(0, 18))
@@ -66,5 +60,3 @@ while not region.exists(Pattern("blank_space.png").similar(0.99)):
 
 # go back to first screen
 click(first_region.getCenter())
-
-helper.write_success()

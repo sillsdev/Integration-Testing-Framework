@@ -3,31 +3,27 @@ import sys
 import unittest
 import subprocess
 import os
+import inspect
+from sikuli import *
+from test_helper import *
 
 class FlexTests(unittest.TestCase):
 
-    command = "sikuli-ide"
-    line = "\n"
-    boilerplate = 2
-
-    #This does not work in Python 2.5 -- hence the static variables above.
     @classmethod
     def setUpClass(self):
-        print "setting up class"
-        self.myOS = Env.getOS()
-        if self.myOS == OS.LINUX:
-            self.command = "sikuli-ide"
-            self.line = "\n"
-            self.boilerplate = 2
-        elif self.myOS == OS.WINDOWS:
-            self.command = "runsikulix.cmd"
-            self.line = "\r\n"
-            self.boilerplate = 3
+        if __name__ == '__main__':
+            self.myFolder = getParentFolder()
         else:
-            print "Unsupported OS."
+            if myOS == sikuli.OS.LINUX:
+                self.myFolder = os.path.dirname(__file__)
+            elif myOS == sikuli.OS.WINDOWS:
+                self.myFolder = os.path.dirname(os.path.dirname(__file__))
+            elif myOS == OS.MAC:
+                self.myFolder = os.path.dirname(__file__)
 
     def setUp(self):
-        print ("\n"+time.strftime("%H:%M:%S %x") + " Running " + str.split(self.id(),".")[2][5:] + "... \n")
+        print ("\n"+time.strftime("%H:%M:%S %x") + " Running " + str.split(self.id(),".")[-1][5:] + "... \n")
+
 
     def tearDown(self):
         pass
@@ -85,12 +81,21 @@ class FlexTests(unittest.TestCase):
         self.assertTrue('Success' in output)
 
     def run_sikuli_test(self,name):
-        my_test = str.split(name,".")[2][5:] # test name of the form '__main__.MyTests.test_name', split on periods, then remove the 'test_'
-        file = os.path.join(os.path.dirname(os.path.dirname(sys.argv[0])),"sikuli", my_test+".sikuli") # test location
-        subprocess.call([self.command, '-r', file])
-        for line in open("/vagrant/error_log"):
+        the_test = str.split(name,".")[-1][5:] # test name of the form '__main__.MyTests.test_name', split on periods, then remove the 'test_'
+        file = os.path.join(self.myFolder, the_test+".sikuli") # test location
+        #subprocess.call([self.command, '-r', file])
+        runScript(file)
+        for line in open("./error_log"):
             last = line
-        return last
+        return line
+
+def load_tests(*args, **kwargs):
+    print "Passed: ", args, kwargs
+    suite = unittest.TestSuite()
+    for name, obj in inspect.getmembers(sys.modules[__name__]):
+        if inspect.isclass(obj) and issubclass(obj,unittest.TestCase):
+            suite.addTests(unittest.TestLoader().loadTestsFromTestCase(obj))
+    return suite
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(FlexTests)

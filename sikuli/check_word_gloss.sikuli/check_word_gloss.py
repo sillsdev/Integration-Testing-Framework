@@ -1,39 +1,34 @@
-from a_setup import *
-from test_helper import TestHelper
-from Regionplus import Regionplus
-
-helper = TestHelper("check_word_gloss")
+from test_helper import *
 
 # Make sure the word exists
 wait("Lexicon.png",300)
-helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
-helper.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
-helper.Exists("asdfghasdfgh.png", "'asdfgh' word does not exist")
+click("Lexicon.png")
+click("LexiconEdit.png")
+exists("asdfghasdfgh.png")
 
 # Enter text if it's not there
-helper.Click("VTexts6W0rc.png", "'Texts & Words' not found")
-helper.Click(Pattern("Basehne.png").similar(0.90), "'Baseline' tab not found")
-helper.Click("1438706667507.png", "Blank space not found")    # Move cursor to blank space
+click("VTexts6W0rc.png")
+click(Pattern("Basehne.png").similar(0.90))
+click("1438706667507.png")    # Move cursor to blank space
 if not exists("1439580090308.png"):
     paste("asdfgh jjjj")
 
 # View Gloss tab, make sure gloss is suggested and focus shifts
-helper.Click(Pattern("Gloss-1.png").similar(0.81), "'Gloss' tab not found")
+click(Pattern("Gloss-1.png").similar(0.81))
 hover("1438706667507.png")    # Move to blank space so the hovertext doesn't appear
 wait(2)
-helper.Exists("asdfghhahaha.png", "'hahaha' gloss not suggested for 'asdfgh'")
-helper.Click(Pattern("Luhukooo.png").targetOffset(-16,0), "Drop down menu not found")
-helper.Click("Noun.png", "'Noun' not found")
+exists("asdfghhahaha.png")
+click(Pattern("Luhukooo.png").targetOffset(-16,0))
+click("Noun.png")
 type(Key.ENTER)
-helper.Exists(Pattern("Luhukooo-1.png").similar(0.86), "'jjjj' word not in focus in Gloss tab")
+exists(Pattern("Luhukooo-1.png").similar(0.86))
 
 # View Analyze tab, make sure focus is kept
-helper.Click(Pattern("Analyze.png").similar(0.90), "'Analyze' tab not found")
+click(Pattern("Analyze.png").similar(0.90))
 hover("1438706667507.png")    # Move to blank space so the hovertext doesn't appear
-helper.Exists(Pattern("LJLoooLJLooo.png").similar(0.80), "'jjjj' word not in focus in Analyze tab")
+exists(Pattern("LJLoooLJLooo.png").similar(0.80))
 
 # Go back to Lexicon Edit
-helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
-helper.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
+click("Lexicon.png")
+click("LexiconEdit.png")
 
-helper.write_success()

@@ -1,40 +1,25 @@
-from a_setup import *
-from sikuli import *
-from test_helper import TestHelper
-from flex_regions import *
-from Regionplus import *
-
-# Setup
-helper = TestHelper("drag_column")
-set_flex_helper(helper)
+from test_helper import *
 
 # Opening
 #############
 wait("Lexicon.png", 300)
-helper.Click("Lexicon.png", "Couldn't find 'Lexicon' button")
-LEFT_SIDEBAR.Click("LexiconEdit.png", "Couldn't find 'Lexicon Edit' button")
+click("Lexicon.png")
+LEFT_SIDEBAR.click("LexiconEdit.png")
 
 # Goal
 #############
 
 # Not doing the drag-drop directly, so if it fails we can
 # pinpoint what wasn't found
-glosses = MID_TOOLBAR.Find("3losses.png", "Couldn't find 'Glosses' column header")
-target = MID_TOOLBAR.Find("lLexemeJorm_.png",
-    "'Headword' and 'Lexeme Form' headers not where expected")
+glosses = MID_TOOLBAR.find("3losses.png")
+target = MID_TOOLBAR.find("lLexemeJorm_.png")
 dragDrop(glosses, target)
 
 # Check that it's in the new position
-helper.Find(Pattern("hexemeformHe.png").similar(0.80), "'Glosses' column not in new position")
+find(Pattern("hexemeformHe.png").similar(0.80))
 
-# Closing
-##############
-helper.write_success()
 
 # Drag it back to previous position
-glosses = MID_TOOLBAR.Find("3losses.png", "Couldn't find 'Glosses' column header",
-    restart=True)
-target = MID_TOOLBAR.Find("LexemeFormIG.png",
-    "'Lexeme Form' and 'Grammatical Info' headers not where expected",
-    restart=True)
+glosses = MID_TOOLBAR.find("3losses.png")
+target = MID_TOOLBAR.find("LexemeFormIG.png")
 dragDrop(glosses, target)

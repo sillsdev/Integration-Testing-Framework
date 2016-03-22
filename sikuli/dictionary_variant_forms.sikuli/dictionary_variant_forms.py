@@ -1,14 +1,10 @@
-import a_setup
-from test_helper import TestHelper
+from test_helper import *
 import open_flex_from_backup
-
-
-helper = TestHelper("dictionary_variant_forms")
 
 # Opening
 #############
 
-backups_folder = a_setup.home_folder + "/Integration-Testing-Framework/flex/projects/"
+backups_folder = home_folder + "/Integration-Testing-Framework/flex/projects/"
 
 # Open Tagbanwa
 open_flex_from_backup.open_backup(backups_folder + "Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup", True)
@@ -17,25 +13,26 @@ wait(60)
 
 # Filter for "agbas"
 wait("LexiconEdit.png",300)
-helper.Click("LexiconEdit.png", "'Lexicon Edit' not found", time=10)
-helper.Click(Pattern("LexemeForm.png").targetOffset(-52,23), "'Lexeme Form' column not found")
-helper.Click("lterfor.png", "'Filter for' button not found")
+click("LexiconEdit.png")
+wait(10)
+click(Pattern("LexemeForm.png").targetOffset(-52,23))
+click("lterfor.png")
 paste("agbas")
 type(Key.ENTER)
 wait(15)
 
 # Open Configure menu
-helper.Click("Tools.png", "'Tools' menu not found")
-helper.Click("Configure.png", "'Configure' menu not found")
-helper.Click(Pattern("Dictionary-1.png").similar(0.95), "'Dictionary...' menu not found")
+click("Tools.png")
+click("Configure.png")
+click(Pattern("Dictionary-1.png").similar(0.95))
 
 # Switch to Stem-based
 if not exists("1439408395678.png"):
-    helper.Click(Pattern("1439408329695.png").targetOffset(-54,0), "Drop down menu next to 'Manage Views' not found")
-    helper.Click("Stembased.png", "'Stem-based' not found")
+    click(Pattern("1439408329695.png").targetOffset(-54,0))
+    click("Stembased.png")
 
 # Uncheck all check boxes
-main_entry = helper.Find("MainEntrv.png", "'Main Entry' not found")
+main_entry = find("MainEntrv.png")
 click(main_entry)
 
 # Get the region under and to the right of Main Entry
@@ -55,7 +52,7 @@ while myregion.exists(Pattern("1439410798330.png").similar(0.85)):
 while not exists("VariantForms.png"):
     type(Key.PAGE_UP)
 click("VariantForms.png")
-variant_forms = helper.Find("1439412239108.png", "'Variant Forms' not found")
+variant_forms = find("1439412239108.png")
 focus_region = variant_forms
 
 # This assumes all the "Variant Forms" options (expanded), and
@@ -68,17 +65,15 @@ while not focus_region.exists("Etvmoloav.png"):
     focus_region = focus_region.offset(Location(0, 16))
     type(Key.DOWN)
 
-helper.Click(Pattern("OK.png").similar(0.95), "'OK' button not found")
+click(Pattern("OK.png").similar(0.95))
 
 # Go to Dictionary view and wait (up to 30 seconds) for it to load
-helper.Click(Pattern("Dictionary.png").similar(0.90), "'Dictionary' not found")
-helper.Wait("MainDictiona.png", 30, "Dictionary loading timed out")
+click(Pattern("Dictionary.png").similar(0.90))
+wait("MainDictiona.png", 30)
 
 # Goal
 ###############
-helper.Exists("frvarFreeVar.png", "Variant Forms dictionary view incorrect")
+exists("frvarFreeVar.png")
 
 App.focus("Tagbanwa")
-helper.Click("1436902218392.png", "Cannot find orange close button")
-
-helper.write_success()
+click("1436902218392.png")

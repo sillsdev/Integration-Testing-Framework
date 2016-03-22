@@ -1,5 +1,4 @@
-from sikuli import *
-from a_setup import *
+from test_helper import *
 import open_new_project
 
 open_new_project.open_new_project()

@@ -1,31 +1,19 @@
-from a_setup import *
-from sikuli import *
-from test_helper import TestHelper
-from flex_regions import *
-from Regionplus import *
+from test_helper import *
 
-# Setup
-helper = TestHelper("create_new_text")
-set_flex_helper(helper)
 
 # Opening
 ##############
 wait("OTextsWord.png",300)
-helper.Click("OTextsWord.png", "Couldn't find 'Texts & Words' button")
-LEFT_SIDEBAR.Click("InterlinearT.png", "Couldn't find 'Interlinear Texts' button")
-TOOLBARS.Click(Pattern("1435693467339.png").similar(0.90), "Couldn't find 'Add new text' button")
+click("OTextsWord.png")
+LEFT_SIDEBAR.click("InterlinearT.png")
+TOOLBARS.click(Pattern("1435693467339.png").similar(0.90))
 
 # Goal
 ###############
-helper.Click(Pattern("TitleIFreEng.png").targetOffset(48,-18), "Couldn't find Title field")
-helper.Type("Bonjour")
-helper.Click(Pattern("TitleIFreEng.png").targetOffset(48,9), "Couldn't find Title field")
-helper.Type("Hello" + Key.TAB)
-helper.Type("asdf zxcv werdtfyguuio")
+click(Pattern("TitleIFreEng.png").targetOffset(48,-18))
+type("Bonjour")
+click(Pattern("TitleIFreEng.png").targetOffset(48,9))
+type("Hello" + Key.TAB)
+type("asdf zxcv werdtfyguuio")
+Region(147,101,537,692).exists("Bonjour.png")
 
-Regionplus(helper, Region(147,101,537,692)).Exists("Bonjour.png",
-    "Cannot find new 'Bonjour' text")
-
-# Closing
-#################
-helper.write_success()

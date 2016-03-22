@@ -12,7 +12,6 @@ sudo rm -Rf /home/vagrant/.local/share/fieldworks/Projects/*
 fieldworks-flex &
 
 ### Sikuli XScripts
-sikuli-ide -r /home/vagrant/Integration-Testing-Framework/sikuli_runall.sikuli
-python /vagrant/display_log.py
+runsikulix -r /home/vagrant/Integration-Testing-Framework/sikuli_runall.sikuli
 
 exit
