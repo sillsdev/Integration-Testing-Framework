@@ -75,14 +75,12 @@ echo "vagrant" > ~/.Sikulix/Lib/site-packages/logFolder.txt
 #echo "vagrant" > ~/Library/Application Support/Sikulix/Lib/site-packages/logFolder.txt
 
 ### Install French keyboard (and keep English keyboard)
-gsettings set org.gnome.libgnomekbd.keyboard layouts "['us', 'fr']"
+gsettings set org.gnome.desktop.input-sources sources  "[('xkb', 'us'), ('xkb', 'fr')]"
 
-### Disable the screen blackout:
-gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac 0
-gsettings set org.gnome.settings-daemon.plugins.power sleep-display-battery 0
-
-### Disable the screen lock:
-gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+### Disable the screen blackout and lock:
+gsettings set org.gnome.desktop.session idle-delay 0
+gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+gsettings set org.gnome.desktop.screensaver lock-enabled false
 
 ### Could be done in autostart script - it exists, but needs to finish before sikuli starts
 sudo apt-get -y install libswing-layout-java tesseract-ocr tesseract-ocr-eng gnome-panel

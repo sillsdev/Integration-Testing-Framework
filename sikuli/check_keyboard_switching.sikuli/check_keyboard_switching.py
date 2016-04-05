@@ -15,7 +15,7 @@ def open_keyboard_selection():
     click(Pattern("Format.png").similar(0.80))
     click("SetupWriting.png")
     analysis = find("Analysis_Wri-1.png")
-    analysis.above().right()).click("Modify.png")
+    analysis.above().right().click("Modify.png")
     click(Pattern("f__AIII_l__l.png").similar(0.80))
 
 def close_keyboard_selection():
@@ -58,10 +58,10 @@ if click(Pattern("Create.png").similar(0.90)):
 # Verify input languages
 if not click(Pattern("FreLexemeFON.png").targetOffset(114,4)):
     recover()
-find("1438702584115.png").right()).exists("Eh-1.png")
+find("1438702584115.png").right().exists("Eh-1.png")
 if not click(Pattern("EngNote.png").targetOffset(94,1)):
     recover()
-find("1438702584115.png").right()).exists("Een-1.png")
+find("1438702584115.png").right().exists("Een-1.png")
 
 # Change keyboard back to English to avoid side effects
 set_english_keyboard()

@@ -24,7 +24,6 @@ class FlexTests(unittest.TestCase):
     def setUp(self):
         print ("\n"+time.strftime("%H:%M:%S %x") + " Running " + str.split(self.id(),".")[-1][5:] + "... \n")
 
-
     def tearDown(self):
         pass
 
@@ -82,7 +81,7 @@ class FlexTests(unittest.TestCase):
 
     def run_sikuli_test(self,name):
         the_test = str.split(name,".")[-1][5:] # test name of the form '__main__.MyTests.test_name', split on periods, then remove the 'test_'
-        file = os.path.join(self.myFolder, the_test+".sikuli") # test location
+        file = os.path.join(self.myFolder, "sikuli", the_test+".sikuli") # test location
         #subprocess.call([self.command, '-r', file])
         runScript(file)
         for line in open("./error_log"):

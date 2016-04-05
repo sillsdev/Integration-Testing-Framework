@@ -3,7 +3,7 @@ from test_helper import *
 # Opening
 ##############
 wait("Notebook5.png",300)
-helper.Click("Notebook5.png",)
+click("Notebook5.png")
 LEFT_SIDEBAR.wait("RecordEdit.png",60)
 LEFT_SIDEBAR.click("RecordEdit.png",)
 TOOLBARS.click(Pattern("1435614864882.png").similar(0.96))

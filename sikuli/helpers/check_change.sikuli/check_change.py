@@ -22,7 +22,7 @@ def check_word(word, compare_path):
     
     
     # Create a region inside the 'Entry' panel
-    entry_header = helper.Find("9Entry.png",
+    entry_header = find("9Entry.png",
         "'Entry' field not found in right panel") 
     below_region = entry_header.below()
     right_region = entry_header.right()

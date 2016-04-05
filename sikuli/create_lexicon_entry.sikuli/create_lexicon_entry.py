@@ -7,7 +7,7 @@ wait("Lexicon.png",300)
 click("Lexicon.png")
 LEFT_SIDEBAR.wait("LexiconEdit.png", 60)
 LEFT_SIDEBAR.click("LexiconEdit.png")
-MID_TOOLBAR.click("Headword.png)
+MID_TOOLBAR.click("Headword.png")
 TOOLBARS.click("1435675185765.png")
 
 # Goal
