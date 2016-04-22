@@ -1,6 +1,12 @@
 from sikuli import *
 from test_helper import *
 import os
+def open_handler(event):
+    Debug.user("Successfully opened flex.")
+    event.stopObserver()
+    wait(45)
+    # Don't stop observer, to give it time to open before
+    # the next script runs.
 
 # Open Flex from the start screen
 def open_new_project(project_name="hello"):
@@ -13,3 +19,6 @@ def open_new_project(project_name="hello"):
         click(Pattern("OK-1.png").similar(0.86))
     else:
         click(Pattern("Qpen.png").similar(0.80))
+
+    onAppear("1435347136957.png", open_handler)
+    observe(300)

@@ -29,6 +29,7 @@ def open_backup(path, flex_is_open):
     if not click(Pattern("Browse.png").similar(0.90)):
         close_box()
     click("1436284725146.png")
+    click("1436284725146.png")
     paste(path)
     type(Key.ENTER)
    

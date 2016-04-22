@@ -4,7 +4,7 @@ import open_flex_from_backup
 # Opening
 #############
 
-backups_folder = home_folder + "/Integration-Testing-Framework/flex/projects/"
+backups_folder = home_folder + "/Integration-Testing-Framework/projects/"
 
 # Open Tagbanwa
 open_flex_from_backup.open_backup(backups_folder + "Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup", True)

@@ -1,8 +1,8 @@
 from test_helper import *
 import check_change, open_flex_from_backup
 
-folder = home_folder + "/Integration-Testing-Framework/sikuli/helpers/images_for_comparison/"
-backups_folder = home_folder + "/Integration-Testing-Framework/flex/projects/"
+folder = home_folder + "/Integration-Testing-Framework/general_tests/helpers/images_for_comparison/"
+backups_folder = home_folder + "/Integration-Testing-Framework/projects/"
 
 # Open Tagbanwa
 open_flex_from_backup.open_backup(backups_folder + "Tagbanwa, Calamian 2015-07-07 1037 for testing purposes.fwbackup", True)

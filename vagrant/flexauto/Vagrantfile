@@ -105,10 +105,10 @@ EOF
 	### Installation of FLEX, the first line assumes "More" is not needed, the second assumes "More" is used.
 	sudo apt-get update
 	sudo echo "debconf debconf/frontend select Readline" | sudo debconf-set-selections
-	sudo expect Integration-Testing-Framework/flex/fwapp_install_nomore.exp 2>> /vagrant/error_log
+	sudo expect Integration-Testing-Framework/scripts/fwapp_install_nomore.exp 2>> /vagrant/error_log
 
 	### For manual install, use [more] exp script
-	#sudo expect Integration-Testing-Framework/flex/fwapp_install.exp 2>> /vagrant/error_log
+	#sudo expect Integration-Testing-Framework/scripts/fwapp_install.exp 2>> /vagrant/error_log
 
 	### Language libraries
 	sudo apt-get -y install fieldworks-l10n-*

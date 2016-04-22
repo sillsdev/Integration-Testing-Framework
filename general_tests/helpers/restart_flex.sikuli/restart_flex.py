@@ -6,7 +6,7 @@ def restart_flex():
     if myOS == OS.LINUX:
         type("t", KeyModifier.CTRL | KeyModifier.ALT)
         wait(5)
-        type("sudo /home/vagrant/Integration-Testing-Framework/sikuli/helpers/restart_flex.sh && exit" + Key.ENTER)
+        type("sudo /home/vagrant/Integration-Testing-Framework/general_tests/helpers/restart_flex.sh && exit" + Key.ENTER)
     else:
         popup("Only able to restart FLEx on Linux!")
         Debug.user("Only able to restart FLEx on Linux!")
