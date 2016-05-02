@@ -1,0 +1,151 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "8"
+  config.vm.guest = :windows
+  #config.ssh.username="IEUser"
+  #config.ssh.password="Passw0rd!"
+  config.vm.communicator="winrm"
+  config.winrm.username="IEUser"
+  config.winrm.password="Passw0rd!"
+  #config.winrm.username="vagrant"
+  #config.winrm.password="vagrant"
+
+  config.vm.network "forwarded_port", guest: 3389, host: 33890
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+   config.vm.provider "virtualbox" do |vb|
+     # Display the VirtualBox GUI when booting the machine
+     vb.gui = true
+	 #vb.name = "my_8_box"
+
+     # Customize the amount of memory on the VM:
+     vb.memory = "4096"
+	 vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "1", "--device", "0", "--type", "dvddrive", "--medium", "additions"]
+   end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+   config.vm.provision "shell", inline: <<-SHELL
+
+  ####
+  #### Boxes have ssh built natively into them.
+  #### These scripts are built with powershell,
+  #### Put these commands into a file and then
+  #### use cmd /c powershell filename to set up
+  #### machine.
+  ####
+
+  #  Write-Host "--Inside Provisioner--"
+
+  function my_wget($my_url) {
+  $my_filename = Split-Path $my_url -Leaf ; $filename = [System.IO.Path]::GetFileName($my_url)
+  Write-Host "url  name is: $my_url"
+  Write-Host "file name is: $my_filename"
+  Invoke-WebRequest $my_url -OutFile $filename
+  return $my_filename
+  }
+
+
+  ###############################  INSTALL AUTO  ###############################
+
+  ### Install Guest Additions
+  ## Manual
+  ## - Devices
+  ## - Insert Guest Addtitions CD image...
+  ## - Run VBoxWindowsAditions.exe
+  #+++  $VB_VERSION='5.0.10'
+  #+++  $url = "http://download.virtualbox.org/virtualbox/"+$VB_VERSION+"/VBoxGuestAdditions_"+$VB_VERSION+".iso"
+  #+++  my_wget $url
+  #
+
+  ### Install Java
+  ## http://java.com/en/download/manual.jsp
+  #	 cd c:\vagrant
+  #	 $password = Convertto-SecureString "Passw0rd!" -AsPlainText -Force
+  #	 $credential = New-Object System.Management.Automation.PSCredential "IEUser",$password
+  #	 Start-Process -FilePath "c:\vagrant\jre-8u77-windows-x64.exe" -ArgumentList '/S REBOOT=ReallySuppress JAVAUPDATE=0 WEBSTARTICON=0 SYSTRAY=0' -Credential $credential -wait
+
+  ### Install Sikuli
+  ##
+  #  #Copy or Download Sikuli Setup Jar File
+  # my_wget https://launchpad.net/sikuli/sikulix/1.1.0/+download/sikulixsetup-1.1.0.jar
+  # https://launchpad.net/sikuli/sikulix/1.1.1/+download/sikulixsetup-1.1.1.jar
+  #+++  java -jar sikulixsetup-1.1.0.jar options 1.1 2 3 4.1 #use 4 to download all system libraries
+
+  ### Install Git
+  ## https://github.com/git-for-windows/git/releases/download/v2.8.1.windows.1/Git-2.8.1-64-bit.exe
+  $GIT_VERSION='2.8.1'
+  $url = "https://github.com/git-for-windows/git/releases/download/v"+$GIT_VERSION+".windows.1/Git-"+$GIT_VERSION+"-64-bit.exe"
+  $filename = my_wget $url
+  Invoke-Expression (".\"+ $filename +" /SILENT")
+  #REBOOT NECESSARY
+
+  ### Install TightVNC (TODO)
+  #  AddWindows-Driver
+
+  ### Install 7-Zip
+  $7Z_VERSION='1514'
+  $url = "http://7-zip.org/a/7z"+$7Z_VERSION+"-x64.exe"
+  $filename = my_wget $url
+  Invoke-Expression (".\"+ $filename +" /S")
+
+
+  ###############################  FLEX AUTO  ###############################
+
+  ### Clone Repo / Move site-packages
+  git clone http://github.com/sillsdev/Integration-Testing-Framework
+
+  ### Copy site-packages (TODO)
+  # cp -r (($Env:APPDATA)+"\Sikulix\Lib\site-packages\") Integration-Testing-Framesite-packages
+
+  ### Disable the screen blackout and lock:
+  #
+
+  ### Install Flex
+  # #SE Full/Minimal depends on Windows version
+  $FW_VERSION='8.2.7'
+  $FW_FULL = $true
+  $FW_BTE = $false
+  #@("False Condition","True Condition")[$Conditional]
+  $install_version = @("B","A")[$FW_FULL]
+  $type = @("SE","BTE")[$FW_BTE]
+  $folder = "FW"+$FW_VERSION.Replace(".", "")+"_"+$type+"_"+$install_version
+  $url = "http://downloads.sil.org/FieldWorks/"+$FW_VERSION+"/"+$type+"/"+$folder+".exe"
+  my_wget $url
+  #unzip file contents
+  &"C:\Program Files\7-Zip\7z.exe" -o".\" x .\FW827_SE_A.exe
+  cd $folder
+  .\setup.exe -silent
+
+  ### Install Language Libraries
+  # #http://fieldworks.sil.org/download/localizations/
+
+  ### Run Scripts
+  # runsikulix -r Integration-Testing-Framework/general_tests/_sikuli_runall.sikuli
+
+  ### Change Resolution (TODO)
+  #
+
+  #	 Write-Host "--End of Provisioner--"
+   SHELL
+end
