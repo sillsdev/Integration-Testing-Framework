@@ -8,23 +8,11 @@ Contributors
 * Karl Rogers
 
 Packaging a Vagrant Box: 
-C:\Users\mccoppinR>vagrant package --base box_to_package
---output ubuntu64
+C:\Users\mccoppinR>vagrant package --base box_to_package --output ubuntu64
 
 Run Script as root: sudo -u root command
 
 *BIG PICTURE*
-* Powershell 
-  * presents options for os (linux, windows, etc), software suite (FLEx, Bloom, etc)
-    * uses software suite to load test scripts from proper repo
-    * uses software suite to edit Vagrant file (perl script?)
-      * for right suite link
-      * for right test scripts link (from repo)
-    * interface allows user to choose scripts to use
-      * scripts written to file
-      * later read by bash
- * calls vagrant up followed by vagrant reload
-
 * Vagrant
  * Installs software and scripts
  * Boots software and scripts in "auto run" folder
