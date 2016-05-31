@@ -13,3 +13,5 @@
 
 # Pesky IntelliJ folder
 .idea/
+
+site-packages/favoriteRegions.sikuli**
